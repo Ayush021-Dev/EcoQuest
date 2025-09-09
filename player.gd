@@ -14,19 +14,29 @@ func _physics_process(_delta):
 		direction.y -= 1
 	direction = direction.normalized()
 
-	# Reference the TileMapLayer node
 	var tilemap = get_parent().get_node("TileMapLayer")
 	var next_position = global_position + direction * speed * _delta
-	var local_pos = tilemap.to_local(next_position)
-	var cell = tilemap.local_to_map(local_pos)
-	var cell_data = tilemap.get_cell_tile_data(cell)
-	var can_move = false
 
-	if cell_data:
-		var terrain_info = cell_data.get_terrain()
-		if terrain_info == 0:  # 0 = Terrain 0, as set up in your tileset
-			can_move = true
+	# Size of your collision rectangle (adjust if different)
+	var half_extent = Vector2(16, 16)  # For a 32x32 box; change as needed
 
+	var offsets = [
+		Vector2(0, 0),                        # center
+		Vector2(-half_extent.x, -half_extent.y),  # top-left
+		Vector2(half_extent.x, -half_extent.y),   # top-right
+		Vector2(-half_extent.x, half_extent.y),   # bottom-left
+		Vector2(half_extent.x, half_extent.y)     # bottom-right
+	]
+
+	var can_move = true
+	for offset in offsets:
+		var check_pos = next_position + offset
+		var local_pos = tilemap.to_local(check_pos)
+		var cell = tilemap.local_to_map(local_pos)
+		var cell_data = tilemap.get_cell_tile_data(cell)
+		if not (cell_data and cell_data.get_terrain() == 0):
+			can_move = false
+			break
 
 	if direction != Vector2.ZERO and can_move:
 		velocity = direction * speed

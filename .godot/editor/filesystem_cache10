@@ -1,12 +1,13 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1757418376
+::res://::1757426399
 icon.svg::CompressedTexture2D/CompressedTexture2D::5207553089583387260::1757406470::1757349624::1::::<><><>0<>0<>accbbee7daca8daa69d0255548de26bd<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-main.tscn::PackedScene::10716872224475180::1757418376::0::1::::<><><>0<>0<><>::uid://dus5tb6at253m::::res://assests/Slates [32x32px orthogonal tileset by Ivan Voirol].png<>uid://cu3tcgmhl5lv6::::res://player.gd
-player.gd::GDScript::6235578345722590229::1757418317::0::1::::<>CharacterBody2D<><>0<>0<><>::
-::res://assests/::1757418614
-Green-Cap-Character-16x18.png::CompressedTexture2D::4428392927006189947::1757418614::1757418617::1::::<><><>0<>0<>357dfe231a2c1db935f8050e96304a1b<>res://.godot/imported/Green-Cap-Character-16x18.png-8a6393b0b3f46964471d98132c405d52.ctex::
-Slates - palettes.png::CompressedTexture2D::4107869653368599559::1757410073::1757410641::1::::<><><>0<>0<>a0bbdd0fc64bf769a34e9dfa29258321<>res://.godot/imported/Slates - palettes.png-5d6c8cc91a71e0814e78d35ae25f289a.ctex::
-Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png::CompressedTexture2D::1371340591473012392::1757410070::1757410641::1::::<><><>0<>0<>491917abd748b0864a28177152da29ee<>res://.godot/imported/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png-33d7d614450ca8260f7efa947c7624a4.ctex::
-Slates [32x32px orthogonal tileset by Ivan Voirol].png::CompressedTexture2D::8602053263718988036::1757410067::1757410641::1::::<><><>0<>0<>b386305cd4d5543e3936f6705097231c<>res://.godot/imported/Slates [32x32px orthogonal tileset by Ivan Voirol].png-1ec0746d06c3a5c9acb2b2ab6b3a41c1.ctex::
+main.tscn::PackedScene::10716872224475180::1757425113::0::1::::<><><>0<>0<><>::uid://dus5tb6at253m::::res://assests/Slates [32x32px orthogonal tileset by Ivan Voirol].png<>uid://cu3tcgmhl5lv6::::res://player.gd<>uid://b4de8qdie5q7l::::res://assests/Green-Cap-Character-16x18.png
+player.gd::GDScript::6235578345722590229::1757425003::0::1::::<>CharacterBody2D<><>0<>0<><>::
+README.md::TextFile::-1::1757425994::0::1::::<><><>0<>0<><>::
+::res://assests/::1757418617
+Green-Cap-Character-16x18.png::CompressedTexture2D/CompressedTexture2D::4428392927006189947::1757418614::1757418617::1::::<><><>0<>0<>357dfe231a2c1db935f8050e96304a1b<>res://.godot/imported/Green-Cap-Character-16x18.png-8a6393b0b3f46964471d98132c405d52.ctex::
+Slates - palettes.png::CompressedTexture2D/CompressedTexture2D::4107869653368599559::1757410073::1757410641::1::::<><><>0<>0<>a0bbdd0fc64bf769a34e9dfa29258321<>res://.godot/imported/Slates - palettes.png-5d6c8cc91a71e0814e78d35ae25f289a.ctex::
+Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png::CompressedTexture2D/CompressedTexture2D::1371340591473012392::1757410070::1757410641::1::::<><><>0<>0<>491917abd748b0864a28177152da29ee<>res://.godot/imported/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png-33d7d614450ca8260f7efa947c7624a4.ctex::
+Slates [32x32px orthogonal tileset by Ivan Voirol].png::CompressedTexture2D/CompressedTexture2D::8602053263718988036::1757410067::1757410641::1::::<><><>0<>0<>b386305cd4d5543e3936f6705097231c<>res://.godot/imported/Slates [32x32px orthogonal tileset by Ivan Voirol].png-1ec0746d06c3a5c9acb2b2ab6b3a41c1.ctex::
 ::res://scenes/::1757410619
 ::res://scripts/::1757410624

@@ -4023,7 +4023,7 @@ terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_h2yge")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(35.2031, 42.7813)
+size = Vector2(38.7233, 45.4551)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1bvp3"]
 atlas = ExtResource("3_h2yge")
@@ -4178,11 +4178,12 @@ scale = Vector2(0.675142, 0.721428)
 script = ExtResource("2_0xm2m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-2.22176, 1.38611)
+position = Vector2(0.370255, 0)
 scale = Vector2(1.05188, 1.03682)
 shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(1.48117, 0)
 scale = Vector2(2.63826, 2.6471)
 sprite_frames = SubResource("SpriteFrames_074og")
 animation = &"walk_left"
