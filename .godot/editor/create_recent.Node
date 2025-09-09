@@ -1,0 +1,14 @@
+TileMapLayer
+Camera2D
+AnimatedSprite2D
+Sprite2D
+CollisionShape2D
+CharacterBody2D
+TileMap
+ColorRect
+Area2D
+Node2D
+Line2D
+Label
+VBoxContainer
+Control
