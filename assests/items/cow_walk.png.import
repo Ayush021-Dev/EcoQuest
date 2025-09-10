@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnlmqvhe0vs4t"
-path="res://.godot/imported/heart_shaded.png-316bc4df7da270569251c17ed134942e.ctex"
+uid="uid://d14rgrq5bni88"
+path="res://.godot/imported/cow_walk.png-feaeec80cbf1d4f47362ad780ea1bad2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/items/heart_shaded.png"
-dest_files=["res://.godot/imported/heart_shaded.png-316bc4df7da270569251c17ed134942e.ctex"]
+source_file="res://assests/items/cow_walk.png"
+dest_files=["res://.godot/imported/cow_walk.png-feaeec80cbf1d4f47362ad780ea1bad2.ctex"]
 
 [params]
 

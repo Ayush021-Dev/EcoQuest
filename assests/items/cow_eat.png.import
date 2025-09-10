@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6njq7xmikaga"
-path="res://.godot/imported/guns.png-e10bb076b4a533383049873537a6482f.ctex"
+uid="uid://ddymlmuxjq22c"
+path="res://.godot/imported/cow_eat.png-1cefd033fa5622a95621f64fa005e2d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/items/guns.png"
-dest_files=["res://.godot/imported/guns.png-e10bb076b4a533383049873537a6482f.ctex"]
+source_file="res://assests/items/cow_eat.png"
+dest_files=["res://.godot/imported/cow_eat.png-1cefd033fa5622a95621f64fa005e2d3.ctex"]
 
 [params]
 
