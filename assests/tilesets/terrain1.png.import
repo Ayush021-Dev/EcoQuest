@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byr5apb5b67d0"
-path="res://.godot/imported/Slates - palettes.png-5d6c8cc91a71e0814e78d35ae25f289a.ctex"
+uid="uid://b212ppk2jv5l"
+path="res://.godot/imported/terrain1.png-bf6234efaab3cbf188202a524502e077.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/Slates - palettes.png"
-dest_files=["res://.godot/imported/Slates - palettes.png-5d6c8cc91a71e0814e78d35ae25f289a.ctex"]
+source_file="res://assests/tilesets/terrain1.png"
+dest_files=["res://.godot/imported/terrain1.png-bf6234efaab3cbf188202a524502e077.ctex"]
 
 [params]
 

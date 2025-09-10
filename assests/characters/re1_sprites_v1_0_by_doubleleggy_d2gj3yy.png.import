@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tsj1q0etbkai"
-path="res://.godot/imported/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png-33d7d614450ca8260f7efa947c7624a4.ctex"
+uid="uid://d1neul7smqglc"
+path="res://.godot/imported/re1_sprites_v1_0_by_doubleleggy_d2gj3yy.png-f745ba5d74880b9ed11a7f729f6f8d95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png"
-dest_files=["res://.godot/imported/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png-33d7d614450ca8260f7efa947c7624a4.ctex"]
+source_file="res://assests/characters/re1_sprites_v1_0_by_doubleleggy_d2gj3yy.png"
+dest_files=["res://.godot/imported/re1_sprites_v1_0_by_doubleleggy_d2gj3yy.png-f745ba5d74880b9ed11a7f729f6f8d95.ctex"]
 
 [params]
 

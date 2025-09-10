@@ -14,7 +14,7 @@ func _physics_process(_delta):
 		direction.y -= 1
 	direction = direction.normalized()
 
-	var tilemap = get_parent().get_node("TileMapLayer")
+	var tilemap = get_parent().get_node("Roads")
 	var next_position = global_position + direction * speed * _delta
 
 	# Size of your collision rectangle (adjust if different)
