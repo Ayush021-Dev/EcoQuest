@@ -1,59 +1,80 @@
 extends CharacterBody2D
-@export var speed := 100
+
+@export var speed := 230
 var last_direction := "down"
+var half_extent = Vector2(16, 16)
+var center_offset = Vector2(0, 15)
 
-func _physics_process(_delta):
-	var direction = Vector2.ZERO
-	if Input.is_action_pressed("ui_right"):
-		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
-		direction.x -= 1
-	if Input.is_action_pressed("ui_down"):
-		direction.y += 1
-	if Input.is_action_pressed("ui_up"):
-		direction.y -= 1
-	direction = direction.normalized()
+@onready var walking_sound = $WalkingSound
 
+func can_move_to(dir: Vector2, delta: float) -> bool:
+	if dir == Vector2.ZERO:
+		return false
 	var tilemap = get_parent().get_node("Roads")
-	var next_position = global_position + direction * speed * _delta
-
-	# Size of your collision rectangle (adjust if different)
-	var half_extent = Vector2(16, 16)  # For a 32x32 box; change as needed
-
-	var offsets = [
-		Vector2(0, 0),                        # center
-		Vector2(-half_extent.x, -half_extent.y),  # top-left
-		Vector2(half_extent.x, -half_extent.y),   # top-right
-		Vector2(-half_extent.x, half_extent.y),   # bottom-left
-		Vector2(half_extent.x, half_extent.y)     # bottom-right
-	]
-
-	var can_move = true
-	for offset in offsets:
-		var check_pos = next_position + offset
+	var next_pos = global_position + dir * speed * delta
+	for offset in [
+		Vector2(0, 0),
+		Vector2(-half_extent.x, -half_extent.y),
+		Vector2(half_extent.x, -half_extent.y),
+		Vector2(-half_extent.x, half_extent.y),
+		Vector2(half_extent.x, half_extent.y)
+	]:
+		var check_pos = next_pos + offset + center_offset
 		var local_pos = tilemap.to_local(check_pos)
 		var cell = tilemap.local_to_map(local_pos)
 		var cell_data = tilemap.get_cell_tile_data(cell)
 		if not (cell_data and cell_data.get_terrain() == 0):
-			can_move = false
-			break
+			return false
+	return true
 
-	if direction != Vector2.ZERO and can_move:
-		velocity = direction * speed
+func _physics_process(delta):
+	var input_dir = Vector2.ZERO
+	if Input.is_action_pressed("ui_right"):
+		input_dir.x += 1
+	if Input.is_action_pressed("ui_left"):
+		input_dir.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		input_dir.y += 1
+	if Input.is_action_pressed("ui_up"):
+		input_dir.y -= 1
+
+	input_dir = input_dir.normalized()
+	var move_dir = Vector2.ZERO
+
+	if can_move_to(input_dir, delta):
+		move_dir = input_dir
+	else:
+		# Try axis separately (sliding)
+		if input_dir.x != 0 and can_move_to(Vector2(input_dir.x, 0), delta):
+			move_dir.x = input_dir.x
+		if input_dir.y != 0 and can_move_to(Vector2(0, input_dir.y), delta):
+			move_dir.y = input_dir.y
+
+	if move_dir != Vector2.ZERO:
+		velocity = move_dir * speed
 		move_and_slide()
-		# Play walk animation based on direction
-		if direction.x > 0:
+
+		# Play walking sound if not playing
+		if not walking_sound.playing:
+			walking_sound.play()
+
+		# Animations
+		if move_dir.x > 0:
 			$AnimatedSprite2D.play("walk_right")
 			last_direction = "right"
-		elif direction.x < 0:
+		elif move_dir.x < 0:
 			$AnimatedSprite2D.play("walk_left")
 			last_direction = "left"
-		elif direction.y > 0:
+		elif move_dir.y > 0:
 			$AnimatedSprite2D.play("walk_down")
 			last_direction = "down"
-		elif direction.y < 0:
+		elif move_dir.y < 0:
 			$AnimatedSprite2D.play("walk_up")
 			last_direction = "up"
 	else:
 		velocity = Vector2.ZERO
 		$AnimatedSprite2D.play("idle_" + last_direction)
+
+		# Stop walking sound when idle
+		if walking_sound.playing:
+			walking_sound.stop()
