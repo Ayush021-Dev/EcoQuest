@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var animated_sprite = $cow
+@onready var animated_sprite = $sheep
 @onready var timer = $Timer
 
 # Cow behavior states
@@ -17,10 +17,10 @@ var current_direction = Direction.DOWN
 
 # Manual waypoints - ADD YOUR POINTS HERE
 var waypoints = [
-	Vector2(950.0, 677.0),   # Point 1 - grass area
-	Vector2(1177.0,705.0 ),   # Point 2 - grass area  
-	Vector2(628.0, 540.0),   # Point 3 - grass area
-	Vector2(282.0, 524.0),   # Point 4 - grass area
+	Vector2(-492.0, 436.0),   # Point 1 - grass area
+	Vector2(-492.0,671.0 ),   # Point 2 - grass area  
+	Vector2(-77.0, 1027.0),   # Point 3 - grass area
+	Vector2(-205.0, 1311.0),   # Point 4 - grass area
 	#Vector2(750, 350),   # Point 5 - grass area
 	#Vector2(450, 500),   # Point 6 - grass area
 	# Add more waypoints as needed
