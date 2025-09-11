@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://jss3joppgef5"
+path="res://.godot/imported/lucasarts-scumm-outline.fnt-0e86a51fcc7f4ed708b14e7ced1ecf4c.fontdata"
+
+[deps]
+
+source_file="res://assets/fonts/lucasarts-scumm-outline.fnt"
+dest_files=["res://.godot/imported/lucasarts-scumm-outline.fnt-0e86a51fcc7f4ed708b14e7ced1ecf4c.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

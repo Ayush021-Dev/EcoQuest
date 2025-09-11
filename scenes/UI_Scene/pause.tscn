@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxusuliceq7bn"]
+
+[ext_resource type="Script" uid="uid://cxcpqcy37emil" path="res://scripts/Ui_scripts/pause_button.gd" id="1_1bjho"]
+[ext_resource type="Texture2D" uid="uid://cs4b1ocgjip02" path="res://assets/items/tile_0017.png" id="1_d21mr"]
+[ext_resource type="Texture2D" uid="uid://dfash4mmmjbmo" path="res://assets/ui/Sprite_png/home button.png" id="2_q0pkf"]
+[ext_resource type="Texture2D" uid="uid://1ypoe8wegx7l" path="res://assets/ui/Sprite_png/menu button.png" id="2_yijan"]
+[ext_resource type="Texture2D" uid="uid://pai7ijfk1624" path="res://assets/ui/Sprite_png/play button.png" id="3_1bjho"]
+[ext_resource type="FontFile" uid="uid://b7rxowm6cft1e" path="res://assets/fonts/lucasarts-scumm-outline.ttf" id="4_yijan"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+script = ExtResource("1_1bjho")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseButton" type="TextureButton" parent="Control"]
+layout_mode = 1
+offset_right = 59.0
+offset_bottom = 61.0
+texture_normal = ExtResource("2_yijan")
+stretch_mode = 0
+
+[node name="PauseCanvas" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 288.0
+offset_top = 140.0
+offset_right = 791.0
+offset_bottom = 477.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_d21mr")
+
+[node name="MainMenuButton" type="TextureButton" parent="Control/PauseCanvas"]
+layout_mode = 2
+offset_left = 102.0
+offset_top = 186.0
+offset_right = 207.0
+offset_bottom = 262.0
+texture_normal = ExtResource("2_q0pkf")
+stretch_mode = 0
+
+[node name="ResumeButton" type="TextureButton" parent="Control/PauseCanvas"]
+layout_mode = 2
+offset_left = 298.0
+offset_top = 183.0
+offset_right = 401.0
+offset_bottom = 262.0
+texture_normal = ExtResource("3_1bjho")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Control/PauseCanvas"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 79.0
+offset_right = 383.0
+offset_bottom = 149.0
+theme_override_fonts/font = ExtResource("4_yijan")
+theme_override_font_sizes/font_size = 100
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
