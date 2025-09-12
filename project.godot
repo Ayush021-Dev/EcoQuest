@@ -15,6 +15,18 @@ run/main_scene="uid://wa6ticmc1kvn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AvatarManager="*res://AvatarManager.gd"
+
+[display]
+
+mouse_cursor/custom_image="uid://w7l500mlcg7j"
+
+[global_group]
+
+Player=""
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

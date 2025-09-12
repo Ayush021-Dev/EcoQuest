@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cdqmupaivnhvt" path="res://assets/ui/BG.png" id="1_tahfu"]
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="2_mli57"]
-[ext_resource type="Texture2D" uid="uid://eeu2odwtlawx" path="res://assets/ui/Sprite_png/skin select button.png" id="3_616yh"]
-[ext_resource type="Script" uid="uid://b31sdvj84sjhh" path="res://scripts/Ui_scripts/avatar.gd" id="4_nufh0"]
+[ext_resource type="Texture2D" uid="uid://ck0nnjjgcgprx" path="res://assets/ui/Sprite_png/info button.png" id="3_tahfu"]
+[ext_resource type="Script" uid="uid://b31sdvj84sjhh" path="res://scripts/Ui_scripts/About.gd" id="4_nufh0"]
 [ext_resource type="Texture2D" uid="uid://bjv8xwoitvrqp" path="res://assets/ui/Sprite_png/exit button.png" id="5_kefff"]
 [ext_resource type="Script" uid="uid://dy62ud0wtjcr" path="res://scripts/Ui_scripts/exit.gd" id="6_iuymg"]
 [ext_resource type="Texture2D" uid="uid://pai7ijfk1624" path="res://assets/ui/Sprite_png/play button.png" id="7_sd2jr"]
@@ -147,13 +147,13 @@ libraries = {
 }
 autoplay = "flaot"
 
-[node name="Avatar" type="TextureButton" parent="."]
+[node name="About" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 720.0
 offset_top = 457.0
 offset_right = 846.0
 offset_bottom = 562.0
-texture_normal = ExtResource("3_616yh")
+texture_normal = ExtResource("3_tahfu")
 stretch_mode = 0
 script = ExtResource("4_nufh0")
 
@@ -177,18 +177,19 @@ texture_normal = ExtResource("7_sd2jr")
 stretch_mode = 0
 script = ExtResource("8_e11ec")
 
-[node name="ProgressBar" parent="." instance=ExtResource("9_tahfu")]
-visible = false
-layout_mode = 0
-offset_left = 158.0
-offset_top = 473.0
-offset_right = 1044.0
-offset_bottom = 561.0
-
 [node name="StartBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_tahfu")
 volume_db = 1.224
 autoplay = true
+
+[node name="ProgressBar" parent="." instance=ExtResource("9_tahfu")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+offset_left = 158.0
+offset_top = 469.0
+offset_right = 1044.0
+offset_bottom = 557.0
 
 [node name="HoverSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_w4ide")
@@ -196,9 +197,9 @@ stream = ExtResource("11_w4ide")
 [node name="ClickSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_baodq")
 
-[connection signal="mouse_entered" from="Avatar" to="Avatar" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Avatar" to="Avatar" method="_on_mouse_exited"]
-[connection signal="pressed" from="Avatar" to="Avatar" method="_on_pressed"]
+[connection signal="mouse_entered" from="About" to="About" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="About" to="About" method="_on_mouse_exited"]
+[connection signal="pressed" from="About" to="About" method="_on_pressed"]
 [connection signal="mouse_entered" from="Exit" to="Exit" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Exit" to="Exit" method="_on_mouse_exited"]
 [connection signal="pressed" from="Exit" to="Exit" method="_on_pressed"]
