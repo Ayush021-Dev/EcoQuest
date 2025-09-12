@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://io4vnmodj6ir"
-path="res://.godot/imported/dne (all).svg-d5269139a28e5abd22f3f17b22ddf1b4.ctex"
+path="res://.godot/imported/dne (all).svg-dc91a45009d5e699597d0681047f754a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/city_items/dne (all).svg"
-dest_files=["res://.godot/imported/dne (all).svg-d5269139a28e5abd22f3f17b22ddf1b4.ctex"]
+source_file="res://assets/city_items/dne (all).svg"
+dest_files=["res://.godot/imported/dne (all).svg-dc91a45009d5e699597d0681047f754a.ctex"]
 
 [params]
 

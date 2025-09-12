@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bi6oau8h8vpwn"
-path="res://.godot/imported/power_plant.png-af00af0870ea7ed3c99afaf5756b9bf1.ctex"
+path="res://.godot/imported/power_plant.png-2f048345dc3bb6f39df86d926ca34a15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assests/city_items/power_plant.png"
-dest_files=["res://.godot/imported/power_plant.png-af00af0870ea7ed3c99afaf5756b9bf1.ctex"]
+source_file="res://assets/city_items/power_plant.png"
+dest_files=["res://.godot/imported/power_plant.png-2f048345dc3bb6f39df86d926ca34a15.ctex"]
 
 [params]
 
