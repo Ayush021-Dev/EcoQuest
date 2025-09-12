@@ -23,8 +23,9 @@ func can_move_to(dir: Vector2, delta: float) -> bool:
 		var local_pos = tilemap.to_local(check_pos)
 		var cell = tilemap.local_to_map(local_pos)
 		var cell_data = tilemap.get_cell_tile_data(cell)
-		if not (cell_data and cell_data.get_terrain() == 0):
+		if not (cell_data and (cell_data.get_terrain()== 0 or cell_data.get_terrain()== 1)):
 			return false
+
 	return true
 
 func _physics_process(delta):
