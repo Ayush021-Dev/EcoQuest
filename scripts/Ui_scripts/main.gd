@@ -12,7 +12,7 @@ func _ready():
 	var players = get_tree().get_nodes_in_group("Player")  
 	if players.size() > 0:
 		player = players[0]
-		print("Player node found: ", player.name)
+		
 	else:
 		push_warning("Player node not found in group 'player'")
 
@@ -21,11 +21,11 @@ func _process(_delta):
 		var players = get_tree().get_nodes_in_group("player")
 		if players.size() > 0:
 			player = players[0]
-			print("Player node found late: ", player.name)
+			
 		else:
 			return
 
-	print("Player position: ", player.global_position)
+	
 
 	if has_triggered:
 		return

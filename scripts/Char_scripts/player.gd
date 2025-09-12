@@ -7,7 +7,7 @@ var center_offset = Vector2(0, 15)
 @onready var walking_sound = $WalkingSound
 @onready var animated_sprite = $AnimatedSprite2D
 @export var roads_node_name := "Roads"
-
+var coins: int = 0
 func _ready():
 	load_current_avatar()
 	if AvatarManager.has_signal("avatar_changed"):
@@ -19,7 +19,7 @@ func _on_avatar_changed(_new_index):
 func load_current_avatar():
 	var current_avatar = AvatarManager.get_current_avatar()
 	if current_avatar:
-		print("Loading avatar in player: ", current_avatar["name"], " path: ", current_avatar["sprite_frames_path"])
+		
 		var sprite_frames = load(current_avatar["sprite_frames_path"])
 		if sprite_frames == null:
 			push_error("Failed to load sprite_frames at path: " + str(current_avatar["sprite_frames_path"]))
@@ -28,7 +28,7 @@ func load_current_avatar():
 		animated_sprite.play("idle_down")
 
 func change_avatar_display():
-	print("change_avatar_display() called on ", self.name)
+	
 	load_current_avatar()
 
 func can_move_to(dir: Vector2, delta: float) -> bool:
