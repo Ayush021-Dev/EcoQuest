@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://ce7pirr3uftn0"]
+
+[ext_resource type="FontFile" uid="uid://b7rxowm6cft1e" path="res://assets/fonts/lucasarts-scumm-outline.ttf" id="1_jorqa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn317"]
+bg_color = Color(0.254818, 0.22622, 0.0023386, 1)
+
+[node name="ProgressBar" type="ProgressBar"]
+offset_left = 147.0
+offset_top = 484.0
+offset_right = 1033.0
+offset_bottom = 572.0
+theme_override_constants/outline_size = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_tn317")
+rounded = true
+show_percentage = false
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 310.0
+offset_top = -42.0
+offset_right = 555.0
+offset_bottom = -6.0
+theme_override_fonts/font = ExtResource("1_jorqa")
+theme_override_font_sizes/font_size = 50
+text = "Loading....."
+horizontal_alignment = 1
+vertical_alignment = 1
