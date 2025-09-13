@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://4up73yx6xc65"]
+[gd_scene load_steps=12 format=3 uid="uid://4up73yx6xc65"]
 
 [ext_resource type="Texture2D" uid="uid://gah64h1ju60v" path="res://assets/items/chest_mimic.png" id="1_cjixx"]
+[ext_resource type="Script" uid="uid://2emovgok2vit" path="res://scripts/chest.gd" id="1_rkgax"]
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="2_s2tek"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s2tek"]
@@ -59,7 +60,11 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_cjixx"]
 radius = 16.0312
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s2tek"]
+size = Vector2(21, 6)
+
 [node name="Chest" type="Node2D"]
+script = ExtResource("1_rkgax")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_matvi")
@@ -80,3 +85,10 @@ offset_right = 72.0
 offset_bottom = -1.0
 theme_override_fonts/font = ExtResource("2_s2tek")
 text = "Press I to open"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_s2tek")
