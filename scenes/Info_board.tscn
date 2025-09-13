@@ -1,0 +1,105 @@
+[gd_scene load_steps=11 format=3 uid="uid://o16ibklgbwm0"]
+
+[ext_resource type="Texture2D" uid="uid://bd6xfldxd081f" path="res://assets/items/sheet.png" id="1_ooonm"]
+[ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="2_ntv4s"]
+[ext_resource type="Texture2D" uid="uid://bodo3ximou3l" path="res://assets/ui/Sprite_png/close button.png" id="3_ooonm"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="4_ntv4s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_127g8"]
+atlas = ExtResource("1_ooonm")
+region = Rect2(68, 102, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6as0f"]
+atlas = ExtResource("1_ooonm")
+region = Rect2(34, 102, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1jcck"]
+atlas = ExtResource("1_ooonm")
+region = Rect2(0, 0, 34, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3ply"]
+atlas = ExtResource("1_ooonm")
+region = Rect2(0, 136, 34, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0euye"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_127g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6as0f")
+}],
+"loop": true,
+"name": &"found",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1jcck")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3ply")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hnj0v"]
+radius = 85.0059
+
+[node name="InfoBoard" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_0euye")
+animation = &"opened"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hnj0v")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -77.0
+offset_top = -65.0
+offset_right = 100.0
+offset_bottom = -44.375
+theme_override_fonts/font = ExtResource("2_ntv4s")
+theme_override_font_sizes/font_size = 30
+text = "Press I to open"
+
+[node name="QuotePopup" type="Panel" parent="."]
+z_index = 20
+offset_left = -256.0
+offset_top = -123.0
+offset_right = 211.0
+offset_bottom = 247.0
+
+[node name="QuoteLabel" type="Label" parent="QuotePopup"]
+offset_left = 46.0
+offset_top = 71.0
+offset_right = 405.0
+offset_bottom = 317.0
+theme_override_fonts/font = ExtResource("2_ntv4s")
+theme_override_font_sizes/font_size = 50
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="QuotePopup"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 11.0
+offset_right = 454.0
+offset_bottom = 61.0
+theme_override_icons/icon = ExtResource("3_ooonm")
+action_mode = 0
+text = "Close"
+
+[node name="CloseClickSound" type="AudioStreamPlayer2D" parent="QuotePopup/CloseButton"]
+stream = ExtResource("4_ntv4s")
