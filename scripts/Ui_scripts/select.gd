@@ -8,10 +8,17 @@ var current_display_index = 0  # Which avatar we're currently viewing
 @onready var avatar_name_label = $PauseCanvas/AvatarSelectionPanel/AvatarNameLabel
 @onready var status_label = $PauseCanvas/AvatarSelectionPanel/Status
 @onready var select_button = $PauseCanvas/AvatarSelectionPanel/SelectButton
-@onready var coin_display = $PauseCanvas/AvatarSelectionPanel/CoinDisplay
+#@onready var coin_display = $PauseCanvas/AvatarSelectionPanel/CoinDisplay
+
+@onready var select_click_sound = $PauseCanvas/AvatarSelectionPanel/SelectButton/ClickSound
+@onready var select_unlock_sound = $PauseCanvas/AvatarSelectionPanel/SelectButton/UnlockSound
 
 func _ready():
 	# Connect existing buttons
+	if select_click_sound:
+		select_click_sound.process_mode = Node.PROCESS_MODE_ALWAYS
+	if select_unlock_sound:
+		select_unlock_sound.process_mode = Node.PROCESS_MODE_ALWAYS
 	if not left_button.pressed.is_connected(_on_left_button_pressed):
 		left_button.pressed.connect(_on_left_button_pressed)
 	if not right_button.pressed.is_connected(_on_right_button_pressed):
@@ -27,7 +34,7 @@ func _ready():
 	
 	current_display_index = AvatarManager.current_avatar_index
 	update_avatar_display()
-	update_coin_display()
+	#update_coin_display()
 
 func update_avatar_display():
 	var avatar_data = AvatarManager.get_avatar(current_display_index)
@@ -76,10 +83,10 @@ func update_avatar_display():
 		# Update navigation buttons
 		left_button.disabled = (current_display_index <= 0)
 		right_button.disabled = (current_display_index >= AvatarManager.get_avatar_count() - 1)
-
-func update_coin_display():
-	if coin_display:
-		coin_display.text = "Coins: " + str(AvatarManager.get_coins())
+#
+#func update_coin_display():
+	#if coin_display:
+		#coin_display.text = "Coins: " + str(AvatarManager.get_coins())
 
 func _on_left_button_pressed():
 	if current_display_index > 0:
@@ -92,6 +99,7 @@ func _on_right_button_pressed():
 		update_avatar_display()
 
 func _on_select_button_pressed():
+	select_click_sound.play()
 	var avatar_data = AvatarManager.get_avatar(current_display_index)
 	if not avatar_data:
 		return
@@ -111,7 +119,9 @@ func _on_select_button_pressed():
 			if AvatarManager.buy_avatar(current_display_index):
 				#show_message("Purchased: " + avatar_data["name"], Color.GREEN)
 				update_avatar_display()  # Refresh to show unlocked state
-				update_coin_display()    # Update coin display
+				select_unlock_sound.play()
+				
+				#update_coin_display()    # Update coin display
 			else:
 				show_message("Purchase failed", Color.RED)
 		else:
@@ -140,7 +150,7 @@ func show_message(text: String, color: Color = Color.WHITE):
 	print(text)  # Also print to console
 
 func _on_coins_changed(_new_amount: int):
-	update_coin_display()
+	#update_coin_display()
 	update_avatar_display()  # Refresh to update buy button states
 
 func _on_avatar_changed(_new_index: int):

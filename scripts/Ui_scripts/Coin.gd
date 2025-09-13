@@ -12,17 +12,15 @@ var original_position: Vector2
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var area := $Area2D
 @onready var collision_shape := $Area2D/CollisionShape2D
-@onready var value_label := $ValueLabel
+#@onready var value_label := $ValueLabel
 
 signal coin_collected(value: int)
 
 func _ready():
-	print("Coin _ready() called at position: ", global_position)
 	
-	# Store original position
 	original_position = global_position
 	
-	# Ensure coin is visible
+	
 	visible = true
 	modulate = Color.WHITE
 	scale = Vector2(1, 1)
@@ -35,7 +33,7 @@ func _ready():
 		area.input_event.connect(_on_area_input_event)
 		#area.mouse_entered.connect(_on_mouse_entered)
 		#area.mouse_exited.connect(_on_mouse_exited)
-		print("Area2D connected successfully")
+		
 	else:
 		print("ERROR: Area2D not found!")
 	
@@ -45,16 +43,16 @@ func _ready():
 	# Set up visual state
 	if animated_sprite:
 		animated_sprite.play("Spin")
-		print("AnimatedSprite2D playing 'Spin' animation")
+		
 	else:
 		print("ERROR: AnimatedSprite2D not found!")
 	
-	if value_label:
-		value_label.text = str(coin_value)
-		value_label.visible = false
-		print("ValueLabel set to: ", coin_value)
-	else:
-		print("WARNING: ValueLabel not found")
+	#if value_label:
+		#value_label.text = str(coin_value)
+		#value_label.visible = false
+		#print("ValueLabel set to: ", coin_value)
+	#else:
+		#print("WARNING: ValueLabel not found")
 	
 	# Start the float animation
 	start_float_animation()
@@ -116,13 +114,13 @@ func collect_coin():
 	is_collected = true
 	can_be_collected = false
 	
-	# Play collection sound
+	
 	play_collection_sound()
 	
-	# Add to global coins
+	
 	if AvatarManager and AvatarManager.has_method("add_coins"):
 		AvatarManager.add_coins(coin_value)
-		print("Added ", coin_value, " coins to AvatarManager")
+		
 	else:
 		print("WARNING: AvatarManager not found or doesn't have add_coins method")
 	
@@ -133,22 +131,20 @@ func collect_coin():
 	animate_collection()
 
 func play_collection_sound():
-	print("*Coin collection sound*")
-	# Add your audio player code here if you have one
 	$AudioStreamPlayer2D.play()
 
 func animate_collection():
-	# Stop all tweens first
+	
 	var existing_tweens = get_tree().get_nodes_in_group("tween")
 	for tween_node in existing_tweens:
 		if is_instance_valid(tween_node) and tween_node.get_parent() == self:
 			tween_node.kill()
 	
-	# Disable area monitoring
+	
 	if area:
 		area.set_deferred("monitoring", false)
 	
-	# Collection animation - scale up and fade out
+	
 	var tween = create_tween()
 	tween.parallel().tween_property(self, "scale", Vector2(2.0, 2.0), 0.2)
 	tween.parallel().tween_property(self, "modulate:a", 0.0, 0.3)
@@ -159,6 +155,6 @@ func animate_collection():
 
 func set_coin_value(value: int):
 	coin_value = value
-	if value_label:
-		value_label.text = str(coin_value)
+	#if value_label:
+		#value_label.text = str(coin_value)
 	print("Coin value set to: ", value)

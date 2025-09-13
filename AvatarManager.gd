@@ -11,13 +11,13 @@ var avatars = [
 	{"name": "Avatar 5", "sprite_frames_path": "res://avatars/avatar5.tres", "unlocked": false, "price": 200},
 	{"name": "Miss Earth", "sprite_frames_path": "res://avatars/missearth.tres", "unlocked": false, "price": 300}
 ]
-
+@onready var select_unlock_sound = $PauseCanvas/AvatarSelectionPanel/SelectButton/UnlockSound
 var current_avatar_index = 0
 var total_coins: int = 0  # Global coin storage
 
 func _ready():
 	# Initialize with some starting coins for testing
-	total_coins = 20
+	total_coins = 50
 
 # Coin management functions
 func get_coins() -> int:
@@ -50,6 +50,7 @@ func buy_avatar(index) -> bool:
 		var avatar = avatars[index]
 		if not avatar["unlocked"] and spend_coins(avatar["price"]):
 			unlock_avatar(index)
+			select_unlock_sound.play()
 			return true
 	return false
 

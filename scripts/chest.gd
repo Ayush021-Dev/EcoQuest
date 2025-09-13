@@ -73,9 +73,6 @@ func open_chest():
 		
 		# Spawn single coin
 		spawn_coin()
-		
-		print("Chest opened!")
-
 func spawn_coin():
 	# Generate random coin value
 	var coin_value = randi_range(min_coin_value, max_coin_value)
@@ -110,7 +107,6 @@ func spawn_coin():
 	if coin.has_signal("coin_collected"):
 		coin.coin_collected.connect(_on_coin_collected)
 	
-	print("Coin spawned at position: ", coin.global_position)
 
 func _on_coin_collected(value: int):
 	print("Coin worth ", value, " collected from this chest!")

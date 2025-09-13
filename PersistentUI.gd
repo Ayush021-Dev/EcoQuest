@@ -30,8 +30,10 @@ func create_coin_display():
 	coin_container.set_deferred("size", Vector2(140, 40))
 	
 	# Create background (optional)
-	var background = ColorRect.new()
-	background.color = Color(0, 0, 0, 0.5)
+	var background = TextureRect.new()
+	background.texture = load("res://assets/items/chessboard2.png")  # Adjust path as needed
+	background.expand = true
+	background.stretch_mode = TextureRect.STRETCH_TILE
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	coin_container.add_child(background)
 	
