@@ -96303,7 +96303,7 @@ position = Vector2(-197, 1641)
 position = Vector2(1433, 171)
 
 [node name="Player" parent="." instance=ExtResource("13_0h0fx")]
-position = Vector2(-835, -212)
+position = Vector2(3131, -123)
 
 [node name="InfoBoard3" parent="." instance=ExtResource("21_ol8pr")]
 position = Vector2(1685, 987)
@@ -96327,13 +96327,13 @@ tile_map_data = PackedByteArray("AADT/wcAAAAAAAQAAADT/wgAAAAAAAUAAADT/wkAAAAAAAY
 tile_set = SubResource("TileSet_5vw27")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(3764, 1563)
+position = Vector2(2922, -174)
 
 [node name="PauseMenu" parent="." instance=ExtResource("15_a4lkh")]
 
 [node name="ProgressBar" parent="." instance=ExtResource("17_ba6sx")]
 visible = false
-offset_left = 2955.0
-offset_top = 1567.0
-offset_right = 3841.0
-offset_bottom = 1655.0
+offset_left = 2747.0
+offset_top = 1680.0
+offset_right = 3626.0
+offset_bottom = 1791.0

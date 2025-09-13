@@ -46,7 +46,6 @@ extends Node2D
 var player_in_range: bool = false
 var player_ref = null
 var quote_visible := false  # Tracks if popup is visible
-
 @onready var area := $Area2D
 @onready var prompt_label := $Label  # your prompt label node
 @onready var quote_popup := $QuotePopup  # your popup panel node
@@ -86,24 +85,56 @@ func _on_body_exited(body):
 		hide_quote()
 
 func _process(_delta):
+	# Keep quote_popup centered on current viewport if visible
+	if quote_visible and quote_popup:
+		center_popup_on_viewport()
+
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		if quote_visible:
 			hide_quote()
 		else:
 			show_random_quote()
 
+func center_popup_on_viewport():
+	var camera = get_viewport().get_camera_2d()
+	if camera:
+		# Get the viewport size
+		var viewport_size = get_viewport().get_visible_rect().size
+		# Get camera's global position
+		var camera_pos = camera.global_position
+		# Calculate the top-left corner of the visible area
+		var viewport_top_left = camera_pos - viewport_size * 0.5
+		# Center the popup in the visible area
+		var popup_size = quote_popup.size
+		quote_popup.global_position = viewport_top_left + (viewport_size - popup_size) * 0.5
+	else:
+		# Fallback: center on screen if no camera found
+		var screen_size = get_viewport().get_visible_rect().size
+		var popup_size = quote_popup.size
+		quote_popup.position = (screen_size - popup_size) * 0.5
+
 func show_random_quote():
 	if quote_popup and quote_label:
 		var idx = randi() % quotes.size()
 		quote_label.text = quotes[idx]
+		
+		# Center the popup on viewport
+		center_popup_on_viewport()
+		
 		quote_popup.visible = true
 		quote_visible = true
-
+		
+		# Disable player movement while quote is visible
+		if player_ref and player_ref.has_method("set_movement_enabled"):
+			player_ref.set_movement_enabled(false)
 
 func hide_quote():
 	if quote_popup:
 		quote_popup.visible = false
 		quote_visible = false
+		# Enable player movement when quote hidden
+		if player_ref and player_ref.has_method("set_movement_enabled"):
+			player_ref.set_movement_enabled(true)
 		if animation_player:
 			animation_player.play("idle")
 

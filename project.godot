@@ -18,9 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 AvatarManager="*res://AvatarManager.gd"
+PersistentUI="*res://PersistentUI.gd"
 
 [display]
 
+window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://bun6yg2b7n6vf"
 
 [global_group]

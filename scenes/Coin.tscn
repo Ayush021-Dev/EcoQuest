@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://bmxqpejqv62kg"]
+
+[ext_resource type="Script" uid="uid://24olaum6nvis" path="res://scripts/Ui_scripts/Coin.gd" id="1_kyq3r"]
+[ext_resource type="Texture2D" uid="uid://ctrid7i5tljn8" path="res://assets/items/pixel_coins_asset/spin_coin_big_upscale_strip6.png" id="2_5twpi"]
+[ext_resource type="AudioStream" uid="uid://bca7lakb03sst" path="res://assets/sounds/coin.wav" id="3_5twpi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5bujc"]
+radius = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bedda"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(0, 0, 18, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2du1a"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(18, 0, 18, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2og0"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(36, 0, 18, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61u1m"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(54, 0, 18, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7om06"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(72, 0, 18, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4cfa"]
+atlas = ExtResource("2_5twpi")
+region = Rect2(90, 0, 18, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yhj0e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bedda")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2du1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2og0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61u1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7om06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4cfa")
+}],
+"loop": true,
+"name": &"Spin",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kyq3r"]
+radius = 24.0
+
+[node name="Coin" type="RigidBody2D"]
+mass = 0.1
+script = ExtResource("1_kyq3r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(14, 11)
+shape = SubResource("CircleShape2D_5bujc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(14, 10.5)
+scale = Vector2(2.44444, 2.05)
+sprite_frames = SubResource("SpriteFrames_yhj0e")
+animation = &"Spin"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(14, 11)
+shape = SubResource("CircleShape2D_kyq3r")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_5twpi")

@@ -1,5 +1,4 @@
 extends CharacterBody2D
-
 @export var speed := 230
 var last_direction := "down"
 var half_extent = Vector2(16, 16)
@@ -8,6 +7,9 @@ var center_offset = Vector2(0, 15)
 @onready var animated_sprite = $AnimatedSprite2D
 @export var roads_node_name := "Roads"
 var coins: int = 0
+
+var can_move := true  # New flag to control movement
+
 func _ready():
 	load_current_avatar()
 	if AvatarManager.has_signal("avatar_changed"):
@@ -19,7 +21,6 @@ func _on_avatar_changed(_new_index):
 func load_current_avatar():
 	var current_avatar = AvatarManager.get_current_avatar()
 	if current_avatar:
-		
 		var sprite_frames = load(current_avatar["sprite_frames_path"])
 		if sprite_frames == null:
 			push_error("Failed to load sprite_frames at path: " + str(current_avatar["sprite_frames_path"]))
@@ -28,8 +29,11 @@ func load_current_avatar():
 		animated_sprite.play("idle_down")
 
 func change_avatar_display():
-	
 	load_current_avatar()
+
+# New method to enable/disable movement
+func set_movement_enabled(enable: bool) -> void:
+	can_move = enable
 
 func can_move_to(dir: Vector2, delta: float) -> bool:
 	if dir == Vector2.ZERO:
@@ -55,6 +59,14 @@ func can_move_to(dir: Vector2, delta: float) -> bool:
 	return true
 
 func _physics_process(delta):
+	if not can_move:
+		# Stop moving: zero velocity and idle animation
+		velocity = Vector2.ZERO
+		animated_sprite.play("idle_" + last_direction)
+		if walking_sound.playing:
+			walking_sound.stop()
+		return  # Skip rest of movement processing
+
 	var input_dir = Vector2.ZERO
 	if Input.is_action_pressed("ui_right"):
 		input_dir.x += 1
@@ -64,6 +76,7 @@ func _physics_process(delta):
 		input_dir.y += 1
 	if Input.is_action_pressed("ui_up"):
 		input_dir.y -= 1
+
 	input_dir = input_dir.normalized()
 	var move_dir = Vector2.ZERO
 	if can_move_to(input_dir, delta):
@@ -73,6 +86,7 @@ func _physics_process(delta):
 			move_dir.x = input_dir.x
 		if input_dir.y != 0 and can_move_to(Vector2(0, input_dir.y), delta):
 			move_dir.y = input_dir.y
+
 	if move_dir != Vector2.ZERO:
 		velocity = move_dir * speed
 		move_and_slide()
