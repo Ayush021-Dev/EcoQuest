@@ -1,5 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://wa6ticmc1kvn"]
+[gd_scene load_steps=22 format=3 uid="uid://wa6ticmc1kvn"]
 
+[ext_resource type="Script" uid="uid://curxw8xp3ac8l" path="res://scripts/Ui_scripts/startscene.gd" id="1_mli57"]
 [ext_resource type="Texture2D" uid="uid://cdqmupaivnhvt" path="res://assets/ui/BG.png" id="1_tahfu"]
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="2_mli57"]
 [ext_resource type="Texture2D" uid="uid://ck0nnjjgcgprx" path="res://assets/ui/Sprite_png/info button.png" id="3_tahfu"]
@@ -9,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://pai7ijfk1624" path="res://assets/ui/Sprite_png/play button.png" id="7_sd2jr"]
 [ext_resource type="Script" uid="uid://ccbpcqcflanyi" path="res://scripts/Ui_scripts/play.gd" id="8_e11ec"]
 [ext_resource type="PackedScene" uid="uid://ce7pirr3uftn0" path="res://scenes/UI_Scene/progress_bar.tscn" id="9_tahfu"]
-[ext_resource type="AudioStream" uid="uid://cjealb8sgcgua" path="res://assets/sounds/fanfare.wav" id="10_tahfu"]
+[ext_resource type="AudioStream" uid="uid://dptwlr1fro867" path="res://assets/sounds/fanfareogg.ogg" id="10_mli57"]
 [ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="11_w4ide"]
 [ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="12_baodq"]
 
@@ -104,6 +105,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_mli57")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -178,8 +180,8 @@ stretch_mode = 0
 script = ExtResource("8_e11ec")
 
 [node name="StartBGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_tahfu")
-volume_db = 1.224
+stream = ExtResource("10_mli57")
+volume_db = 1.1
 autoplay = true
 
 [node name="ProgressBar" parent="." instance=ExtResource("9_tahfu")]

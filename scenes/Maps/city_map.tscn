@@ -1,6 +1,7 @@
-[gd_scene load_steps=54 format=4 uid="uid://dsjnpnylm176x"]
+[gd_scene load_steps=57 format=4 uid="uid://dsjnpnylm176x"]
 
 [ext_resource type="Texture2D" uid="uid://dqwiqrc5i6lib" path="res://assets/waterfall-autotiles-anim.png" id="1_mq4xc"]
+[ext_resource type="Script" uid="uid://duawbo883aa3j" path="res://scripts/Ui_scripts/city_map.gd" id="1_r8m21"]
 [ext_resource type="Texture2D" uid="uid://ct06mfg1r5le4" path="res://assets/city_items/tilemap_packed_better.png" id="2_x6c4j"]
 [ext_resource type="Texture2D" uid="uid://dkmci7ljqn1t5" path="res://assets/city_items/beach_sand_woa.png" id="3_dib7t"]
 [ext_resource type="Texture2D" uid="uid://bri5oky6xuvqf" path="res://assets/city_items/beach_sand_woa2.png" id="4_m0ahl"]
@@ -17,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://03nmr5a4pep7" path="res://assets/city_items/victorian-garden.png" id="11_r8m21"]
 [ext_resource type="Texture2D" uid="uid://cl7rokbljevoq" path="res://assets/city_items/sTiles.png" id="13_pwn20"]
 [ext_resource type="Texture2D" uid="uid://b0vjva6qkrbuo" path="res://assets/tilesets/ddpuooa-02f7b97a-1549-4d68-a107-1d69123feffe.png" id="16_usn2h"]
+[ext_resource type="AudioStream" uid="uid://b03yd8ml6vfa7" path="res://assets/sounds/metro_city.mp3" id="19_pwn20"]
+[ext_resource type="PackedScene" uid="uid://ce7pirr3uftn0" path="res://scenes/UI_Scene/progress_bar.tscn" id="20_pwn20"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wemco"]
 texture = ExtResource("1_mq4xc")
@@ -82324,6 +82327,7 @@ texture = ExtResource("2_x6c4j")
 sources/0 = SubResource("TileSetAtlasSource_w6l02")
 
 [node name="city_map" type="Node2D"]
+script = ExtResource("1_r8m21")
 
 [node name="City_water" type="TileMapLayer" parent="."]
 scale = Vector2(1.11915, 1.12965)
@@ -82439,3 +82443,16 @@ tile_map_data = PackedByteArray("AACj/1IAAAACABAAAACj/1MAAAACABEAAACj/1QAAAACABI
 tile_set = SubResource("TileSet_kxpsi")
 
 [node name="PauseMenu" parent="." instance=ExtResource("11_b3x0x")]
+
+[node name="BG" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_pwn20")
+
+[node name="ProgressBar" parent="." instance=ExtResource("20_pwn20")]
+visible = false
+offset_left = -1359.0
+offset_top = -941.0
+offset_right = -473.0
+offset_bottom = -853.0
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-1492, -1053)

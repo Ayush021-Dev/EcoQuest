@@ -23,7 +23,7 @@ func create_coin_display():
 	coin_container = Control.new()
 	coin_container.name = "CoinContainer"
 	coin_container.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
-	coin_container.position = Vector2(-150, 20)
+	coin_container.position = Vector2(-140, 03)
 	add_child(coin_container)
 	
 	# Use set_deferred to avoid the warning
@@ -45,7 +45,7 @@ func create_coin_display():
 	coin_label.text = "EcoCoins: 0"
 	coin_label.add_theme_font_size_override("font_size", 18)
 	coin_label.add_theme_color_override("font_color", Color.WHITE)
-	coin_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	coin_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	coin_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	coin_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	coin_container.add_child(coin_label)
