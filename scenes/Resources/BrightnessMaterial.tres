@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://wknm13o23y8s"]
+
+[ext_resource type="Shader" uid="uid://bp1del2vymwtq" path="res://scenes/Resources/BrightnessShader.gdshader" id="1_1gsvc"]
+
+[resource]
+shader = ExtResource("1_1gsvc")
+shader_parameter/brightness = 1.0
