@@ -1,6 +1,6 @@
 extends TileMap  # Attached to ReforestationController
 
-@onready var area = $reforestationGame/Area2D
+@onready var area = $Area2D
 @onready var interact_label = $InteractLabel
 @onready var tilemap_layer = $reforestationGame  # TileMapLayer node
 
