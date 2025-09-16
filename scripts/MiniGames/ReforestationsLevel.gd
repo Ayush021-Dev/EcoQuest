@@ -1,13 +1,11 @@
 extends Node2D
-
 @onready var audio_player = $LevelClick
 @onready var levels_container = $Levels
 @onready var hover_audio_player = $LevelHover 
 @onready var close_button = $CloseButton
-var loading_bar_scene = preload("res://scenes/UI_Scene/progress_bar.tscn")
-var loading_bar_instance: Node = null
-var progress_bar: ProgressBar = null
-var loading_label: Label = null
+@onready var progress_bar = $ProgressBar
+@onready var loading_label = $ProgressBar/Label
+
 var level_scenes = [
 	"res://scenes/Level1.tscn",
 	"res://scenes/Level2.tscn", 
@@ -36,23 +34,33 @@ func _play_hover_sound():
 func _on_level_pressed(level_index: int):
 	if level_index < level_scenes.size():
 		get_tree().change_scene_to_file(level_scenes[level_index])
+
 func _on_close_pressed():
-	# Instantiate ProgressBar scene
-	loading_bar_instance = loading_bar_scene.instantiate()
-	add_child(loading_bar_instance)
-	progress_bar = loading_bar_instance   # root node is ProgressBar
-	loading_label = loading_bar_instance.get_node("Label")
-	progress_bar.value = 0
-	loading_label.text = "Loading... 0%"
-	loading_bar_instance.visible = true
+	if progress_bar:
+		print("ProgressBar node found!")
+		progress_bar.visible = true
+		progress_bar.value = 0
+	else:
+		print("ProgressBar node NOT found!")
+	
+	if loading_label:
+		print("LoadingLabel node found!")
+		loading_label.visible = true
+		loading_label.text = "Loading... 0%"
+	else:
+		print("LoadingLabel node NOT found!")
+	
 	ResourceLoader.load_threaded_request("res://scenes/Maps/main.tscn")
 	_check_loading_progress()
-
 
 func _check_loading_progress() -> void:
 	var progress = []
 	var status = ResourceLoader.load_threaded_get_status("res://scenes/Maps/main.tscn", progress)
-	if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+	
+	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		print("Error: Invalid resource path")
+		return
+	elif status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 		var percent = progress[0] * 100
 		if progress_bar:
 			progress_bar.value = percent
@@ -68,10 +76,6 @@ func _check_loading_progress() -> void:
 		await get_tree().create_timer(0.5).timeout
 		var loaded_scene = ResourceLoader.load_threaded_get("res://scenes/Maps/main.tscn")
 		get_tree().change_scene_to_packed(loaded_scene)
-		if loading_bar_instance:
-			loading_bar_instance.queue_free()
 	elif status == ResourceLoader.THREAD_LOAD_FAILED:
 		if loading_label:
 			loading_label.text = "Loading failed!"
-		if loading_bar_instance:
-			loading_bar_instance.queue_free()

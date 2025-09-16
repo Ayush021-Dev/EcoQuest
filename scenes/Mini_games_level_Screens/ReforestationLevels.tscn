@@ -160,11 +160,9 @@ texture_hover = ExtResource("11_cbs06")
 stretch_mode = 5
 
 [node name="ProgressBar" parent="." instance=ExtResource("12_cbs06")]
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 121.0
-offset_top = 460.0
-offset_right = 1007.0
-offset_bottom = 548.0
+visible = false
+layout_direction = 0
+offset_left = 137.0
+offset_top = 475.0
+offset_right = 1023.0
+offset_bottom = 563.0
