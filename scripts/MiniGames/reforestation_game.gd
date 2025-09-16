@@ -38,4 +38,4 @@ func _set_brightness(value: float):
 
 func _input(event):
 	if can_interact and event.is_action_pressed("interact"):
-		get_tree().change_scene_to_file("res://path_to_minigame_scene.tscn")
+		get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")

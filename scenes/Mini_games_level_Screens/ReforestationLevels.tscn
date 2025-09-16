@@ -1,0 +1,142 @@
+[gd_scene load_steps=21 format=3 uid="uid://b83ogmv4se5kd"]
+
+[ext_resource type="Texture2D" uid="uid://7pr3gu2boh2f" path="res://assets/items/layers/parallax-forest-back-trees.png" id="1_mscoy"]
+[ext_resource type="Script" uid="uid://dk7e80nsbrs2g" path="res://scripts/MiniGames/ReforestationsLevel.gd" id="1_wgjd4"]
+[ext_resource type="Texture2D" uid="uid://c6qbfjxlyfmib" path="res://assets/items/layers/parallax-forest-lights.png" id="2_uyhd2"]
+[ext_resource type="Texture2D" uid="uid://d02jhxg7ellgp" path="res://assets/items/layers/parallax-forest-middle-trees.png" id="3_wgjd4"]
+[ext_resource type="Texture2D" uid="uid://jwwgyhy6rgo7" path="res://assets/items/layers/parallax-forest-front-trees.png" id="4_mpqif"]
+[ext_resource type="Texture2D" uid="uid://bgcgk3dlxxaei" path="res://assets/items/Numbers/Color_02.png" id="5_ublnh"]
+[ext_resource type="Texture2D" uid="uid://blf7sjddrvg1j" path="res://assets/items/Numbers/Color_01.png" id="6_lcawo"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="7_uyhd2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbs06"]
+atlas = ExtResource("5_ublnh")
+region = Rect2(57.8186, 57.4534, 142.876, 141.547)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnua5"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(58.8348, 60.1323, 143.465, 138.177)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0x8q"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(61.4755, 57.4618, 136.41, 141.725)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvmek"]
+atlas = ExtResource("5_ublnh")
+region = Rect2(545.032, 61.3959, 133.871, 133.871)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpb1f"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(544, 62, 136, 135)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0hej"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(546, 60, 132, 138)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mscoy"]
+atlas = ExtResource("5_ublnh")
+region = Rect2(382.364, 55.7273, 138.182, 146.364)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyhd2"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(382.233, 53.7378, 137.093, 142.417)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgjd4"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(383, 55.0001, 141, 142)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpqif"]
+atlas = ExtResource("5_ublnh")
+region = Rect2(221.496, 58.5471, 138.208, 139.628)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ublnh"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(222.75, 57.1238, 133.018, 137.468)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcawo"]
+atlas = ExtResource("6_lcawo")
+region = Rect2(221.38, 62.2649, 135.52, 133.1)
+
+[node name="ReforestationLevels" type="Node2D"]
+script = ExtResource("1_wgjd4")
+
+[node name="1" type="TextureRect" parent="."]
+offset_right = 1151.0
+offset_bottom = 650.0
+texture = ExtResource("1_mscoy")
+
+[node name="2" type="TextureRect" parent="."]
+offset_right = 1154.0
+offset_bottom = 654.0
+texture = ExtResource("2_uyhd2")
+
+[node name="3" type="TextureRect" parent="."]
+offset_right = 1150.0
+offset_bottom = 652.0
+texture = ExtResource("3_wgjd4")
+
+[node name="4" type="TextureRect" parent="."]
+offset_right = 1150.0
+offset_bottom = 646.0
+texture = ExtResource("4_mpqif")
+
+[node name="Levels" type="CanvasLayer" parent="."]
+
+[node name="Level1" type="TextureButton" parent="Levels"]
+anchors_preset = -1
+anchor_left = 0.089
+anchor_top = 0.361
+anchor_right = 0.212
+anchor_bottom = 0.55
+offset_left = -0.528
+offset_top = 0.0719757
+offset_right = -0.224014
+offset_bottom = 18.6
+texture_normal = SubResource("AtlasTexture_cbs06")
+texture_pressed = SubResource("AtlasTexture_fnua5")
+texture_hover = SubResource("AtlasTexture_f0x8q")
+
+[node name="Level4" type="TextureButton" parent="Levels"]
+anchors_preset = -1
+anchor_left = 0.769
+anchor_top = 0.366
+anchor_right = 0.89
+anchor_bottom = 0.573
+offset_left = 0.111938
+offset_top = -0.168015
+offset_right = -0.280029
+offset_bottom = -0.304016
+texture_normal = SubResource("AtlasTexture_xvmek")
+texture_pressed = SubResource("AtlasTexture_jpb1f")
+texture_hover = SubResource("AtlasTexture_g0hej")
+
+[node name="Level3" type="TextureButton" parent="Levels"]
+anchors_preset = -1
+anchor_left = 0.53
+anchor_top = 0.356
+anchor_right = 0.652
+anchor_bottom = 0.576
+offset_left = 0.439941
+offset_top = 0.311996
+offset_right = -0.104004
+offset_bottom = 3.75198
+texture_normal = SubResource("AtlasTexture_mscoy")
+texture_pressed = SubResource("AtlasTexture_uyhd2")
+texture_hover = SubResource("AtlasTexture_wgjd4")
+
+[node name="Level2" type="TextureButton" parent="Levels"]
+anchors_preset = -1
+anchor_left = 0.317
+anchor_top = 0.356
+anchor_right = 0.44
+anchor_bottom = 0.579
+offset_left = -4.18399
+offset_top = 0.311996
+offset_right = 0.119965
+offset_bottom = -1.19205
+texture_normal = SubResource("AtlasTexture_mpqif")
+texture_pressed = SubResource("AtlasTexture_ublnh")
+texture_hover = SubResource("AtlasTexture_lcawo")
+
+[node name="LevelClick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_uyhd2")
