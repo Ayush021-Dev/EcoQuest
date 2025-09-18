@@ -15,11 +15,15 @@ var avatars = [
 var current_avatar_index = 0
 var total_coins: int = 0
 
+# Audio players declarations
 var pause_click_sound: AudioStreamPlayer
 var resume_click_sound: AudioStreamPlayer
 var main_menu_click_sound: AudioStreamPlayer
 var select_click_sound: AudioStreamPlayer
 var select_unlock_sound: AudioStreamPlayer
+
+# Player position saving dictionary keyed by level/scene name
+var player_positions = {}
 
 func _ready():
 	# Setup audio players for UI sounds
@@ -28,19 +32,27 @@ func _ready():
 	main_menu_click_sound = AudioStreamPlayer.new()
 	select_click_sound = AudioStreamPlayer.new()
 	select_unlock_sound = AudioStreamPlayer.new()
-	
 	for audio_player in [pause_click_sound, resume_click_sound, main_menu_click_sound, select_click_sound, select_unlock_sound]:
 		add_child(audio_player)
 		audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 		audio_player.bus = "Master"
-	
-	# Load actual sound files - replace paths with your own
+	# Load actual sound files - replace paths as needed
 	pause_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	resume_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	main_menu_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	select_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	select_unlock_sound.stream = preload("res://assets/sounds/character_unlock.ogg")
 
+# Player position save/load
+func save_player_position(level_name: String, position: Vector2):
+	player_positions[level_name] = position
+
+func get_player_position(level_name: String) -> Vector2:
+	if level_name in player_positions:
+		return player_positions[level_name]
+	return Vector2.ZERO
+
+# Coin management funcs
 func get_coins() -> int:
 	return total_coins
 
@@ -55,6 +67,7 @@ func spend_coins(amount: int) -> bool:
 		return true
 	return false
 
+# Avatar management funcs
 func get_current_avatar():
 	return avatars[current_avatar_index]
 
@@ -86,7 +99,7 @@ func get_avatar(index):
 func get_avatar_count():
 	return avatars.size()
 
-# Sound playback functions:
+# Sound playback functions
 func play_pause_click():
 	if pause_click_sound.playing:
 		pause_click_sound.stop()

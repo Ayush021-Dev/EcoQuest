@@ -56,10 +56,10 @@ vertical_alignment = 1
 
 [node name="1" type="TextureButton" parent="Question"]
 layout_mode = 0
-offset_left = 33.0
-offset_top = 219.0
-offset_right = 114.0
-offset_bottom = 291.0
+offset_left = 34.0
+offset_top = 209.0
+offset_right = 115.0
+offset_bottom = 281.0
 texture_normal = ExtResource("2_d8jg4")
 stretch_mode = 4
 

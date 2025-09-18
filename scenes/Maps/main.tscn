@@ -101768,7 +101768,7 @@ text = "Press I to interact"
 position = Vector2(56, 237)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ReforestationController/Area2D"]
-position = Vector2(1, 102)
+position = Vector2(-46, 67)
 shape = SubResource("CircleShape2D_gs0m0")
 
 [node name="reforestationGame" type="TileMapLayer" parent="ReforestationController"]
@@ -101807,6 +101807,7 @@ text = "Press I to interact"
 position = Vector2(1308, 1428)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LakeController/Area2D"]
+position = Vector2(95, -37)
 shape = SubResource("CircleShape2D_3eu0s")
 
 [node name="Rocks" type="TileMapLayer" parent="."]
@@ -101847,7 +101848,7 @@ tile_map_data = PackedByteArray("AADT/wcAAAAAAAQAAADT/wgAAAAAAAUAAADT/wkAAAAAAAY
 tile_set = SubResource("TileSet_5vw27")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(2922, -174)
+position = Vector2(-91, -259)
 
 [node name="PauseMenu" parent="." instance=ExtResource("15_a4lkh")]
 process_mode = 3

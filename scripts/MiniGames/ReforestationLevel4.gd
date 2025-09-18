@@ -1,7 +1,6 @@
 extends Node2D
 @onready var click_sound = $ClickSound
 @onready var hover_sound = $HoverSound
-
 var questions = [
 	{
 		"q": "What is the biggest rainforest in the world?",
@@ -26,9 +25,7 @@ var questions = [
 		]
 	}
 ]
-
 var current = 0
-
 @onready var close_button = $CloseButton
 @onready var question_label = $Question
 var buttons = []
@@ -45,7 +42,7 @@ func _ready():
 	feedback_label = $Question.get_node("Feedback")
 	next_button = $Question.get_node("Next")
 
-	# Connect sounds and handlers only once for Next and Close buttons
+	# Connect Next and Close buttons signals only once
 	if not next_button.pressed.is_connected(_on_next_pressed):
 		next_button.pressed.connect(_on_next_pressed)
 	if not next_button.pressed.is_connected(_play_click_sound):
@@ -59,15 +56,23 @@ func _ready():
 	if not close_button.mouse_entered.is_connected(_play_hover_sound):
 		close_button.mouse_entered.connect(_play_hover_sound)
 
-	# For option buttons: connect handlers and sounds only once
-	for i in range(buttons.size()):
-		if not buttons[i].pressed.is_connected(_play_click_sound):
-			buttons[i].pressed.connect(_play_click_sound)
-		if not buttons[i].mouse_entered.is_connected(_play_hover_sound):
-			buttons[i].mouse_entered.connect(_play_hover_sound)
-		# Option pressed handler uses a lambda, so must always connect anew
-		buttons[i].pressed.connect(func():
-			_on_option_pressed(i)
+	# Connect option buttons with press, and add hover effect with inline lambdas for only hovered button
+	for button in buttons:
+		if not button.pressed.is_connected(_play_click_sound):
+			button.pressed.connect(_play_click_sound)
+		button.pressed.connect(func(btn=button):
+			# Find index of this button
+			var idx = buttons.find(btn)
+			_on_option_pressed(idx)
+		)
+		# Connect mouse_entered with inline lambda to darken only hovered button and play hover sound
+		button.mouse_entered.connect(func(btn=button):
+			btn.modulate = Color(0.6, 0.6, 0.6)
+			_play_hover_sound()
+		)
+		# Connect mouse_exited with inline lambda to reset only hovered button color
+		button.mouse_exited.connect(func(btn=button):
+			btn.modulate = Color(1, 1, 1)
 		)
 
 	load_question()
@@ -79,7 +84,7 @@ func load_question():
 		buttons[i].get_node("Label").text = q_data["opts"][i]
 		buttons[i].disabled = false
 		buttons[i].visible = true
-		buttons[i].modulate = Color(1, 1, 1)  # Normal color
+		buttons[i].modulate = Color(1, 1, 1)  # reset to normal
 	feedback_label.text = ""
 	feedback_label.visible = true
 	next_button.visible = false
