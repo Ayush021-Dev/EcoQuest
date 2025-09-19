@@ -1,4 +1,4 @@
-extends TileMap  # Attached to LakeController
+extends Node2D  # Attached to LakeController
 
 @onready var area = $Area2D
 @onready var interact_label = $InteractLabel
