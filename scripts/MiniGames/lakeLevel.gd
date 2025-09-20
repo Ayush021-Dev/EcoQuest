@@ -8,8 +8,8 @@ extends Node2D
 
 var level_scenes = [
 	"res://scenes/Mini_games_level_Screens/LakeLevel1.tscn",
-	"res://scenes/LakeLevel2.tscn", 
-	"res://scenes/LakeLevel3.tscn",
+	"res://scenes/Mini_games_level_Screens/LakeLevel2.tscn", 
+	"res://scenes/Mini_games_level_Screens/LakeLevel3.tscn",
 	"res://scenes/Mini_games_level_Screens/LakeLevel4.tscn"
 ]
 

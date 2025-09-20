@@ -2,28 +2,171 @@ extends Node2D
 @onready var click_sound = $ClickSound
 @onready var hover_sound = $HoverSound
 var questions = [
-	{
-		"q": "What is the biggest rainforest in the world?",
-		"opts": ["Amazon", "Congo", "Daintree", "Sundarbans"],
-		"correct": 0,
-		"feedback": [
-			"Correct! The Amazon is the largest.", 
-			"No, it's the Amazon.", 
-			"No, it's the Amazon.", 
-			"No, it's the Amazon."
-		]
-	},
-	{
-		"q": "What do trees absorb from the atmosphere?",
-		"opts": ["Oxygen", "CO2", "Nitrogen", "Helium"],
-		"correct": 1,
-		"feedback": [
-			"No, that's not right.", 
-			"Correct! Trees absorb carbon dioxide.",
-			"No, that's not right.",
-			"No, that's not right."
-		]
-	}
+  {
+	"q": "What is the main goal of reforestation?",
+	"opts": ["Restoring lost forests", "Building cities", "Expanding farmland", "Creating dams"],
+	"correct": 0,
+	"feedback": [
+	  "Correct! Reforestation restores lost forests.", 
+	  "No, that's urbanization.", 
+	  "No, that's deforestation.", 
+	  "No, that's unrelated to forests."
+	]
+  },
+  {
+	"q": "Which process involves planting trees in areas that previously had no forest cover?",
+	"opts": ["Reforestation", "Afforestation", "Deforestation", "Desertification"],
+	"correct": 1,
+	"feedback": [
+	  "Not quite. That's replanting lost forests.", 
+	  "Correct! Afforestation creates new forests.", 
+	  "No, that's removing trees.", 
+	  "No, that's land degradation."
+	]
+  },
+  {
+	"q": "Which gas do trees absorb most during photosynthesis, helping fight climate change?",
+	"opts": ["Oxygen", "Carbon dioxide", "Nitrogen", "Methane"],
+	"correct": 1,
+	"feedback": [
+	  "No, oxygen is released.", 
+	  "Correct! Trees absorb carbon dioxide.", 
+	  "No, nitrogen is absorbed from soil.", 
+	  "No, methane is not absorbed."
+	]
+  },
+  {
+	"q": "Which tree-planting initiative is one of the largest in India?",
+	"opts": ["Chipko Movement", "Green India Mission", "Save Soil", "Jal Shakti Abhiyan"],
+	"correct": 1,
+	"feedback": [
+	  "No, that's a protest movement.", 
+	  "Correct! The Green India Mission is a reforestation program.", 
+	  "No, that's about soil conservation.", 
+	  "No, that's focused on water."
+	]
+  },
+  {
+	"q": "Which country started the 'Great Green Wall' project to combat desertification?",
+	"opts": ["India", "China", "Brazil", "African nations"],
+	"correct": 3,
+	"feedback": [
+	  "No, not India.", 
+	  "No, not China.", 
+	  "No, not Brazil.", 
+	  "Correct! African nations started it."
+	]
+  },
+  {
+	"q": "What is the main difference between reforestation and afforestation?",
+	"opts": ["Same process", "Reforestation restores, afforestation creates", "One removes trees", "One cuts grass"],
+	"correct": 1,
+	"feedback": [
+	  "No, they are not the same.", 
+	  "Correct! Reforestation restores, afforestation creates.", 
+	  "No, that's deforestation.", 
+	  "No, irrelevant to forests."
+	]
+  },
+  {
+	"q": "Which Indian state holds the record for planting millions of trees in a single day?",
+	"opts": ["Kerala", "Madhya Pradesh", "Uttar Pradesh", "Rajasthan"],
+	"correct": 2,
+	"feedback": [
+	  "No, not Kerala.", 
+	  "Close, but not Madhya Pradesh.", 
+	  "Correct! Uttar Pradesh holds the record.", 
+	  "No, not Rajasthan."
+	]
+  },
+  {
+	"q": "Which of the following is a benefit of reforestation?",
+	"opts": ["Soil erosion control", "Higher pollution", "Less biodiversity", "More floods"],
+	"correct": 0,
+	"feedback": [
+	  "Correct! Reforestation prevents soil erosion.", 
+	  "No, it reduces pollution.", 
+	  "No, it increases biodiversity.", 
+	  "No, it reduces flood risk."
+	]
+  },
+  {
+	"q": "Which tree is often called the 'lungs of the planet'?",
+	"opts": ["Neem", "Banyan", "Rainforest trees", "Pine"],
+	"correct": 2,
+	"feedback": [
+	  "No, not Neem.", 
+	  "No, not Banyan.", 
+	  "Correct! Rainforests are called Earth's lungs.", 
+	  "No, not Pine."
+	]
+  },
+  {
+	"q": "What does deforestation directly lead to?",
+	"opts": ["Cleaner air", "Loss of biodiversity", "More rainfall", "Stronger soil"],
+	"correct": 1,
+	"feedback": [
+	  "No, it increases pollution.", 
+	  "Correct! It causes biodiversity loss.", 
+	  "No, rainfall decreases.", 
+	  "No, soil gets weaker."
+	]
+  },
+  {
+	"q": "Which global day promotes tree planting and forest awareness?",
+	"opts": ["World Water Day", "Earth Day", "World Forestry Day", "Ozone Day"],
+	"correct": 2,
+	"feedback": [
+	  "No, that’s about water.", 
+	  "No, Earth Day is broader.", 
+	  "Correct! World Forestry Day promotes trees.", 
+	  "No, that’s about ozone."
+	]
+  },
+  {
+	"q": "Which region is most affected by desertification where afforestation is critical?",
+	"opts": ["Amazon", "Sahara", "Alps", "Andes"],
+	"correct": 1,
+	"feedback": [
+	  "No, Amazon has rainforests.", 
+	  "Correct! Sahara region faces desertification.", 
+	  "No, Alps are mountain ranges.", 
+	  "No, Andes are mountains."
+	]
+  },
+  {
+	"q": "Which practice helps forests grow back naturally without human intervention?",
+	"opts": ["Afforestation", "Deforestation", "Natural regeneration", "Urbanization"],
+	"correct": 2,
+	"feedback": [
+	  "No, that's artificial planting.", 
+	  "No, that destroys forests.", 
+	  "Correct! Natural regeneration restores forests.", 
+	  "No, that removes green cover."
+	]
+  },
+  {
+	"q": "Which greenhouse gas is reduced the most by large-scale afforestation?",
+	"opts": ["Oxygen", "Carbon dioxide", "Sulfur dioxide", "Nitrous oxide"],
+	"correct": 1,
+	"feedback": [
+	  "No, oxygen is released, not reduced.", 
+	  "Correct! CO₂ is absorbed by trees.", 
+	  "No, sulfur dioxide is not the main target.", 
+	  "No, nitrous oxide reduction is indirect."
+	]
+  },
+  {
+	"q": "Which UN program promotes forest conservation and reforestation globally?",
+	"opts": ["UNESCO Heritage", "UNEP REDD+", "WHO Green", "UNICEF Trees"],
+	"correct": 1,
+	"feedback": [
+	  "No, that’s for heritage.", 
+	  "Correct! UNEP REDD+ promotes reforestation.", 
+	  "No, WHO focuses on health.", 
+	  "No, UNICEF focuses on children."
+	]
+  }
 ]
 var current = 0
 @onready var close_button = $CloseButton
@@ -60,20 +203,17 @@ func _ready():
 	for button in buttons:
 		if not button.pressed.is_connected(_play_click_sound):
 			button.pressed.connect(_play_click_sound)
-		button.pressed.connect(func(btn=button):
+		button.pressed.connect(func(_btn=button):
 			# Find index of this button
-			var idx = buttons.find(btn)
+			var idx = buttons.find(_btn)
 			_on_option_pressed(idx)
 		)
 		# Connect mouse_entered with inline lambda to darken only hovered button and play hover sound
-		button.mouse_entered.connect(func(btn=button):
-			btn.modulate = Color(0.6, 0.6, 0.6)
+		button.mouse_entered.connect(func(_btn=button):
+	
 			_play_hover_sound()
 		)
-		# Connect mouse_exited with inline lambda to reset only hovered button color
-		button.mouse_exited.connect(func(btn=button):
-			btn.modulate = Color(1, 1, 1)
-		)
+		
 
 	load_question()
 

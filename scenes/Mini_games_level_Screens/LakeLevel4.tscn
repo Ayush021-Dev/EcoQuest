@@ -1,0 +1,162 @@
+[gd_scene load_steps=12 format=3 uid="uid://chwacdbjnclc3"]
+
+[ext_resource type="Script" uid="uid://c23xg8prc4ywl" path="res://scripts/MiniGames/lakelevel4.gd" id="1_25d0w"]
+[ext_resource type="Texture2D" uid="uid://vlcw3gsjsuho" path="res://assets/ui/Ocean (1).png" id="2_ysyxj"]
+[ext_resource type="Texture2D" uid="uid://ds0iin0t0tcf" path="res://assets/items/Orange/scaled-at-50/b_No.png" id="3_qsadg"]
+[ext_resource type="Texture2D" uid="uid://cemn0bqsx2kgt" path="res://assets/items/Red/scaled-at-50/b_No.png" id="4_icsrx"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="5_vmuy2"]
+[ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="6_d6odh"]
+[ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="7_a1hs8"]
+[ext_resource type="Texture2D" uid="uid://bhyjwcc6qwhih" path="res://assets/items/Orange/scaled-at-50/b_Background.png" id="8_efgf2"]
+[ext_resource type="Texture2D" uid="uid://b8qbmqjmc7m1" path="res://assets/items/Red/scaled-at-50/b_Background.png" id="9_lgxd0"]
+[ext_resource type="Texture2D" uid="uid://b8x2fy1imvtyn" path="res://assets/items/Orange/scaled-at-50/b_Forward1.png" id="10_ahcqi"]
+[ext_resource type="Texture2D" uid="uid://cfctx7evwewdw" path="res://assets/items/Red/scaled-at-50/b_Forward1.png" id="11_1l6yr"]
+
+[node name="LakeLevel4" type="Node2D"]
+script = ExtResource("1_25d0w")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 1150.0
+offset_bottom = 667.0
+texture = ExtResource("2_ysyxj")
+expand_mode = 1
+
+[node name="CloseButton" type="TextureButton" parent="."]
+offset_left = 1064.0
+offset_top = 80.0
+offset_right = 1135.0
+offset_bottom = 148.0
+texture_normal = ExtResource("3_qsadg")
+texture_pressed = ExtResource("4_icsrx")
+texture_hover = ExtResource("4_icsrx")
+stretch_mode = 4
+
+[node name="ClickSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_vmuy2")
+
+[node name="HoverSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_d6odh")
+
+[node name="Question" type="Label" parent="."]
+offset_left = 74.0
+offset_top = 171.0
+offset_right = 985.0
+offset_bottom = 301.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 70
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="1" type="TextureButton" parent="Question"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.044
+anchor_bottom = 0.758
+offset_left = 28.0
+offset_top = 148.0
+offset_right = 97.916
+offset_bottom = 170.46
+texture_normal = ExtResource("8_efgf2")
+texture_pressed = ExtResource("9_lgxd0")
+texture_hover = ExtResource("9_lgxd0")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Question/1"]
+layout_mode = 0
+offset_left = -48.0
+offset_top = 123.0
+offset_right = 157.0
+offset_bottom = 175.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="2" type="TextureButton" parent="Question"]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 141.0
+offset_right = 436.0
+offset_bottom = 262.0
+texture_normal = ExtResource("8_efgf2")
+texture_pressed = ExtResource("9_lgxd0")
+texture_hover = ExtResource("9_lgxd0")
+
+[node name="Label" type="Label" parent="Question/2"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 127.0
+offset_right = 137.0
+offset_bottom = 178.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="3" type="TextureButton" parent="Question"]
+layout_mode = 0
+offset_left = 609.0
+offset_top = 144.0
+offset_right = 719.0
+offset_bottom = 265.0
+texture_normal = ExtResource("8_efgf2")
+texture_pressed = ExtResource("9_lgxd0")
+texture_hover = ExtResource("9_lgxd0")
+
+[node name="Label" type="Label" parent="Question/3"]
+layout_mode = 0
+offset_left = -18.0
+offset_top = 127.0
+offset_right = 144.0
+offset_bottom = 185.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="4" type="TextureButton" parent="Question"]
+layout_mode = 0
+offset_left = 878.0
+offset_top = 143.0
+offset_right = 988.0
+offset_bottom = 264.0
+texture_normal = ExtResource("8_efgf2")
+texture_pressed = ExtResource("9_lgxd0")
+texture_hover = ExtResource("9_lgxd0")
+
+[node name="Label" type="Label" parent="Question/4"]
+layout_mode = 0
+offset_left = -59.0
+offset_top = 128.0
+offset_right = 173.0
+offset_bottom = 192.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Next" type="TextureButton" parent="Question"]
+layout_mode = 0
+offset_left = 965.0
+offset_top = 367.0
+offset_right = 1074.0
+offset_bottom = 443.0
+texture_normal = ExtResource("10_ahcqi")
+texture_pressed = ExtResource("11_1l6yr")
+texture_hover = ExtResource("11_1l6yr")
+stretch_mode = 4
+
+[node name="Feedback" type="Label" parent="Question"]
+layout_mode = 0
+offset_left = -29.0
+offset_top = 344.0
+offset_right = 790.0
+offset_bottom = 458.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 60
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
