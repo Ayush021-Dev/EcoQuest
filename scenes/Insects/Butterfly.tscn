@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://c7e7s4l6f08q3"]
+
+[ext_resource type="Script" uid="uid://di5don4pk1m2l" path="res://scripts/Insects/Butterfly.gd" id="1_5srqt"]
+[ext_resource type="Texture2D" uid="uid://cewh04h2uyabd" path="res://assets/Insects/butterfly.png" id="1_8afkh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5srqt"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(210, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37bn4"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(240, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q55b"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(270, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_guup6"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(300, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m60t2"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(330, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scb4j"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(360, 25, 30, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brpq7"]
+atlas = ExtResource("1_8afkh")
+region = Rect2(390, 25, 30, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vx064"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5srqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37bn4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q55b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_guup6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m60t2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scb4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_brpq7")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pnul6"]
+radius = 20.025
+
+[node name="Butterfly" type="Area2D"]
+script = ExtResource("1_5srqt")
+
+[node name="Insect" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vx064")
+animation = &"left"
+frame_progress = 0.916457
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_pnul6")

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://y6iwhupr5alu"]
+
+[ext_resource type="Script" uid="uid://dk10silcjxo4y" path="res://scripts/Insects/Beetles.gd" id="1_rknoh"]
+[ext_resource type="Texture2D" uid="uid://dw48uoa0p6wj5" path="res://assets/Insects/bugs.png" id="2_ejo0y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xschy"]
+atlas = ExtResource("2_ejo0y")
+region = Rect2(0, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d45ku"]
+atlas = ExtResource("2_ejo0y")
+region = Rect2(16, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvuk8"]
+atlas = ExtResource("2_ejo0y")
+region = Rect2(32, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k6kqb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xschy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d45ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvuk8")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rknoh"]
+radius = 12.0
+
+[node name="Beetles" type="Area2D"]
+script = ExtResource("1_rknoh")
+
+[node name="Insect" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_k6kqb")
+animation = &"left"
+frame_progress = 0.549675
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rknoh")

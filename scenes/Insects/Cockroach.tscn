@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0ncvg3whrxbx"]
+
+[ext_resource type="Script" uid="uid://c8pf0608nchej" path="res://scripts/Insects/Cockroach.gd" id="1_66sx0"]
+[ext_resource type="Texture2D" uid="uid://dn37sadecrv51" path="res://assets/Insects/roach.png" id="2_t54wm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rhyf"]
+atlas = ExtResource("2_t54wm")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0opjj"]
+atlas = ExtResource("2_t54wm")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbojl"]
+atlas = ExtResource("2_t54wm")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjjf7"]
+atlas = ExtResource("2_t54wm")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uovph"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rhyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0opjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbojl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjjf7")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_idxsb"]
+radius = 24.0832
+
+[node name="Cockroach" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_66sx0")
+
+[node name="Insect" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_uovph")
+animation = &"left"
+frame_progress = 0.136207
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_idxsb")
