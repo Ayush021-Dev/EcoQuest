@@ -1,0 +1,93 @@
+[gd_scene load_steps=11 format=3 uid="uid://cecdkua66dj34"]
+
+[ext_resource type="Script" uid="uid://cx85pbvls4byt" path="res://scripts/Char_scripts/fisherman.gd" id="1_x4j76"]
+[ext_resource type="Texture2D" uid="uid://ds6jvd6c2gtvq" path="res://assets/characters/character(whitebeard).png" id="2_pl1lm"]
+[ext_resource type="Texture2D" uid="uid://d0ub8rakc7aqt" path="res://assets/characters/DialougeBOXES left.png" id="3_bnn80"]
+[ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="4_3k7u1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fkkbm"]
+size = Vector2(44.75, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4j76"]
+atlas = ExtResource("2_pl1lm")
+region = Rect2(0, 896, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pl1lm"]
+atlas = ExtResource("2_pl1lm")
+region = Rect2(64, 1216, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnn80"]
+atlas = ExtResource("2_pl1lm")
+region = Rect2(128, 1216, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bnn80"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4j76")
+}],
+"loop": true,
+"name": &"fisherman_idle",
+"speed": 1.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pl1lm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnn80")
+}],
+"loop": true,
+"name": &"fisherman_talk",
+"speed": 1.5
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vpr84"]
+size = Vector2(39, 72)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_x4j76")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11.625, 12)
+shape = SubResource("RectangleShape2D_fkkbm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(12, 3)
+scale = Vector2(1.55469, 1.50781)
+sprite_frames = SubResource("SpriteFrames_bnn80")
+animation = &"fisherman_idle"
+frame_progress = 0.164052
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_left = -319.0
+offset_top = -196.0
+offset_right = -12.0
+offset_bottom = -37.0
+texture = ExtResource("3_bnn80")
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 13.0
+offset_right = 292.0
+offset_bottom = 111.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(53, 13)
+shape = SubResource("RectangleShape2D_vpr84")
+
+[node name="TalkPrompt" type="Label" parent="."]
+offset_left = -59.0
+offset_top = -54.0
+offset_right = 74.0
+offset_bottom = -31.0
+theme_override_fonts/font = ExtResource("4_3k7u1")
+theme_override_font_sizes/font_size = 27
+text = "Press I to talk"

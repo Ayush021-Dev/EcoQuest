@@ -3,6 +3,7 @@ extends Node2D  # Attached to LakeController
 @onready var area = $Area2D
 @onready var interact_label = $InteractLabel
 @onready var tilemap_layer = $lakeGame  # TileMapLayer node, replace with your actual Lake TileMapLayer
+
 var can_interact = false
 var player = null
 
@@ -10,7 +11,13 @@ func _ready():
 	interact_label.hide()
 	area.body_entered.connect(_on_area_body_entered)
 	area.body_exited.connect(_on_area_body_exited)
-	player = get_tree().get_nodes_in_group("Player")[0]  # assuming player is in "Player" group
+	
+	# UPDATED: Better player finding with error handling
+	var players = get_tree().get_nodes_in_group("Player")
+	if players.size() > 0:
+		player = players[0]
+	else:
+		print("Warning: No player found in Player group")
 
 func _process(_delta):
 	if interact_label.visible and player:
@@ -37,4 +44,6 @@ func _set_brightness(value: float):
 
 func _input(event):
 	if can_interact and event.is_action_pressed("interact"):
+		# ADDED: Save player position before changing scene
+		AvatarManager.entering_level()
 		get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")

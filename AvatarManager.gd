@@ -21,6 +21,11 @@ var resume_click_sound: AudioStreamPlayer
 var main_menu_click_sound: AudioStreamPlayer
 var select_click_sound: AudioStreamPlayer
 var select_unlock_sound: AudioStreamPlayer
+var current_scene_name: String = ""
+
+# UPDATED: Main scene player position storage
+var main_scene_player_position: Vector2 = Vector2.ZERO
+var returning_from_level: bool = false
 
 # Player position saving dictionary keyed by level/scene name
 var player_positions = {}
@@ -32,10 +37,12 @@ func _ready():
 	main_menu_click_sound = AudioStreamPlayer.new()
 	select_click_sound = AudioStreamPlayer.new()
 	select_unlock_sound = AudioStreamPlayer.new()
+	
 	for audio_player in [pause_click_sound, resume_click_sound, main_menu_click_sound, select_click_sound, select_unlock_sound]:
 		add_child(audio_player)
 		audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 		audio_player.bus = "Master"
+	
 	# Load actual sound files - replace paths as needed
 	pause_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	resume_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
@@ -43,9 +50,61 @@ func _ready():
 	select_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	select_unlock_sound.stream = preload("res://assets/sounds/character_unlock.ogg")
 
-# Player position save/load
+# UPDATED: Save player position from main scene before going to levels
+func save_main_scene_player_position():
+	var players = get_tree().get_nodes_in_group("Player")
+	if players.size() > 0:
+		var player = players[0]
+		main_scene_player_position = player.global_position
+		print("Saved main scene player position: ", main_scene_player_position)
+		return true
+	else:
+		print("Warning: No player found to save position")
+		return false
+
+# ADDED: For compatibility with existing main.gd calls
+func auto_save_main_player_position():
+	save_main_scene_player_position()
+
+func prepare_scene_change():
+	save_main_scene_player_position()
+
+# UPDATED: Restore player position in main scene
+func restore_main_scene_player_position():
+	if main_scene_player_position == Vector2.ZERO:
+		print("No saved position to restore")
+		return false
+		
+	var players = get_tree().get_nodes_in_group("Player")
+	if players.size() > 0:
+		var player = players[0]
+		player.global_position = main_scene_player_position
+		print("Restored player to main scene position: ", main_scene_player_position)
+		return true
+	else:
+		print("Warning: No player found to restore position")
+		return false
+
+# UPDATED: Call this when entering any level
+func entering_level():
+	save_main_scene_player_position()
+	returning_from_level = true
+
+# UPDATED: Call this when returning to main scene
+func returned_to_main():
+	if returning_from_level:
+		# Small delay to ensure scene is fully loaded
+		await get_tree().process_frame
+		restore_main_scene_player_position()
+		returning_from_level = false
+
+# Keep existing functions but update them
 func save_player_position(level_name: String, position: Vector2):
 	player_positions[level_name] = position
+
+# DEPRECATED: Use the new functions above instead
+func load_player_to_main_position():
+	restore_main_scene_player_position()
 
 func get_player_position(level_name: String) -> Vector2:
 	if level_name in player_positions:

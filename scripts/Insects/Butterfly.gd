@@ -43,15 +43,13 @@ func _on_area_entered(area):
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton and event.pressed:
 		if is_harmful:
-			
 			if main:
-				main.reduce_tree_health(-3)
+				main.reduce_tree_health(-2)
+				main.on_insect_killed("butterfly")  # ADD THIS LINE
 		else:
-			
 			if main:
 				main.reduce_tree_health(5)
-
-		# Start drop animation instead of immediate removal
+				main.on_insect_killed("butterfly")  # ADD THIS LINE
 		start_drop_animation()
 
 func start_drop_animation():

@@ -10,14 +10,20 @@ var is_loading := false
 @onready var progress_bar = $ProgressBar
 @onready var loading_label = $ProgressBar/Label
 @onready var pause_menu = $PauseMenu  # Adjust node path if different
-@onready var bg_audio = $BG           # Your AudioStreamPlayer or AudioStreamPlayer2D node named BG
+@onready var bg_audio = $BG         
 
 func _ready():
+	await get_tree().process_frame
+	
+	# UPDATED: Use the new position restoration system
+	AvatarManager.returned_to_main()
+	
 	var players = get_tree().get_nodes_in_group("Player")  
+	
 	if players.size() > 0:
 		player = players[0]
 	else:
-		push_warning("Player node not found in group 'player'")
+		push_warning("Player node not found in group 'Player'")
 
 	# Connect PauseMenu signals for pause/resume
 	if pause_menu:
@@ -28,6 +34,10 @@ func _ready():
 	if bg_audio:
 		bg_audio.play()
 		bg_audio.connect("finished", Callable(self, "_on_bg_audio_finished"))
+		
+func change_scene_with_save(target_scene_path: String) -> void:
+	AvatarManager.auto_save_main_player_position()
+	get_tree().change_scene_to_file(target_scene_path)
 
 func _on_bg_audio_finished():
 	# When BG music finishes playing, replay it to create a loop
@@ -36,7 +46,7 @@ func _on_bg_audio_finished():
 
 func _process(_delta):
 	if player == null:
-		var players = get_tree().get_nodes_in_group("player")
+		var players = get_tree().get_nodes_in_group("Player")
 		if players.size() > 0:
 			player = players[0]
 		else:
@@ -54,6 +64,16 @@ func _process(_delta):
 		has_triggered = true
 		print("Player reached trigger x position, starting loading...")
 		start_city_map_loading()
+
+# UPDATED: When entering reforestation zone
+func enter_reforestation_zone():
+	AvatarManager.entering_level()  # Use the new function
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
+
+# UPDATED: When entering lake zone  
+func enter_lake_zone():
+	AvatarManager.entering_level()  # Use the new function
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 
 func start_city_map_loading():
 	is_loading = true
@@ -99,6 +119,7 @@ func check_city_map_loading_progress() -> void:
 			loading_label.text = "Loading... 100%"
 		await get_tree().create_timer(0.5).timeout
 		var loaded_scene = ResourceLoader.load_threaded_get(city_map_path)
+		AvatarManager.auto_save_main_player_position()  # Save current player position first
 		get_tree().change_scene_to_packed(loaded_scene)
 		is_loading = false
 	elif status == ResourceLoader.THREAD_LOAD_FAILED:
@@ -115,4 +136,3 @@ func _on_game_paused():
 func _on_game_resumed():
 	if bg_audio:
 		bg_audio.stream_paused = false  # Resume playback from paused position
-  # Resume playing from start or wherever

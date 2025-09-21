@@ -61,7 +61,7 @@ region = Rect2(544, 62, 136, 135)
 atlas = ExtResource("6_lcawo")
 region = Rect2(546, 60, 132, 138)
 
-[node name="ReforestationLevels" type="Node2D"]
+[node name="ReforestationLevels" type="Node2D" groups=["Player"]]
 script = ExtResource("1_wgjd4")
 
 [node name="1" type="TextureRect" parent="."]

@@ -160,3 +160,28 @@ theme_override_font_sizes/font_size = 60
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -65.0
+offset_top = -44.0
+offset_right = 1189.0
+offset_bottom = 670.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 187.0
+offset_right = 1069.0
+offset_bottom = 615.0
+theme_override_fonts/font = ExtResource("7_a1hs8")
+theme_override_font_sizes/font_size = 34
+text = "Welcome to the Quiz on Water Bodies!
+
+Test your knowledge about conserving natural water bodies.
+
+Answer the questions by clicking an option.
+
+Click anywhere to start the quiz.
+"
+
+[connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

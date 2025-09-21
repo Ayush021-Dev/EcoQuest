@@ -24,7 +24,7 @@ var waypoints = [
 	Vector2(1041.0, 1874.0),  # Point 5 - grass area
 	#Vector2(450, 500),   # Point 6 - grass area
 	# Add more waypoints as needed
-]
+]	
 
 func _ready():
 	# Set up the timer

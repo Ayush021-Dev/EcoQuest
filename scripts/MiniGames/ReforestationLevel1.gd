@@ -10,9 +10,16 @@ extends Node2D
 @onready var hover_sound = $HoverSound
 @onready var health_change_label = $TreeHealth/HealthChangeLabel
 @onready var game_timer = $GameTimer  # Timer node set for 120 seconds
-@onready var game_over_panel=$GameOver
-@onready var game_over_label=$GameOver/Label
+@onready var game_over_panel = $GameOver
+@onready var game_over_label = $GameOver/Label
+@onready var instructions_panel = $Panel  # Added for instructions panel
+
 var tree_health = 100
+var cockroaches_killed: int = 0
+var butterflies_killed: int = 0
+var beetles_killed: int = 0
+var initial_tree_health: int = 100
+var level_id: String = "reforestation_level1"
 
 func _ready():
 	insect_scenes = [
@@ -29,15 +36,28 @@ func _ready():
 		close_button.mouse_entered.connect(_play_hover_sound)
 
 	insect_spawn_timer.connect("timeout", Callable(self, "_on_InsectSpawnTimer_timeout"))
-	insect_spawn_timer.start()
-
 	game_timer.connect("timeout", Callable(self, "_on_game_timer_timeout"))
-	game_timer.start()
+	
+	# Do NOT start timers here. Wait for player to click instructions panel.
+	insect_spawn_timer.stop()
+	game_timer.stop()
 
 	tree_health_bar.min_value = 0
 	tree_health_bar.max_value = 100
 	tree_health_bar.value = tree_health
 	health_change_label.visible = false
+	
+	instructions_panel.visible = true  # Show instructions when ready
+
+# Called when player clicks anywhere on the instructions panel to start the game
+func _on_panel_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		instructions_panel.hide()
+		start_game()
+
+func start_game():
+	insect_spawn_timer.start()
+	game_timer.start()
 
 func spawn_insect():
 	var insect_scene = insect_scenes[randi() % insect_scenes.size()]
@@ -65,9 +85,27 @@ func reduce_tree_health(amount):
 	tree_health_bar.value = tree_health
 	show_health_change(-amount)
 	
+	# Each health point lost increases carbon footprint
+	CarbonFootprintManager.add_footprint(amount)
+	
 	if tree_health <= 0:
 		game_over()
 
+func on_insect_killed(insect_type: String):
+	match insect_type.to_lower():
+		"cockroach":
+			cockroaches_killed += 1
+			# Killing cockroaches reduces footprint (good action)
+			CarbonFootprintManager.reduce_footprint(2)
+		"butterfly":
+			butterflies_killed += 1
+			# Killing butterflies increases footprint (bad action)
+			CarbonFootprintManager.add_footprint(5)
+		"beetles":
+			beetles_killed += 1
+			# Killing beetles increases footprint (bad action)
+			CarbonFootprintManager.add_footprint(3)
+			
 func increase_tree_health(amount):
 	tree_health = clamp(tree_health + amount, 0, 100)
 	tree_health_bar.value = tree_health
@@ -80,7 +118,14 @@ func _on_game_timer_timeout():
 		await game_over()
 
 func show_game_won() -> void:
-	game_over_label.text = "You won!"
+	# Calculate final footprint bonus/penalty
+	calculate_final_footprint_score()
+	
+	# Mark level as completed
+	LevelCompletionManager.mark_level_completed(level_id)
+	
+	# Better win message
+	game_over_label.text = "Great Job! You Saved the Tree! 🌳\nThe forest is safe thanks to you!"
 	game_over_label.modulate = Color(0, 1, 0)  # green
 	game_over_panel.visible = true
 	get_tree().paused = true
@@ -89,6 +134,9 @@ func show_game_won() -> void:
 	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
 
 func game_over() -> void:
+	# Penalty for losing the level
+	CarbonFootprintManager.add_footprint(100)
+	
 	game_over_label.text = "Game Over, try again"
 	game_over_label.modulate = Color(1, 0, 0)  # red
 	game_over_panel.visible = true
@@ -97,6 +145,19 @@ func game_over() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
 
+func calculate_final_footprint_score():
+	var health_lost = initial_tree_health - tree_health
+	
+	# Bonus for winning with high health
+	if tree_health >= 80:
+		CarbonFootprintManager.reduce_footprint(50)
+	
+	print("Level 1 Final Stats:")
+	print("Cockroaches killed: ", cockroaches_killed, " (footprint reduced by ", cockroaches_killed * 2, ")")
+	print("Butterflies killed: ", butterflies_killed, " (footprint increased by ", butterflies_killed * 5, ")")
+	print("Beetles killed: ", beetles_killed, " (footprint increased by ", beetles_killed * 3, ")")
+	print("Health lost: ", health_lost, " (footprint increased by ", health_lost, ")")
+	print("Win bonus: -50 footprint")
 
 func _on_close_pressed():
 	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")

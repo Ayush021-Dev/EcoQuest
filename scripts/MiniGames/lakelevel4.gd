@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var click_sound = $ClickSound
 @onready var hover_sound = $HoverSound
+@onready var instructions_panel = $Panel  # Add the instructions Panel node
+
 var questions = [
   {
 	"q": "What is the main purpose of conserving natural water bodies?",
@@ -175,6 +177,7 @@ var current = 0
 var buttons = []
 var feedback_label
 var next_button
+var level_id: String = "lake_level4"  # Added level id
 
 func _ready():
 	buttons = [
@@ -185,7 +188,15 @@ func _ready():
 	]
 	feedback_label = $Question.get_node("Feedback")
 	next_button = $Question.get_node("Next")
-	# Connect Next and Close signals if not already
+
+	# Disable quiz UI until start
+	for b in buttons:
+		b.disabled = true
+		b.visible = false
+	next_button.disabled = true
+	next_button.visible = false
+	
+	# Connect signals
 	if not next_button.pressed.is_connected(_on_next_pressed):
 		next_button.pressed.connect(_on_next_pressed)
 	if not next_button.pressed.is_connected(_play_click_sound):
@@ -198,7 +209,7 @@ func _ready():
 		close_button.pressed.connect(_play_click_sound)
 	if not close_button.mouse_entered.is_connected(_play_hover_sound):
 		close_button.mouse_entered.connect(_play_hover_sound)
-	# Option button wiring
+	
 	for button in buttons:
 		if not button.pressed.is_connected(_play_click_sound):
 			button.pressed.connect(_play_click_sound)
@@ -207,10 +218,24 @@ func _ready():
 			_on_option_pressed(idx)
 		)
 		button.mouse_entered.connect(func(_btn=button):
-			
 			_play_hover_sound()
 		)
-		
+	
+	# Show instructions panel visible initially
+	instructions_panel.visible = true
+
+func _on_panel_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		instructions_panel.hide()
+		start_quiz()
+
+func start_quiz():
+	for b in buttons:
+		b.disabled = false
+		b.visible = true
+	next_button.disabled = false
+	next_button.visible = false
+	current = 0
 	load_question()
 
 func load_question():
@@ -243,12 +268,21 @@ func _on_next_pressed():
 		show_quiz_end()
 
 func show_quiz_end():
+	# Calculate final quiz bonus or penalties
+	calculate_final_quiz_score()
+
+	# Mark this level as completed
+	LevelCompletionManager.mark_level_completed(level_id)
+
 	question_label.text = "Quiz finished!"
 	for b in buttons:
 		b.hide()
 	feedback_label.hide()
 	next_button.hide()
 
+func calculate_final_quiz_score():
+	# Add scoring or footprint reduction logic here if needed
+	pass
 func _on_close_pressed():
 	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 

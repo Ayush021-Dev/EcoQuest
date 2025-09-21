@@ -58,7 +58,7 @@ region = Rect2(536, 56, 144, 144)
 atlas = ExtResource("4_207hs")
 region = Rect2(536, 56, 144, 144)
 
-[node name="LakeLevels" type="Node2D"]
+[node name="LakeLevels" type="Node2D" groups=["Player"]]
 script = ExtResource("1_esnue")
 
 [node name="TextureRect" type="TextureRect" parent="."]
