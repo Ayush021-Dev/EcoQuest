@@ -1,0 +1,276 @@
+[gd_scene load_steps=38 format=3 uid="uid://2j2qbqt0ik0"]
+
+[ext_resource type="Texture2D" uid="uid://ct4bvqf57ihfn" path="res://assets/ui/chrysope-battle-background-new.jpg" id="1_4db2m"]
+[ext_resource type="Script" uid="uid://c44dedjeunbr6" path="res://scripts/MiniGames/reforestationGameController.gd" id="2_5m3ht"]
+[ext_resource type="Texture2D" uid="uid://dk7ep26wbqc6t" path="res://assets/Animals/Item_Sheet_Flora&Fauna_0.png" id="2_dwhvs"]
+[ext_resource type="Texture2D" uid="uid://bhxtu1275wt2" path="res://assets/items/Slates v.2 [32x32px orthogonal tileset by Ivan Voirol].png" id="2_hpnwx"]
+[ext_resource type="Texture2D" uid="uid://hi4lo61hwnbb" path="res://assets/Animals/tilemap.png" id="2_y7k00"]
+[ext_resource type="Texture2D" uid="uid://dw48uoa0p6wj5" path="res://assets/Insects/bugs.png" id="3_dn050"]
+[ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="3_dvwgt"]
+[ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="4_ikmfq"]
+[ext_resource type="Texture2D" uid="uid://ds0iin0t0tcf" path="res://assets/items/Orange/scaled-at-50/b_No.png" id="4_lhlo1"]
+[ext_resource type="Texture2D" uid="uid://cya0aos8x8ikk" path="res://assets/Animals/Fruits.png" id="5_ebsxd"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="5_n6jb4"]
+[ext_resource type="Texture2D" uid="uid://cemn0bqsx2kgt" path="res://assets/items/Red/scaled-at-50/b_No.png" id="5_y7k00"]
+[ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="6_lhlo1"]
+[ext_resource type="Texture2D" uid="uid://1eih8nnedhod" path="res://assets/Animals/Cereals.png" id="7_cjg0p"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwhvs"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(120, 240, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebsxd"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(49.0933, 134.499, 18.5805, 19.4723)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpnwx"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(135.023, 237.043, 17.4463, 18.5255)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjg0p"]
+atlas = ExtResource("3_dn050")
+region = Rect2(0.61879, 32.4273, 16.0074, 16.547)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxu3m"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(0.424671, 257.093, 15.4786, 14.1273)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j51g7"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(152.366, 273.303, 16.4211, 17.2125)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kj1u"]
+atlas = ExtResource("2_hpnwx")
+region = Rect2(257.902, 224.005, 30.0198, 32.6531)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cccdj"]
+atlas = ExtResource("2_dwhvs")
+region = Rect2(1.73059, 33.3457, 30.0724, 31.6551)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mbsth"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(50.7287, 271.755, 17.094, 17.8372)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh7k4"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(117.742, 254.412, 18.1812, 18.304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5gsp8"]
+atlas = ExtResource("7_cjg0p")
+region = Rect2(65.1945, 69.4267, 30.0328, 21.3277)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk5l7"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(50.4576, 119.864, 17.2967, 15.2697)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1dne"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(101.538, 253.81, 16.9454, 17.6886)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvww1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sc2vq"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(67.3611, 271.427, 17.7568, 18.4269)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bp3ya"]
+atlas = ExtResource("5_ebsxd")
+region = Rect2(0.656437, -0.876767, 31.2838, 35.9184)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3wgj"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(152.449, 273.081, 16.6778, 16.0238)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3681k"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(100.646, 135.567, 18.648, 17.7021)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywjgu"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(101.47, 119.365, 17.3913, 17.2427)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1upw4"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(-0.474163, 255.864, 16.619, 15.2341)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7d1hy"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(50.0089, 287.938, 18.0584, 18.304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a13wt"]
+atlas = ExtResource("2_dwhvs")
+region = Rect2(99.4835, 0.0791531, 25.54, 30.9357)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyxy6"]
+atlas = ExtResource("2_y7k00")
+region = Rect2(16.5204, 153.939, 17.8456, 16.9751)
+
+[node name="ReforestationLevel3" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -32.0
+offset_top = -19.0
+offset_right = 1181.0
+offset_bottom = 672.0
+texture = ExtResource("1_4db2m")
+expand_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -35.0
+offset_top = -23.0
+offset_right = 1205.0
+offset_bottom = 724.0
+color = Color(0.462291, 0.462291, 0.462291, 0.796078)
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_left = 300.0
+offset_top = 81.0
+offset_right = 972.0
+offset_bottom = 583.0
+columns = 5
+
+[node name="Frog" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_dwhvs")
+
+[node name="Snake" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ebsxd")
+
+[node name="Phytoplankton" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+
+[node name="Crocodile" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hpnwx")
+
+[node name="Insects" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_cjg0p")
+stretch_mode = 0
+
+[node name="Chick" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_qxu3m")
+
+[node name="Pig" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_j51g7")
+
+[node name="Aquatic Plants" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_1kj1u")
+stretch_mode = 0
+
+[node name="Snail" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_cccdj")
+
+[node name="Bear" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_mbsth")
+
+[node name="Tiger" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_qh7k4")
+
+[node name="Grain" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_5gsp8")
+
+[node name="Krill" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_fk5l7")
+
+[node name="Jaguar" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_o1dne")
+
+[node name="Walrus" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_jvww1")
+
+[node name="Polar Bear" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sc2vq")
+
+[node name="Fruit" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_bp3ya")
+
+[node name="Fox" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_j3wgj")
+
+[node name="Parrot" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+
+[node name="Snake2" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_3681k")
+
+[node name="Anaconda" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ywjgu")
+
+[node name="Chicken" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_1upw4")
+
+[node name="Orca" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_7d1hy")
+
+[node name="Rat" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_a13wt")
+
+[node name="Dog" type="TextureButton" parent="GridContainer"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_gyxy6")
+
+[node name="GameController" type="Node2D" parent="."]
+script = ExtResource("2_5m3ht")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="UI"]
+visible = false
+z_index = 2
+offset_left = 311.0
+offset_top = 309.0
+offset_right = 693.0
+offset_bottom = 450.0
+theme_override_fonts/font = ExtResource("3_dvwgt")
+theme_override_font_sizes/font_size = 80
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = -1
+anchor_left = -0.024
+anchor_top = -0.042
+offset_left = -5.352
+offset_top = 6.216
+offset_right = 1217.0
+offset_bottom = 728.0
+color = Color(0, 0, 0, 0.729412)
+
+[node name="CloseButton" type="TextureButton" parent="."]
+offset_left = 1036.0
+offset_top = 40.0
+offset_right = 1129.0
+offset_bottom = 120.0
+texture_normal = ExtResource("4_lhlo1")
+texture_pressed = ExtResource("5_y7k00")
+texture_hover = ExtResource("5_y7k00")
+stretch_mode = 5
+
+[node name="HoverSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ikmfq")
+
+[node name="ClickSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_n6jb4")
+
+[node name="BG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_lhlo1")
