@@ -14,7 +14,8 @@ var is_loading := false
 
 func _ready():
 	await get_tree().process_frame
-	
+	CarbonFootprintUI.set_footprint_display_visibility(true)
+	PersistentUI.set_coin_display_visibility(true)
 	# UPDATED: Use the new position restoration system
 	AvatarManager.returned_to_main()
 	

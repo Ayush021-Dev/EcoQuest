@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://gojj7d5ggom5"]
+[gd_scene load_steps=15 format=3 uid="uid://gojj7d5ggom5"]
 
 [ext_resource type="Script" uid="uid://bccvoorn3lrib" path="res://scripts/MiniGames/ReforestationLevel4.gd" id="1_d8jg4"]
 [ext_resource type="Texture2D" uid="uid://dc5wjvirb5jtd" path="res://assets/items/layers/fundo_arvore03.png" id="2_oplwu"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="9_6fnv3"]
 [ext_resource type="Texture2D" uid="uid://b8qbmqjmc7m1" path="res://assets/items/Red/scaled-at-50/b_Background.png" id="9_dy61o"]
 [ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="10_dy61o"]
+[ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="14_6fnv3"]
 
 [node name="ReforestationLevel4" type="Node2D"]
 script = ExtResource("1_d8jg4")
@@ -199,5 +200,8 @@ Click anywhere to start the quiz.
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="BG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_6fnv3")
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

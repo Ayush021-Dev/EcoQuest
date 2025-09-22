@@ -33,7 +33,7 @@ var questions = [
 	"correct": 0,
 	"feedback": [
 	  "Correct! Narmada is called the lifeline of MP.", 
-	  "No, that’s for North India.", 
+	  "No, that is for North India.", 
 	  "No, that flows through Delhi.", 
 	  "No, that flows in the northeast."
 	]
@@ -54,8 +54,8 @@ var questions = [
 	"opts": ["Lake Victoria", "Lake Superior", "Lake Baikal", "Caspian Sea"],
 	"correct": 2,
 	"feedback": [
-	  "No, that’s Africa’s largest by area.", 
-	  "No, that’s North America’s largest.", 
+	  "No, that is Africa’s largest by area.", 
+	  "No, that is North America’s largest.", 
 	  "Correct! Lake Baikal holds the most freshwater.", 
 	  "No, Caspian is a saltwater lake."
 	]
@@ -77,9 +77,9 @@ var questions = [
 	"correct": 0,
 	"feedback": [
 	  "Correct! Namami Gange is for river Ganga.", 
-	  "No, that’s about sanitation.", 
-	  "No, that’s about rural water supply.", 
-	  "No, that’s for cities."
+	  "No, that is about sanitation.", 
+	  "No, that is about rural water supply.", 
+	  "No, that is for cities."
 	]
   },
   {
@@ -109,8 +109,8 @@ var questions = [
 	"opts": ["Dal Lake", "Chilika Lake", "Loktak Lake", "Sambhar Lake"],
 	"correct": 2,
 	"feedback": [
-	  "No, that’s in Kashmir.", 
-	  "No, that’s in Odisha.", 
+	  "No, that is in Kashmir.", 
+	  "No, that is in Odisha.", 
 	  "Correct! Loktak Lake in Manipur has phumdis.", 
 	  "No, Sambhar is a salt lake."
 	]
@@ -132,9 +132,9 @@ var questions = [
 	"correct": 0,
 	"feedback": [
 	  "Correct! World Water Day is dedicated to water conservation.", 
-	  "No, that’s about energy saving.", 
-	  "No, that’s about ozone.", 
-	  "No, that’s about food security."
+	  "No, that is about energy saving.", 
+	  "No, that is about ozone.", 
+	  "No, that is about food security."
 	]
   },
   {
@@ -173,11 +173,14 @@ var questions = [
 ]
 var current = 0
 @onready var close_button = $CloseButton
+@onready var bg_music = $BG
 @onready var question_label = $Question
 var buttons = []
 var feedback_label
 var next_button
-var level_id: String = "lake_level4"  # Added level id
+var correct_answers: int = 0
+var wrong_answers: int = 0
+var level_id: String = "lake_level4"
 
 func _ready():
 	buttons = [
@@ -189,14 +192,12 @@ func _ready():
 	feedback_label = $Question.get_node("Feedback")
 	next_button = $Question.get_node("Next")
 
-	# Disable quiz UI until start
 	for b in buttons:
 		b.disabled = true
 		b.visible = false
 	next_button.disabled = true
 	next_button.visible = false
-	
-	# Connect signals
+
 	if not next_button.pressed.is_connected(_on_next_pressed):
 		next_button.pressed.connect(_on_next_pressed)
 	if not next_button.pressed.is_connected(_play_click_sound):
@@ -209,7 +210,7 @@ func _ready():
 		close_button.pressed.connect(_play_click_sound)
 	if not close_button.mouse_entered.is_connected(_play_hover_sound):
 		close_button.mouse_entered.connect(_play_hover_sound)
-	
+
 	for button in buttons:
 		if not button.pressed.is_connected(_play_click_sound):
 			button.pressed.connect(_play_click_sound)
@@ -220,14 +221,14 @@ func _ready():
 		button.mouse_entered.connect(func(_btn=button):
 			_play_hover_sound()
 		)
-	
-	# Show instructions panel visible initially
+
 	instructions_panel.visible = true
 
 func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		instructions_panel.hide()
 		start_quiz()
+		bg_music.play()
 
 func start_quiz():
 	for b in buttons:
@@ -255,8 +256,17 @@ func _on_option_pressed(idx):
 	for b in buttons:
 		b.disabled = true
 	buttons[q_data["correct"]].modulate = Color(0.6, 1.0, 0.6)
-	if idx != q_data["correct"]:
+
+	if idx == q_data["correct"]:
+		correct_answers += 1
+		CarbonFootprintManager.reduce_footprint(10)
+		print("Correct answer! Footprint reduced by 10")
+	else:
+		wrong_answers += 1
+		CarbonFootprintManager.add_footprint(5)
+		print("Wrong answer! Footprint increased by 5")
 		buttons[idx].modulate = Color(1.0, 0.6, 0.6)
+
 	feedback_label.text = q_data["feedback"][idx]
 	next_button.visible = true
 
@@ -268,21 +278,32 @@ func _on_next_pressed():
 		show_quiz_end()
 
 func show_quiz_end():
-	# Calculate final quiz bonus or penalties
 	calculate_final_quiz_score()
-
-	# Mark this level as completed
 	LevelCompletionManager.mark_level_completed(level_id)
-
 	question_label.text = "Quiz finished!"
 	for b in buttons:
 		b.hide()
 	feedback_label.hide()
 	next_button.hide()
+	
+	await get_tree().create_timer(3.0).timeout
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 
 func calculate_final_quiz_score():
-	# Add scoring or footprint reduction logic here if needed
-	pass
+	var accuracy = float(correct_answers) / float(questions.size())
+	if accuracy >= 0.8:
+		CarbonFootprintManager.reduce_footprint(30)
+		print("High accuracy bonus: -30 footprint")
+	elif accuracy >= 0.6:
+		CarbonFootprintManager.reduce_footprint(15)
+		print("Good accuracy bonus: -15 footprint")
+
+	print("Quiz Final Stats:")
+	print("Correct answers: ", correct_answers, " (footprint reduced by ", correct_answers * 10, ")")
+	print("Wrong answers: ", wrong_answers, " (footprint increased by ", wrong_answers * 5, ")")
+	print("Completion bonus: -20 footprint")
+	print("Final accuracy: ", accuracy * 100, "%")
+
 func _on_close_pressed():
 	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 

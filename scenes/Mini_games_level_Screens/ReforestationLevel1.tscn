@@ -57,9 +57,9 @@ position = Vector2(3, 3)
 
 [node name="TreeHealth" type="TextureProgressBar" parent="."]
 offset_left = 353.0
-offset_top = 18.0
+offset_top = 59.0
 offset_right = 849.0
-offset_bottom = 62.0
+offset_bottom = 103.0
 value = 100.0
 texture_under = SubResource("AtlasTexture_l2dhc")
 texture_progress = SubResource("AtlasTexture_tcbjt")
@@ -89,7 +89,7 @@ stretch_mode = 4
 wait_time = 2.0
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 20.0
 one_shot = true
 
 [node name="GameOver" type="ColorRect" parent="."]
@@ -98,18 +98,19 @@ offset_left = -57.0
 offset_top = -33.0
 offset_right = 1175.0
 offset_bottom = 671.0
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0.301961)
 
 [node name="Label" type="Label" parent="GameOver"]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 142.0
-offset_right = 966.0
-offset_bottom = 503.0
+offset_left = 440.0
+offset_top = 191.0
+offset_right = 1198.0
+offset_bottom = 607.0
 theme_override_fonts/font = ExtResource("7_l2dhc")
 theme_override_font_sizes/font_size = 80
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Panel" type="Panel" parent="."]
 offset_left = -65.0
@@ -119,9 +120,9 @@ offset_bottom = 670.0
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 489.0
+offset_left = 454.0
 offset_top = 237.0
-offset_right = 1226.0
+offset_right = 1191.0
 offset_bottom = 665.0
 theme_override_fonts/font = ExtResource("10_tcbjt")
 theme_override_font_sizes/font_size = 40

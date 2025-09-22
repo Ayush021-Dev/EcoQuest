@@ -173,6 +173,8 @@ var questions = [
 var current = 0
 @onready var close_button = $CloseButton
 @onready var question_label = $Question
+@onready var bg_music = $BG
+
 var buttons = []
 var feedback_label
 var next_button
@@ -235,6 +237,7 @@ func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		instructions_panel.hide()
 		start_quiz()
+		bg_music.play()
 
 func start_quiz():
 	# Enable buttons and next button visibility

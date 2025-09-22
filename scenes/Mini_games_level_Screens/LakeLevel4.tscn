@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://chwacdbjnclc3"]
+[gd_scene load_steps=13 format=3 uid="uid://chwacdbjnclc3"]
 
 [ext_resource type="Script" uid="uid://c23xg8prc4ywl" path="res://scripts/MiniGames/lakelevel4.gd" id="1_25d0w"]
 [ext_resource type="Texture2D" uid="uid://vlcw3gsjsuho" path="res://assets/ui/Ocean (1).png" id="2_ysyxj"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://b8qbmqjmc7m1" path="res://assets/items/Red/scaled-at-50/b_Background.png" id="9_lgxd0"]
 [ext_resource type="Texture2D" uid="uid://b8x2fy1imvtyn" path="res://assets/items/Orange/scaled-at-50/b_Forward1.png" id="10_ahcqi"]
 [ext_resource type="Texture2D" uid="uid://cfctx7evwewdw" path="res://assets/items/Red/scaled-at-50/b_Forward1.png" id="11_1l6yr"]
+[ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="12_ysyxj"]
 
 [node name="LakeLevel4" type="Node2D"]
 script = ExtResource("1_25d0w")
@@ -55,10 +56,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.044
 anchor_bottom = 0.758
-offset_left = 28.0
-offset_top = 148.0
-offset_right = 97.916
-offset_bottom = 170.46
+offset_left = 32.0
+offset_top = 187.0
+offset_right = 101.916
+offset_bottom = 209.46
 texture_normal = ExtResource("8_efgf2")
 texture_pressed = ExtResource("9_lgxd0")
 texture_hover = ExtResource("9_lgxd0")
@@ -78,9 +79,9 @@ autowrap_mode = 3
 [node name="2" type="TextureButton" parent="Question"]
 layout_mode = 0
 offset_left = 326.0
-offset_top = 141.0
+offset_top = 184.0
 offset_right = 436.0
-offset_bottom = 262.0
+offset_bottom = 305.0
 texture_normal = ExtResource("8_efgf2")
 texture_pressed = ExtResource("9_lgxd0")
 texture_hover = ExtResource("9_lgxd0")
@@ -99,9 +100,9 @@ autowrap_mode = 3
 [node name="3" type="TextureButton" parent="Question"]
 layout_mode = 0
 offset_left = 609.0
-offset_top = 144.0
+offset_top = 180.0
 offset_right = 719.0
-offset_bottom = 265.0
+offset_bottom = 301.0
 texture_normal = ExtResource("8_efgf2")
 texture_pressed = ExtResource("9_lgxd0")
 texture_hover = ExtResource("9_lgxd0")
@@ -119,10 +120,10 @@ autowrap_mode = 3
 
 [node name="4" type="TextureButton" parent="Question"]
 layout_mode = 0
-offset_left = 878.0
-offset_top = 143.0
-offset_right = 988.0
-offset_bottom = 264.0
+offset_left = 880.0
+offset_top = 184.0
+offset_right = 990.0
+offset_bottom = 305.0
 texture_normal = ExtResource("8_efgf2")
 texture_pressed = ExtResource("9_lgxd0")
 texture_hover = ExtResource("9_lgxd0")
@@ -186,5 +187,8 @@ Click anywhere to start the quiz.
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="BG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_ysyxj")
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

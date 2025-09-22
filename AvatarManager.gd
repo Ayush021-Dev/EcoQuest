@@ -23,8 +23,9 @@ var select_click_sound: AudioStreamPlayer
 var select_unlock_sound: AudioStreamPlayer
 var current_scene_name: String = ""
 
-# UPDATED: Main scene player position storage
+# UPDATED: Main scene player position storage with backup
 var main_scene_player_position: Vector2 = Vector2.ZERO
+var previous_valid_position: Vector2 = Vector2.ZERO  # NEW: Backup of last valid position
 var returning_from_level: bool = false
 
 # Player position saving dictionary keyed by level/scene name
@@ -50,16 +51,34 @@ func _ready():
 	select_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	select_unlock_sound.stream = preload("res://assets/sounds/character_unlock.ogg")
 
+# UPDATED: Check if position is valid (not at origin or very close to it)
+func is_valid_position(pos: Vector2) -> bool:
+	return pos.length() > 10.0  # Position must be at least 10 units away from origin
+
 # UPDATED: Save player position from main scene before going to levels
 func save_main_scene_player_position():
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		var player = players[0]
-		main_scene_player_position = player.global_position
-		print("Saved main scene player position: ", main_scene_player_position)
-		return true
+		var new_position = player.global_position
+		
+		# Check if the new position is valid
+		if is_valid_position(new_position):
+			# Save current valid position as backup before updating
+			if is_valid_position(main_scene_player_position):
+				previous_valid_position = main_scene_player_position
+			
+			main_scene_player_position = new_position
+			print("Saved main scene player position: ", main_scene_player_position)
+			if previous_valid_position != Vector2.ZERO:
+				print("Previous valid position backed up: ", previous_valid_position)
+			return true
+		else:
+			print("Skipping save - player position is invalid (too close to origin): ", new_position)
+			print("Keeping current saved position: ", main_scene_player_position)
+			return false
 	else:
-		print("Warning: No player found to save position")
+		print("Warning: No player found to save position - keeping previous saved position")
 		return false
 
 # ADDED: For compatibility with existing main.gd calls
@@ -69,17 +88,28 @@ func auto_save_main_player_position():
 func prepare_scene_change():
 	save_main_scene_player_position()
 
-# UPDATED: Restore player position in main scene
+# UPDATED: Restore player position in main scene with fallback logic
 func restore_main_scene_player_position():
-	if main_scene_player_position == Vector2.ZERO:
-		print("No saved position to restore")
+	var position_to_restore: Vector2
+	
+	# Determine which position to use
+	if is_valid_position(main_scene_player_position):
+		position_to_restore = main_scene_player_position
+		print("Using main saved position: ", position_to_restore)
+	elif is_valid_position(previous_valid_position):
+		position_to_restore = previous_valid_position
+		print("Main position invalid, using previous valid position: ", position_to_restore)
+		# Update main position with the backup
+		main_scene_player_position = previous_valid_position
+	else:
+		print("No valid saved position to restore")
 		return false
-		
+	
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		var player = players[0]
-		player.global_position = main_scene_player_position
-		print("Restored player to main scene position: ", main_scene_player_position)
+		player.global_position = position_to_restore
+		print("Restored player to position: ", position_to_restore)
 		return true
 	else:
 		print("Warning: No player found to restore position")
@@ -110,6 +140,34 @@ func get_player_position(level_name: String) -> Vector2:
 	if level_name in player_positions:
 		return player_positions[level_name]
 	return Vector2.ZERO
+
+# NEW: Get the best available position (main or backup)
+func get_best_saved_position() -> Vector2:
+	if is_valid_position(main_scene_player_position):
+		return main_scene_player_position
+	elif is_valid_position(previous_valid_position):
+		return previous_valid_position
+	else:
+		return Vector2.ZERO
+
+# NEW: Force set a valid position (useful for debugging or manual setting)
+func set_valid_position(pos: Vector2):
+	if is_valid_position(pos):
+		if is_valid_position(main_scene_player_position):
+			previous_valid_position = main_scene_player_position
+		main_scene_player_position = pos
+		print("Manually set valid position: ", pos)
+	else:
+		print("Cannot set invalid position: ", pos)
+
+# NEW: Debug function to print all saved positions
+func debug_print_positions():
+	print("=== AVATAR MANAGER POSITIONS DEBUG ===")
+	print("Main scene position: ", main_scene_player_position, " (valid: ", is_valid_position(main_scene_player_position), ")")
+	print("Previous valid position: ", previous_valid_position, " (valid: ", is_valid_position(previous_valid_position), ")")
+	print("Best available position: ", get_best_saved_position())
+	print("Returning from level: ", returning_from_level)
+	print("=====================================")
 
 # Coin management funcs
 func get_coins() -> int:
