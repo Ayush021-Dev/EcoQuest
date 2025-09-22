@@ -26,6 +26,7 @@ func _ready():
 		preload("res://scenes/Insects/Cockroach.tscn"),
 		preload("res://scenes/Insects/Butterfly.tscn"),
 		preload("res://scenes/Insects/Beetles.tscn"),
+		preload("res://scenes/Insects/Ants.tscn"),
 	]
 
 	if not close_button.pressed.is_connected(_on_close_pressed):

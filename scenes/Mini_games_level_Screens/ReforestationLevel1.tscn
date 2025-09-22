@@ -12,7 +12,7 @@
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="10_tcbjt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hkfm"]
-size = Vector2(170, 283)
+size = Vector2(263, 384.5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l2dhc"]
 atlas = ExtResource("6_nmn2k")
@@ -48,7 +48,7 @@ texture = ExtResource("4_l2dhc")
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TreeArea"]
-position = Vector2(122, 523)
+position = Vector2(135, 473)
 shape = SubResource("RectangleShape2D_5hkfm")
 
 [node name="InsectContainer" type="Node2D" parent="."]
@@ -111,6 +111,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="."]
+visible = false
 offset_left = -65.0
 offset_top = -44.0
 offset_right = 1189.0
@@ -126,11 +127,12 @@ theme_override_fonts/font = ExtResource("10_tcbjt")
 theme_override_font_sizes/font_size = 34
 text = "Save the tree from harmful insects!
 
-Click on cockroaches to remove them.
+Click on cockroaches and ants to remove them.
 
 Don't click on butterflies, beetles and ladybugs.
 
 The game starts when you click anywhere.
 "
+horizontal_alignment = 1
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

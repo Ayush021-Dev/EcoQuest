@@ -1,3 +1,49 @@
-[gd_scene format=3 uid="uid://ppiq4a7t8q3f"]
+[gd_scene load_steps=8 format=3 uid="uid://ppiq4a7t8q3f"]
 
-[node name="Ants" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://dw48uoa0p6wj5" path="res://assets/Insects/bugs.png" id="1_ic6jg"]
+[ext_resource type="Script" uid="uid://d07dcov2v70ak" path="res://scripts/Insects/Ants.gd" id="1_ted3c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ted3c"]
+atlas = ExtResource("1_ic6jg")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6vxfr"]
+atlas = ExtResource("1_ic6jg")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpaxc"]
+atlas = ExtResource("1_ic6jg")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hjqu1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ted3c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6vxfr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpaxc")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8h7kc"]
+radius = 19.2354
+
+[node name="Ants" type="Area2D"]
+script = ExtResource("1_ted3c")
+
+[node name="Insect" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_hjqu1")
+animation = &"left"
+frame_progress = 0.0146655
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8h7kc")

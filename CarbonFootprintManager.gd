@@ -28,9 +28,9 @@ func add_footprint(amount: int):
 	if actual_change != 0:
 		footprint_changed.emit(actual_change)
 		save_footprint_data()
-		print("Carbon footprint changed by: ", actual_change, " | New total: ", carbon_footprint)
+		
 
-# Reduce carbon footprint (negative amount = better for environment)
+
 func reduce_footprint(amount: int):
 	add_footprint(-amount)
 

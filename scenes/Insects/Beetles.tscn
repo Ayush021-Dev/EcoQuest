@@ -36,6 +36,7 @@ animations = [{
 radius = 12.0
 
 [node name="Beetles" type="Area2D"]
+scale = Vector2(2, 2)
 script = ExtResource("1_rknoh")
 
 [node name="Insect" type="AnimatedSprite2D" parent="."]
