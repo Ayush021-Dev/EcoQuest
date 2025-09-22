@@ -174,7 +174,7 @@ offset_top = 187.0
 offset_right = 1069.0
 offset_bottom = 615.0
 theme_override_fonts/font = ExtResource("7_a1hs8")
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 40
 text = "Welcome to the Quiz on Water Bodies!
 
 Test your knowledge about conserving natural water bodies.
@@ -183,5 +183,8 @@ Answer the questions by clicking an option.
 
 Click anywhere to start the quiz.
 "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

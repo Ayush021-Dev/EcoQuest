@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://byk1yn40530yk"]
+[gd_scene load_steps=15 format=3 uid="uid://byk1yn40530yk"]
 
 [ext_resource type="Script" uid="uid://cbkciksee3g6j" path="res://scripts/MiniGames/ReforestationLevel1.gd" id="1_1vsfv"]
 [ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="1_b1csr"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cemn0bqsx2kgt" path="res://assets/items/Red/scaled-at-50/b_No.png" id="6_tv46p"]
 [ext_resource type="FontFile" uid="uid://b7rxowm6cft1e" path="res://assets/fonts/lucasarts-scumm-outline.ttf" id="7_l2dhc"]
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="10_tcbjt"]
+[ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="11_tv46p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hkfm"]
 size = Vector2(263, 384.5)
@@ -111,7 +112,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Panel" type="Panel" parent="."]
-visible = false
 offset_left = -65.0
 offset_top = -44.0
 offset_right = 1189.0
@@ -119,12 +119,12 @@ offset_bottom = 670.0
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 526.0
+offset_left = 489.0
 offset_top = 237.0
-offset_right = 1164.0
+offset_right = 1226.0
 offset_bottom = 665.0
 theme_override_fonts/font = ExtResource("10_tcbjt")
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 40
 text = "Save the tree from harmful insects!
 
 Click on cockroaches and ants to remove them.
@@ -134,5 +134,9 @@ Don't click on butterflies, beetles and ladybugs.
 The game starts when you click anywhere.
 "
 horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_tv46p")
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

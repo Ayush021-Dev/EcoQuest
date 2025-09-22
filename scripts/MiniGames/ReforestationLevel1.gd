@@ -13,7 +13,7 @@ extends Node2D
 @onready var game_over_panel = $GameOver
 @onready var game_over_label = $GameOver/Label
 @onready var instructions_panel = $Panel  # Added for instructions panel
-
+@onready var bg_sound=$BG
 var tree_health = 100
 var cockroaches_killed: int = 0
 var butterflies_killed: int = 0
@@ -55,6 +55,8 @@ func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		instructions_panel.hide()
 		start_game()
+		bg_sound.play()
+		
 
 func start_game():
 	insect_spawn_timer.start()

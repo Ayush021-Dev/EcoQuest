@@ -182,12 +182,12 @@ offset_bottom = 670.0
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 329.0
-offset_top = 177.0
-offset_right = 984.0
-offset_bottom = 605.0
+offset_left = 234.0
+offset_top = 158.0
+offset_right = 1004.0
+offset_bottom = 586.0
 theme_override_fonts/font = ExtResource("3_k8s3e")
-theme_override_font_sizes/font_size = 34
+theme_override_font_sizes/font_size = 40
 text = "Welcome to the Reforestation Quiz!  
 
 Answer the questions by clicking on an option.  
@@ -196,5 +196,8 @@ Some questions may affect the carbon footprint.
 
 Click anywhere to start the quiz.
 "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
