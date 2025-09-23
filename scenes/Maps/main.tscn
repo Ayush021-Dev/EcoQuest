@@ -47375,6 +47375,9 @@ position = Vector2(-197, 1641)
 [node name="InfoBoard6" parent="." instance=ExtResource("21_ol8pr")]
 position = Vector2(1433, 171)
 
+[node name="Player" parent="." instance=ExtResource("13_0h0fx")]
+position = Vector2(-830, -254)
+
 [node name="InfoBoard3" parent="." instance=ExtResource("21_ol8pr")]
 position = Vector2(1685, 987)
 
@@ -47386,9 +47389,6 @@ position = Vector2(2935, 759)
 
 [node name="InfoBoard7" parent="." instance=ExtResource("21_ol8pr")]
 position = Vector2(-428, 154)
-
-[node name="Player" parent="." instance=ExtResource("13_0h0fx")]
-position = Vector2(-828, -279)
 
 [node name="Fisherman" parent="." instance=ExtResource("23_mhjtb")]
 position = Vector2(1646, 1414)
