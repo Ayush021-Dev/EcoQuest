@@ -1,3 +1,227 @@
-[gd_scene format=3 uid="uid://bqloyiq7in7vx"]
+[gd_scene load_steps=33 format=3 uid="uid://bqloyiq7in7vx"]
+
+[ext_resource type="Script" uid="uid://cjo3d2p5xhale" path="res://scripts/MiniGames/lakeLevel3.gd" id="1_bn70y"]
+[ext_resource type="Texture2D" uid="uid://b2wkahw5rvdt6" path="res://assets/Bubble/tilesetOpenGameBackground_1.png" id="1_jnqxk"]
+[ext_resource type="Texture2D" uid="uid://cv58pq3ehkanx" path="res://assets/Bubble/background.png" id="2_bn70y"]
+[ext_resource type="Texture2D" uid="uid://c4r6yerggwyqi" path="res://assets/Bubble/fish_full.png" id="3_tpdvb"]
+[ext_resource type="Texture2D" uid="uid://sacl7a1tekso" path="res://assets/Bubble/bubble1.png" id="4_vlq11"]
+[ext_resource type="Texture2D" uid="uid://beflxrm7ey7mt" path="res://assets/Bubble/bubble2.png" id="5_m38b7"]
+[ext_resource type="Texture2D" uid="uid://bfhcdhw0ewrnd" path="res://assets/Bubble/bubble3.png" id="6_0882m"]
+[ext_resource type="Texture2D" uid="uid://bybtr6c8hlw27" path="res://assets/Bubble/bubble4.png" id="7_hbnbf"]
+[ext_resource type="Texture2D" uid="uid://qsuj5y2kytw" path="res://assets/Bubble/bubble5.png" id="8_4pger"]
+[ext_resource type="Texture2D" uid="uid://bkyykqm435j6f" path="res://assets/Bubble/bubble6.png" id="9_m7vqp"]
+[ext_resource type="Texture2D" uid="uid://qe6hapiyu3kk" path="res://assets/Bubble/bubble7.png" id="10_7pad8"]
+[ext_resource type="Texture2D" uid="uid://bbai2mqmvwpbg" path="res://assets/Bubble/bubble8.png" id="11_t17ul"]
+[ext_resource type="Texture2D" uid="uid://vre68gyo2gp7" path="res://assets/Bubble/bubble9.png" id="12_cuwc7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph01s"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(0, 0, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah4q2"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(50, 0, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a110h"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(100, 0, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6tqm"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(150, 0, 50, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jlf6v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph01s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah4q2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a110h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6tqm")
+}],
+"loop": true,
+"name": &"swim\'",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxmg1"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(0, 100, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvk63"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(50, 100, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xpish"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(100, 100, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nruel"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(150, 100, 50, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ebb8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxmg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvk63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xpish")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nruel")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edaqp"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(0, 200, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8gwx3"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(50, 200, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uhmn"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(100, 200, 50, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxudc"]
+atlas = ExtResource("3_tpdvb")
+region = Rect2(150, 200, 50, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_40et6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edaqp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8gwx3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5uhmn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vxudc")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jym8u"]
+atlas = ExtResource("4_vlq11")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yeiy1"]
+atlas = ExtResource("5_m38b7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj7ly"]
+atlas = ExtResource("4_vlq11")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d2xmp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jym8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yeiy1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0882m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hbnbf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4pger")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_m7vqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_7pad8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_t17ul")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_cuwc7")
+}],
+"loop": true,
+"name": &"click",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yj7ly")
+}],
+"loop": true,
+"name": &"floating",
+"speed": 5.0
+}]
 
 [node name="LakeLevel3" type="Node2D"]
+script = ExtResource("1_bn70y")
+
+[node name="clouds" type="TextureRect" parent="."]
+offset_left = -12.0
+offset_top = -4.0
+offset_right = 1154.0
+offset_bottom = 198.0
+texture = ExtResource("1_jnqxk")
+
+[node name="water" type="TextureRect" parent="."]
+offset_left = -11.0
+offset_top = 195.0
+offset_right = 1154.0
+offset_bottom = 660.0
+texture = ExtResource("2_bn70y")
+expand_mode = 1
+
+[node name="Fish1" type="AnimatedSprite2D" parent="water"]
+position = Vector2(1099, 290)
+scale = Vector2(2, 2.05)
+sprite_frames = SubResource("SpriteFrames_jlf6v")
+animation = &"swim\'"
+
+[node name="Fish2" type="AnimatedSprite2D" parent="water"]
+position = Vector2(130, 151)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_2ebb8")
+animation = &"swim"
+frame_progress = 0.413377
+flip_h = true
+
+[node name="Fish3" type="AnimatedSprite2D" parent="water"]
+position = Vector2(914, 64)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_40et6")
+animation = &"swim"
+frame_progress = 0.165662
+
+[node name="Bubbles" type="AnimatedSprite2D" parent="."]
+editor_description = "Carbon Catcher: CO₂ bubbles rise toward the lake. Player must pop/capture them before they dissolve, showing link between emissions and water acidification."
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(294, 427)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_d2xmp")
+animation = &"floating"
+frame_progress = 0.77901

@@ -1,3 +1,57 @@
-[gd_scene format=3 uid="uid://retynqlfyumv"]
+[gd_scene load_steps=7 format=3 uid="uid://retynqlfyumv"]
+
+[ext_resource type="Texture2D" uid="uid://udyn1yg565vt" path="res://assets/Farm/Village landscape Free Pixel Art Background.png" id="1_y0yoo"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="2_m8byy"]
+[ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="3_mvv21"]
+[ext_resource type="Texture2D" uid="uid://dsxpi3hwfx1sk" path="res://assets/items/Grey/scaled-at-50/b_No.png" id="4_7udva"]
+[ext_resource type="Texture2D" uid="uid://bys2crxpyojg4" path="res://assets/items/Light Red/scaled-at-50/b_No.png" id="5_b3rrg"]
+[ext_resource type="PackedScene" uid="uid://ce7pirr3uftn0" path="res://scenes/UI_Scene/progress_bar.tscn" id="6_bobm0"]
 
 [node name="FarmLevels" type="Node2D"]
+
+[node name="Bg" type="TextureRect" parent="."]
+offset_right = 1154.0
+offset_bottom = 701.0
+texture = ExtResource("1_y0yoo")
+expand_mode = 1
+
+[node name="Levels" type="CanvasLayer" parent="."]
+
+[node name="Level1" type="TextureButton" parent="Levels"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Level2" type="TextureButton" parent="Levels"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Level3" type="TextureButton" parent="Levels"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Level4" type="TextureButton" parent="Levels"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LevelClick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_m8byy")
+
+[node name="LevelHover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_mvv21")
+
+[node name="CloseButton" type="TextureButton" parent="."]
+offset_left = 1066.0
+offset_top = 80.0
+offset_right = 1131.0
+offset_bottom = 156.0
+texture_normal = ExtResource("4_7udva")
+texture_pressed = ExtResource("5_b3rrg")
+texture_hover = ExtResource("5_b3rrg")
+stretch_mode = 5
+
+[node name="ProgressBar" parent="." instance=ExtResource("6_bobm0")]
+visible = false
+offset_left = 153.0
+offset_top = 442.0
+offset_right = 1039.0
+offset_bottom = 530.0
