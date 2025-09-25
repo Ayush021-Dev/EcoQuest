@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7f21i11hp4fe"]
+
+[ext_resource type="Texture2D" uid="uid://b3gpy76836nhr" path="res://assets/items/recycle_items.png" id="1_n5cbs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euw4v"]
+atlas = ExtResource("1_n5cbs")
+region = Rect2(0.206184, 14.5997, 17.9065, 47.9263)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6rmu3"]
+size = Vector2(21, 47)
+
+[node name="Garbage" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(134, 26)
+texture = SubResource("AtlasTexture_euw4v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(135.5, 27.5)
+shape = SubResource("RectangleShape2D_6rmu3")
