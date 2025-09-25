@@ -181,7 +181,7 @@ var next_button
 var correct_answers: int = 0
 var wrong_answers: int = 0
 var level_id: String = "reforestation_level4"
-
+var level_id2: String = "reforestation_level3"
 func _ready():
 	# Show instructions panel initially (make sure you have one in scene)
 	instructions_panel.visible = true
@@ -292,7 +292,7 @@ func show_quiz_end():
 	calculate_final_quiz_score()
 
 	LevelCompletionManager.mark_level_completed(level_id)
-
+	LevelCompletionManager.mark_level_completed(level_id2)
 	question_label.text = "Quiz Completed!\nCorrect: " + str(correct_answers) + "/" + str(questions.size())
 	for b in buttons:
 		b.hide()

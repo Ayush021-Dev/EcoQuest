@@ -3,6 +3,13 @@ extends Node
 var completed_levels: Dictionary = {}
 var save_file_path: String = "user://level_completion_save.dat"
 
+var required_levels: Array = [
+	"reforestation_level1",
+	"reforestation_level2",
+	"reforestation_level3",
+	"reforestation_level4"
+]
+
 func _ready():
 	load_completion_data()
 
@@ -20,6 +27,13 @@ func get_completed_levels() -> Dictionary:
 func reset_all_completions():
 	completed_levels.clear()
 	save_completion_data()
+
+func all_levels_completed_locked() -> bool:
+	# Check if all required levels are completed
+	for level_id in required_levels:
+		if not is_level_completed(level_id):
+			return false
+	return true
 
 func save_completion_data():
 	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
