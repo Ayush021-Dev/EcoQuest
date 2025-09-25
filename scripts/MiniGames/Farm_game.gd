@@ -2,7 +2,7 @@ extends Node2D  # Attached to FarmController
 
 @onready var area = $Area2D
 @onready var interact_label = $InteractLabel
-@onready var tilemap_layer = $FarmGame  # TileMapLayer node for farm, replace with actual farm TileMapLayer node name
+@onready var tilemap_layer = $FarmGame 
 
 var can_interact = false
 var player = null
@@ -36,9 +36,9 @@ func _on_area_body_exited(body):
 		interact_label.hide()
 
 func _set_brightness(value: float):
-	var material = tilemap_layer.material
-	if material and material is ShaderMaterial:
-		material.set_shader_parameter("brightness", value)
+	var mmaterial = tilemap_layer.mmaterial
+	if mmaterial and mmaterial is ShaderMaterial:
+		mmaterial.set_shader_parameter("brightness", value)
 
 func _input(event):
 	if can_interact and event.is_action_pressed("interact"):

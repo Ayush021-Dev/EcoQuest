@@ -27,7 +27,7 @@ func start_loading():
 	progress_bar.value = 0
 	loading_label.text = "Loading... 0%"
 	# Start threaded loading of scene
-	ResourceLoader.load_threaded_request("res://scenes/maps/main.tscn")
+	ResourceLoader.load_threaded_request("res://scenes/Maps/main.tscn")
 	# Begin tracking loading progress
 	check_loading_progress()
 
@@ -40,7 +40,7 @@ func hide_all_buttons():
 
 func check_loading_progress():
 	var progress = []
-	var status = ResourceLoader.load_threaded_get_status("res://scenes/maps/main.tscn", progress)
+	var status = ResourceLoader.load_threaded_get_status("res://scenes/Maps/main.tscn", progress)
 	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 		print("Error: Invalid resource path")
 		return
@@ -54,7 +54,7 @@ func check_loading_progress():
 		progress_bar.value = 100
 		loading_label.text = "Loading... 100%"
 		await get_tree().create_timer(0.5).timeout
-		var loaded_scene = ResourceLoader.load_threaded_get("res://scenes/maps/main.tscn")
+		var loaded_scene = ResourceLoader.load_threaded_get("res://scenes/Maps/main.tscn")
 		get_tree().change_scene_to_packed(loaded_scene)
 	elif status == ResourceLoader.THREAD_LOAD_FAILED:
 		print("Error: Failed to load scene")

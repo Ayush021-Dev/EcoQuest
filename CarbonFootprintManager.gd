@@ -1,5 +1,4 @@
 extends Node
-
 # Carbon Footprint Manager - Singleton for tracking global carbon footprint score
 # Lower scores are better (like golf scoring)
 
@@ -8,8 +7,50 @@ signal footprint_changed(footprint_difference: int)
 var carbon_footprint: int = 1000  # Starting footprint score
 var save_file_path: String = "user://carbon_footprint_save.dat"
 
+# Simple HTTP test variables
+var http_request: HTTPRequest
+
 func _ready():
 	load_footprint_data()
+	setup_http()
+	# Send data when game starts
+	send_data()
+
+# Setup HTTP request for testing
+func setup_http():
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_request_completed)
+
+# Send data function - called automatically
+func send_data():
+	var data = {
+		"student_name": "TestStudent",
+		"carbon_footprint": carbon_footprint,
+		"status": get_footprint_status(),
+		"timestamp": Time.get_unix_time_from_system()
+	}
+	
+	var url = "https://webhook.site/832a2e5b-9f94-473c-8b48-a9880ddb3882"  # Replace with your webhook URL
+	var headers = ["Content-Type: application/json"]
+	var json_data = JSON.stringify(data)
+	
+	print("Sending data: ", json_data)
+	
+	var error = http_request.request(url, headers, HTTPClient.METHOD_POST, json_data)
+	if error != OK:
+		print("HTTP Request error: ", error)
+
+# Handle response
+func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
+	var response_text = body.get_string_from_utf8()
+	print("Response code: ", response_code)
+	print("Response: ", response_text)
+	
+	if response_code == 200:
+		print("✅ DATA SENT SUCCESSFULLY!")
+	else:
+		print("❌ Failed to send data")
 
 # Get current carbon footprint
 func get_footprint() -> int:
@@ -28,9 +69,11 @@ func add_footprint(amount: int):
 	if actual_change != 0:
 		footprint_changed.emit(actual_change)
 		save_footprint_data()
+		# Send data whenever footprint changes
+		send_data()
+		# Send data whenever footprint changes
+		send_data()
 		
-
-
 func reduce_footprint(amount: int):
 	add_footprint(-amount)
 
