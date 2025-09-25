@@ -1,13 +1,65 @@
-[gd_scene load_steps=7 format=3 uid="uid://retynqlfyumv"]
+[gd_scene load_steps=22 format=3 uid="uid://retynqlfyumv"]
 
+[ext_resource type="Script" uid="uid://cgwgngffohsu3" path="res://scripts/MiniGames/Farm_level.gd" id="1_7udva"]
 [ext_resource type="Texture2D" uid="uid://udyn1yg565vt" path="res://assets/Farm/Village landscape Free Pixel Art Background.png" id="1_y0yoo"]
 [ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="2_m8byy"]
+[ext_resource type="Texture2D" uid="uid://bgcgk3dlxxaei" path="res://assets/items/Numbers/Color_02.png" id="2_mvv21"]
+[ext_resource type="Texture2D" uid="uid://blf7sjddrvg1j" path="res://assets/items/Numbers/Color_01.png" id="3_7udva"]
 [ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="3_mvv21"]
 [ext_resource type="Texture2D" uid="uid://dsxpi3hwfx1sk" path="res://assets/items/Grey/scaled-at-50/b_No.png" id="4_7udva"]
 [ext_resource type="Texture2D" uid="uid://bys2crxpyojg4" path="res://assets/items/Light Red/scaled-at-50/b_No.png" id="5_b3rrg"]
 [ext_resource type="PackedScene" uid="uid://ce7pirr3uftn0" path="res://scenes/UI_Scene/progress_bar.tscn" id="6_bobm0"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3rrg"]
+atlas = ExtResource("2_mvv21")
+region = Rect2(56, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bobm0"]
+atlas = ExtResource("3_7udva")
+region = Rect2(56, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d886"]
+atlas = ExtResource("3_7udva")
+region = Rect2(56, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocxcv"]
+atlas = ExtResource("2_mvv21")
+region = Rect2(216, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etg46"]
+atlas = ExtResource("3_7udva")
+region = Rect2(216, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6qp2"]
+atlas = ExtResource("3_7udva")
+region = Rect2(224, 56, 136, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llujb"]
+atlas = ExtResource("2_mvv21")
+region = Rect2(376, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0l0tc"]
+atlas = ExtResource("3_7udva")
+region = Rect2(376, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m72md"]
+atlas = ExtResource("3_7udva")
+region = Rect2(376, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ftg1"]
+atlas = ExtResource("2_mvv21")
+region = Rect2(536, 56, 144, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_880o2"]
+atlas = ExtResource("3_7udva")
+region = Rect2(544, 56, 136, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqjc8"]
+atlas = ExtResource("3_7udva")
+region = Rect2(544, 56, 136, 144)
+
 [node name="FarmLevels" type="Node2D"]
+script = ExtResource("1_7udva")
 
 [node name="Bg" type="TextureRect" parent="."]
 offset_right = 1154.0
@@ -18,20 +70,40 @@ expand_mode = 1
 [node name="Levels" type="CanvasLayer" parent="."]
 
 [node name="Level1" type="TextureButton" parent="Levels"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 116.0
+offset_top = 334.0
+offset_right = 260.0
+offset_bottom = 478.0
+texture_normal = SubResource("AtlasTexture_b3rrg")
+texture_pressed = SubResource("AtlasTexture_bobm0")
+texture_hover = SubResource("AtlasTexture_5d886")
 
 [node name="Level2" type="TextureButton" parent="Levels"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 374.0
+offset_top = 334.0
+offset_right = 518.0
+offset_bottom = 478.0
+texture_normal = SubResource("AtlasTexture_ocxcv")
+texture_pressed = SubResource("AtlasTexture_etg46")
+texture_hover = SubResource("AtlasTexture_f6qp2")
 
 [node name="Level3" type="TextureButton" parent="Levels"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 642.0
+offset_top = 327.0
+offset_right = 786.0
+offset_bottom = 471.0
+texture_normal = SubResource("AtlasTexture_llujb")
+texture_pressed = SubResource("AtlasTexture_0l0tc")
+texture_hover = SubResource("AtlasTexture_m72md")
 
 [node name="Level4" type="TextureButton" parent="Levels"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 909.0
+offset_top = 326.0
+offset_right = 1053.0
+offset_bottom = 470.0
+texture_normal = SubResource("AtlasTexture_5ftg1")
+texture_pressed = SubResource("AtlasTexture_880o2")
+texture_hover = SubResource("AtlasTexture_fqjc8")
 
 [node name="LevelClick" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_m8byy")
