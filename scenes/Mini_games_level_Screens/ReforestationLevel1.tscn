@@ -89,7 +89,7 @@ stretch_mode = 4
 wait_time = 2.0
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 60.0
+wait_time = 20.0
 one_shot = true
 
 [node name="GameOver" type="ColorRect" parent="."]

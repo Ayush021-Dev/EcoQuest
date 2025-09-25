@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bqloyiq7in7vx"]
+[gd_scene load_steps=41 format=3 uid="uid://bqloyiq7in7vx"]
 
 [ext_resource type="Script" uid="uid://cjo3d2p5xhale" path="res://scripts/MiniGames/lakeLevel3.gd" id="1_bn70y"]
 [ext_resource type="Texture2D" uid="uid://b2wkahw5rvdt6" path="res://assets/Bubble/tilesetOpenGameBackground_1.png" id="1_jnqxk"]
@@ -6,13 +6,19 @@
 [ext_resource type="Texture2D" uid="uid://c4r6yerggwyqi" path="res://assets/Bubble/fish_full.png" id="3_tpdvb"]
 [ext_resource type="Texture2D" uid="uid://sacl7a1tekso" path="res://assets/Bubble/bubble1.png" id="4_vlq11"]
 [ext_resource type="Texture2D" uid="uid://beflxrm7ey7mt" path="res://assets/Bubble/bubble2.png" id="5_m38b7"]
+[ext_resource type="Script" uid="uid://ib5pm2chwt5u" path="res://scripts/Char_scripts/fish_1.gd" id="5_vlq11"]
 [ext_resource type="Texture2D" uid="uid://bfhcdhw0ewrnd" path="res://assets/Bubble/bubble3.png" id="6_0882m"]
+[ext_resource type="Script" uid="uid://blwsfv44cji5b" path="res://scripts/Char_scripts/fish_2.gd" id="6_m38b7"]
+[ext_resource type="Script" uid="uid://ct43ta68auoqp" path="res://scripts/Char_scripts/fish_3.gd" id="7_0882m"]
 [ext_resource type="Texture2D" uid="uid://bybtr6c8hlw27" path="res://assets/Bubble/bubble4.png" id="7_hbnbf"]
 [ext_resource type="Texture2D" uid="uid://qsuj5y2kytw" path="res://assets/Bubble/bubble5.png" id="8_4pger"]
 [ext_resource type="Texture2D" uid="uid://bkyykqm435j6f" path="res://assets/Bubble/bubble6.png" id="9_m7vqp"]
 [ext_resource type="Texture2D" uid="uid://qe6hapiyu3kk" path="res://assets/Bubble/bubble7.png" id="10_7pad8"]
 [ext_resource type="Texture2D" uid="uid://bbai2mqmvwpbg" path="res://assets/Bubble/bubble8.png" id="11_t17ul"]
 [ext_resource type="Texture2D" uid="uid://vre68gyo2gp7" path="res://assets/Bubble/bubble9.png" id="12_cuwc7"]
+[ext_resource type="Shader" uid="uid://2evgnqn2xlca" path="res://scenes/Mini_games_level_Screens/LakeLevel3.gdshader" id="14_tpdvb"]
+[ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="18_hbnbf"]
+[ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="19_4pger"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ph01s"]
 atlas = ExtResource("3_tpdvb")
@@ -177,14 +183,27 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tpdvb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m38b7"]
+shader = ExtResource("14_tpdvb")
+
 [node name="LakeLevel3" type="Node2D"]
 script = ExtResource("1_bn70y")
 
-[node name="clouds" type="TextureRect" parent="."]
-offset_left = -12.0
-offset_top = -4.0
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -11.0
+offset_top = 3.0
 offset_right = 1154.0
-offset_bottom = 198.0
+offset_bottom = 196.0
+color = Color(3.85046e-07, 0.756599, 0.986114, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="clouds" type="TextureRect" parent="."]
+offset_left = -6.0
+offset_top = -110.0
+offset_right = 1158.0
+offset_bottom = 90.0
 texture = ExtResource("1_jnqxk")
 
 [node name="water" type="TextureRect" parent="."]
@@ -194,12 +213,14 @@ offset_right = 1154.0
 offset_bottom = 660.0
 texture = ExtResource("2_bn70y")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Fish1" type="AnimatedSprite2D" parent="water"]
 position = Vector2(1099, 290)
 scale = Vector2(2, 2.05)
 sprite_frames = SubResource("SpriteFrames_jlf6v")
 animation = &"swim\'"
+script = ExtResource("5_vlq11")
 
 [node name="Fish2" type="AnimatedSprite2D" parent="water"]
 position = Vector2(130, 151)
@@ -208,20 +229,232 @@ sprite_frames = SubResource("SpriteFrames_2ebb8")
 animation = &"swim"
 frame_progress = 0.413377
 flip_h = true
+script = ExtResource("6_m38b7")
 
 [node name="Fish3" type="AnimatedSprite2D" parent="water"]
-position = Vector2(914, 64)
+position = Vector2(1083, 69)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_40et6")
 animation = &"swim"
-frame_progress = 0.165662
+frame_progress = 0.381455
+script = ExtResource("7_0882m")
 
 [node name="Bubbles" type="AnimatedSprite2D" parent="."]
 editor_description = "Carbon Catcher: CO₂ bubbles rise toward the lake. Player must pop/capture them before they dissolve, showing link between emissions and water acidification."
+visible = false
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(0, 0, 0, 1)
 position = Vector2(294, 427)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_d2xmp")
 animation = &"floating"
-frame_progress = 0.77901
+
+[node name="SedimentSpot1" type="Area2D" parent="."]
+position = Vector2(29, 636)
+scale = Vector2(1.01568, 1.01651)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot1"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot1"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot1"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot2" type="Area2D" parent="."]
+position = Vector2(187, 623)
+scale = Vector2(1.64, 1.36)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot2"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot2"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot2"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot3" type="Area2D" parent="."]
+position = Vector2(926, 606)
+scale = Vector2(1.84901, 2.06367)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot3"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot3"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot3"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot4" type="Area2D" parent="."]
+position = Vector2(499, 633)
+scale = Vector2(1.6202, 1.32522)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot4"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot4"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot4"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot5" type="Area2D" parent="."]
+position = Vector2(654, 628)
+scale = Vector2(1.32, 1.44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot5"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot5"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot5"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot6" type="Area2D" parent="."]
+position = Vector2(737, 617)
+scale = Vector2(1.56, 1.72)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot6"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot6"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot6"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot7" type="Area2D" parent="."]
+position = Vector2(994, 627)
+scale = Vector2(1.6, 1.64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot7"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot7"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot7"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SedimentSpot8" type="Area2D" parent="."]
+position = Vector2(1111, 631)
+scale = Vector2(1.44, 1.22275)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SedimentSpot8"]
+position = Vector2(1, 0)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_tpdvb")
+
+[node name="Timer" type="Timer" parent="SedimentSpot8"]
+
+[node name="ColorRect" type="ColorRect" parent="SedimentSpot8"]
+material = SubResource("ShaderMaterial_m38b7")
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 18.0
+offset_bottom = 8.0
+color = Color(0.404611, 0.288421, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = -55.0
+offset_top = -18.0
+offset_right = 1205.0
+offset_bottom = 692.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 117.0
+offset_right = 1187.0
+offset_bottom = 651.0
+theme_override_fonts/font = ExtResource("18_hbnbf")
+theme_override_font_sizes/font_size = 30
+text = "Welcome to EcoQuest  Lake Carbon Bubble Challenge!
+
+
+This level simulates a real environmental issue: carbon gases bubble up from lake sediments and contribute to climate change. Managing and cleaning these sediment spots helps reduce harmful emissions and keeps our lakes healthy.
+
+
+Your mission is to drag and \"clean\" the bubbling sediment spots at the bottom of the lake before bubbles rise to the surface and escape.
+
+
+
+Simply click and drag on a sediment spot to scrub it clean.
+
+Each spot requires several rubs to be fully cleaned.
+
+Clean spots stop bubbles from forming, protecting the lake and reducing carbon footprint.
+
+By playing, you learn how real-world lake management like dredging helps fight climate change. Good luck!"
+text_overrun_behavior = 2
+
+[node name="BG" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_4pger")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
+[node name="ResultLabel" type="Label" parent="."]
+visible = false
+offset_left = 178.0
+offset_top = 140.0
+offset_right = 978.0
+offset_bottom = 561.0
+theme_override_fonts/font = ExtResource("18_hbnbf")
+theme_override_font_sizes/font_size = 30
+autowrap_mode = 2
