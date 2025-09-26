@@ -12,7 +12,7 @@ var classroom_password: String = ""
 var profiles_folder: String = "user://profiles/"
 
 # Webhook URL - CHANGE THIS TO YOUR WEBHOOK
-var webhook_url: String = "https://webhook.site/832a2e5b-9f94-473c-8b48-a9880ddb3882"
+var webhook_url: String = "https://webhook.site/e1bd9b38-84c0-4ef0-a218-5d3781834d9b"
 
 # HTTP request
 var http_request: HTTPRequest
