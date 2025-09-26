@@ -1,144 +1,115 @@
 extends Node2D
 
-@export var garbage_scene: PackedScene = preload("res://scenes/Garbage.tscn")
-@export var spawn_area: Rect2 = Rect2(165, 150, 800, 400)  # Adjust spawn area to your map
-
-@export var move_speed = 200.0
-@export var down_speed = 300.0
-@export var up_speed = 300.0
-
-@export var gripper_left_limit: float = 85.0
-@export var gripper_right_limit: float = 1020.0
-@export var gripper_top_y: float = 60.0
-@export var gripper_bottom_y: float = 625.0
-
 @onready var gripper = $Gripper
+@onready var water_tilemap = $Water
 @onready var garbage_container = $GarbageContainer
 @onready var dustbin_area = $DustbinArea
 
-var direction = 1
-var is_moving = true
-var is_down = false
-var is_up = false
-var grabbed_garbage = null
+# Preload the garbage scene - Update this path to match your file location
+@export var garbage_scene: PackedScene = preload("res://scenes/Garbage.tscn")
+var garbage_types = ["cokezero", "sprite", "can", "bottle"]
+var total_garbage_count = 10  # Adjust as needed
+var current_garbage_count = 0
+var score = 0
+
+# UI elements (optional - add Label node for score display)
+@onready var score_label = get_node_or_null("ScoreLabel")
 
 func _ready():
-	gripper.position.x = gripper_left_limit
-	_create_gripper_visual()
-	_spawn_garbage_batch(5)
-
-func _process(delta):
-	
-	if is_moving:
-		_move_horizontal(delta)
-	elif is_down:
-		_move_down(delta)
-	elif is_up:
-		_move_up(delta)
-
-
-func _move_horizontal(delta):
-	gripper.position.x += direction * move_speed * delta
-	if gripper.position.x > gripper_right_limit:
-		gripper.position.x = gripper_right_limit
-		direction = -1
-	elif gripper.position.x < gripper_left_limit:
-		gripper.position.x = gripper_left_limit
-		direction = 1
-
-func _move_down(delta):
-	gripper.position.y += down_speed * delta
-	if gripper.position.y > gripper_bottom_y:
-		gripper.position.y = gripper_bottom_y
-	_check_grab_garbage()
-	if gripper.position.y >= gripper_bottom_y:
-		is_down = false
-		is_up = true
-
-func _move_up(delta):
-	gripper.position.y -= up_speed * delta
-	if gripper.position.y < gripper_top_y:
-		gripper.position.y = gripper_top_y
-	if gripper.position.y <= gripper_top_y:
-		is_up = false
-		is_moving = true
-
-func _check_grab_garbage():
-	if grabbed_garbage:
-		return
-	for garbage in garbage_container.get_children():
-		if _aabb_intersects(gripper, garbage):
-			grabbed_garbage = garbage
-			garbage_container.remove_child(garbage)
-			gripper.add_child(garbage)
-			grabbed_garbage.position = Vector2(0, 20)
-			grabbed_garbage.scale = Vector2(1, 1)
-			grabbed_garbage.rotation = 0
-			grabbed_garbage.set_physics_process(false)
-			print("Grabbed garbage:", grabbed_garbage.name)
+	# Load garbage scene if not assigned
+	if not garbage_scene:
+		garbage_scene = load("res://scenes/Garbage.tscn")
+		if not garbage_scene:
+			print("Failed to load Garbage.tscn - check file path!")
 			return
-
-# Adjusted grab box, shifted slightly right to match claws visually
-func _aabb_intersects(node_a, node_b) -> bool:
-	var a_pos = node_a.global_position
-	var b_pos = node_b.global_position
-	var grab_offset = Vector2(10, 0)
-	var a_rect = Rect2(a_pos + grab_offset - Vector2(10, 15), Vector2(20, 30))
-	var b_rect = Rect2(b_pos - Vector2(15, 15), Vector2(30, 30))
-	return a_rect.intersects(b_rect)
+	
+	# Connect input events
+	set_process_input(true)
+	
+	# Spawn initial garbage
+	spawn_garbage()
+	
+	# Connect gripper signals
+	if gripper.has_signal("garbage_collected"):
+		gripper.connect("garbage_collected", _on_garbage_collected)
+	
+	# Update score display
+	update_score_display()
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed:
-		if is_moving:
-			is_moving = false
-			is_down = true
-		elif grabbed_garbage:
-			_drop_garbage()
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		gripper.on_mouse_click()
 
-func _drop_garbage():
-	if dustbin_area.get_overlapping_bodies().has(grabbed_garbage) or dustbin_area.get_overlapping_areas().has(grabbed_garbage):
-		print("Garbage dropped inside dustbin! Well done!")
-		grabbed_garbage.queue_free()
-	else:
-		print("Dropped outside dustbin, try again.")
-		if grabbed_garbage and grabbed_garbage.get_parent() == gripper:
-			gripper.remove_child(grabbed_garbage)
-			garbage_container.add_child(grabbed_garbage)
-			grabbed_garbage.position = gripper.global_position + Vector2(0, 20)
-			grabbed_garbage.set_physics_process(true)
-	grabbed_garbage = null
-	is_moving = true
-
-func _create_gripper_visual():
-	if gripper.get_child_count() == 0:
-		var claw_left = ColorRect.new()
-		claw_left.color = Color(1, 0.85, 0.2)
-		claw_left.size = Vector2(10, 30)
-		claw_left.position = Vector2(-15, 0)
-		gripper.add_child(claw_left)
+func spawn_garbage():
+	# Check if garbage_scene is properly loaded
+	if not garbage_scene:
+		print("Error: Garbage scene not loaded!")
+		return
+	
+	# Get water tilemap bounds
+	var used_rect = water_tilemap.get_used_rect()
+	var tile_size = water_tilemap.tile_set.tile_size
+	
+	var min_x = used_rect.position.x * tile_size.x
+	var max_x = (used_rect.position.x + used_rect.size.x) * tile_size.x - 160  # Reduced by 160
+	var min_y = used_rect.position.y * tile_size.y
+	var max_y = (used_rect.position.y + used_rect.size.y) * tile_size.y - 25   # Reduced by 25
+	
+	print("Garbage spawning range:")
+	print("X: ", min_x, " to ", max_x)
+	print("Y: ", min_y, " to ", max_y)
+	
+	for i in range(total_garbage_count):
+		var garbage_instance = garbage_scene.instantiate()
 		
-		var claw_right = ColorRect.new()
-		claw_right.color = Color(1, 0.85, 0.2)
-		claw_right.size = Vector2(10, 30)
-		claw_right.position = Vector2(15, 0)
-		gripper.add_child(claw_right)
+		# Use the adjusted ranges
+		var random_x = randf_range(min_x, max_x)
+		var random_y = randf_range(min_y, max_y)
+		
+		garbage_instance.position = Vector2(random_x, random_y)
+		
+		# Set random garbage type
+		var random_type = garbage_types[randi() % garbage_types.size()]
+		garbage_instance.set_garbage_type(random_type)
+		
+		add_child(garbage_instance)
 
-# Debug draw the grab zone rectangle
-func _draw():
-	var grab_offset = Vector2(10, 0)
-	var box_pos = grab_offset - Vector2(10, 15)
-	var box_size = Vector2(20, 30)
-	draw_rect(Rect2(box_pos, box_size), Color(1, 0, 0, 0.4), false)
+func _on_garbage_collected():
+	score += 10  # Add points for successful collection
+	print("Score: ", score)
+	update_score_display()
+	
+	# Count remaining garbage
+	var remaining_garbage = get_tree().get_nodes_in_group("garbage").size()
+	current_garbage_count = remaining_garbage
+	
+	if current_garbage_count <= 0:
+		print("Level Complete! Final Score: ", score)
+		# Add level completion logic here
 
-func _spawn_garbage_batch(count):
-	for i in range(count):
-		_spawn_garbage()
+# Add this new function to handle missed garbage from gripper
+func respawn_missed_garbage(garbage_type: String):
+	print("Respawning missed garbage of type: ", garbage_type)
+	var new_garbage = garbage_scene.instantiate()
+	
+	# Get random position in water area
+	var used_rect = water_tilemap.get_used_rect()
+	var tile_size = water_tilemap.tile_set.tile_size
+	
+	var random_x = randf_range(used_rect.position.x * tile_size.x, 
+							  (used_rect.position.x + used_rect.size.x) * tile_size.x)
+	var random_y = randf_range(used_rect.position.y * tile_size.y, 
+							  (used_rect.position.y + used_rect.size.y) * tile_size.y)
+	
+	new_garbage.position = Vector2(random_x, random_y)
+	new_garbage.set_garbage_type(garbage_type)
+	add_child(new_garbage)
+	print("New garbage spawned at: ", new_garbage.position)
 
-func _spawn_garbage():
-	var garbage_instance = garbage_scene.instantiate()
-	var pos = Vector2(
-		randf_range(spawn_area.position.x, spawn_area.position.x + spawn_area.size.x),
-		randf_range(spawn_area.position.y, spawn_area.position.y + spawn_area.size.y)
-	)
-	garbage_instance.position = pos
-	garbage_container.add_child(garbage_instance)
+func update_score_display():
+	if score_label:
+		score_label.text = "Score: " + str(score)
+	
+	# Count remaining garbage
+	var remaining_garbage = get_tree().get_nodes_in_group("garbage").size()
+	current_garbage_count = remaining_garbage

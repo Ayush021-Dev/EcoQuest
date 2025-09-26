@@ -358,7 +358,7 @@ func pop_bubble(bubble):
 		print("Bubble escaped! Total:", bubbles_escaped_count)
 		
 func _on_close_pressed():
-	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 
 func _play_click_sound():
 	if click_sound.playing:
