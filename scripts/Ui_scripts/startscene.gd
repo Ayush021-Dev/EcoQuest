@@ -10,7 +10,7 @@ extends Control
 @onready var refresh_button = $LoginPanel/Button2
 @onready var blackout = $BlackOverlay  # The black ColorRect overlay
 @onready var start_button = $Play      # Your main menu/play/start button (named 'Play' in your scene)
-
+@onready var progress_bar = $ProgressBar 
 var profiles_folder = "user://profiles/"
 var current_profile = ""
 
@@ -27,7 +27,7 @@ func _ready():
 	blackout.visible = true
 	login_panel.visible = true
 	start_button.visible = false
-
+	progress_bar.visible = false
 	# Center login panel (if not already set in editor)
 	login_panel.anchor_left = 0.5
 	login_panel.anchor_right = 0.5
@@ -143,7 +143,7 @@ func _on_validation_success(profile_name: String, classroom_id: String, password
 	blackout.visible = false
 	# Show Start button and main UI (show only visual nodes)
 	for child in get_children():
-		if child != login_panel and child != blackout and child is CanvasItem:
+		if child != login_panel and child != blackout and child != progress_bar and child is CanvasItem:
 			child.visible = true
 	start_button.visible = true
 	start_button.grab_focus()

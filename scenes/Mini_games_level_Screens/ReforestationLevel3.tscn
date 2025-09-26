@@ -192,11 +192,13 @@ offset_right = 1156.0
 offset_bottom = 658.0
 
 [node name="ColorRect" type="ColorRect" parent="WinPanel"]
+layout_mode = 0
 offset_right = 1156.0
 offset_bottom = 649.0
 color = Color(0, 0, 0, 0.862745)
 
 [node name="WinLabel" type="Label" parent="WinPanel"]
+layout_mode = 0
 offset_left = 134.0
 offset_top = 115.0
 offset_right = 896.0
