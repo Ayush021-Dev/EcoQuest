@@ -122,7 +122,7 @@ var questions = [
 	  "No, that’s about water.", 
 	  "No, Earth Day is broader.", 
 	  "Correct! World Forestry Day promotes trees.", 
-	  "No, that’s about ozone."
+	  "No, that is about ozone."
 	]
   },
   {

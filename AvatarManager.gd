@@ -15,6 +15,10 @@ var avatars = [
 var current_avatar_index = 0
 var total_coins: int = 0
 
+# Profile-based save system
+var current_profile: String = ""
+var profiles_folder: String = "user://profiles/"
+
 # Audio players declarations
 var pause_click_sound: AudioStreamPlayer
 var resume_click_sound: AudioStreamPlayer
@@ -23,12 +27,10 @@ var select_click_sound: AudioStreamPlayer
 var select_unlock_sound: AudioStreamPlayer
 var current_scene_name: String = ""
 
-# UPDATED: Main scene player position storage with backup
+# Player position storage with backup
 var main_scene_player_position: Vector2 = Vector2.ZERO
-var previous_valid_position: Vector2 = Vector2.ZERO  # NEW: Backup of last valid position
+var previous_valid_position: Vector2 = Vector2.ZERO
 var returning_from_level: bool = false
-
-# Player position saving dictionary keyed by level/scene name
 var player_positions = {}
 
 func _ready():
@@ -51,55 +53,60 @@ func _ready():
 	select_click_sound.stream = preload("res://assets/sounds/051_use_item_01.wav")
 	select_unlock_sound.stream = preload("res://assets/sounds/character_unlock.ogg")
 
-# UPDATED: Check if position is valid (not at origin or very close to it)
-func is_valid_position(pos: Vector2) -> bool:
-	return pos.length() > 10.0  # Position must be at least 10 units away from origin
+# NEW: Set current profile (called from login system)
+func set_profile(profile_name: String):
+	current_profile = profile_name
+	load_all_profile_data()
+	print("AvatarManager: Set profile to ", profile_name)
 
-# UPDATED: Save player position from main scene before going to levels
+# NEW: Load all profile-specific data
+func load_all_profile_data():
+	load_avatar_data()
+	load_coins_data()
+	load_position_data()
+
+# Check if position is valid (not at origin or very close to it)
+func is_valid_position(pos: Vector2) -> bool:
+	return pos.length() > 10.0
+
+# Save player position from main scene before going to levels
 func save_main_scene_player_position():
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		var player = players[0]
 		var new_position = player.global_position
 		
-		# Check if the new position is valid
 		if is_valid_position(new_position):
-			# Save current valid position as backup before updating
 			if is_valid_position(main_scene_player_position):
 				previous_valid_position = main_scene_player_position
 			
 			main_scene_player_position = new_position
+			save_position_data()  # Save to profile
 			print("Saved main scene player position: ", main_scene_player_position)
-			if previous_valid_position != Vector2.ZERO:
-				print("Previous valid position backed up: ", previous_valid_position)
 			return true
 		else:
-			print("Skipping save - player position is invalid (too close to origin): ", new_position)
-			print("Keeping current saved position: ", main_scene_player_position)
+			print("Skipping save - player position is invalid: ", new_position)
 			return false
 	else:
-		print("Warning: No player found to save position - keeping previous saved position")
+		print("Warning: No player found to save position")
 		return false
 
-# ADDED: For compatibility with existing main.gd calls
 func auto_save_main_player_position():
 	save_main_scene_player_position()
 
 func prepare_scene_change():
 	save_main_scene_player_position()
 
-# UPDATED: Restore player position in main scene with fallback logic
+# Restore player position in main scene with fallback logic
 func restore_main_scene_player_position():
 	var position_to_restore: Vector2
 	
-	# Determine which position to use
 	if is_valid_position(main_scene_player_position):
 		position_to_restore = main_scene_player_position
 		print("Using main saved position: ", position_to_restore)
 	elif is_valid_position(previous_valid_position):
 		position_to_restore = previous_valid_position
-		print("Main position invalid, using previous valid position: ", position_to_restore)
-		# Update main position with the backup
+		print("Using previous valid position: ", position_to_restore)
 		main_scene_player_position = previous_valid_position
 	else:
 		print("No valid saved position to restore")
@@ -115,33 +122,42 @@ func restore_main_scene_player_position():
 		print("Warning: No player found to restore position")
 		return false
 
-# UPDATED: Call this when entering any level
 func entering_level():
 	save_main_scene_player_position()
 	returning_from_level = true
 
-# UPDATED: Call this when returning to main scene
 func returned_to_main():
 	if returning_from_level:
-		# Small delay to ensure scene is fully loaded
 		await get_tree().process_frame
 		restore_main_scene_player_position()
 		returning_from_level = false
 
-# Keep existing functions but update them
 func save_player_position(level_name: String, position: Vector2):
-	player_positions[level_name] = position
+	# Store as dictionary to ensure JSON compatibility
+	player_positions[level_name] = {
+		"x": position.x,
+		"y": position.y
+	}
+	save_position_data()  # Save to profile
 
-# DEPRECATED: Use the new functions above instead
 func load_player_to_main_position():
 	restore_main_scene_player_position()
 
 func get_player_position(level_name: String) -> Vector2:
 	if level_name in player_positions:
-		return player_positions[level_name]
+		var pos_data = player_positions[level_name]
+		
+		# Check if it's already a Vector2
+		if pos_data is Vector2:
+			return pos_data
+		# If it's a dictionary (from JSON loading), convert it back to Vector2
+		elif pos_data is Dictionary:
+			return Vector2(pos_data.get("x", 0), pos_data.get("y", 0))
+		else:
+			print("Warning: Invalid position data for level: ", level_name)
+			return Vector2.ZERO
 	return Vector2.ZERO
 
-# NEW: Get the best available position (main or backup)
 func get_best_saved_position() -> Vector2:
 	if is_valid_position(main_scene_player_position):
 		return main_scene_player_position
@@ -150,47 +166,50 @@ func get_best_saved_position() -> Vector2:
 	else:
 		return Vector2.ZERO
 
-# NEW: Force set a valid position (useful for debugging or manual setting)
 func set_valid_position(pos: Vector2):
 	if is_valid_position(pos):
 		if is_valid_position(main_scene_player_position):
 			previous_valid_position = main_scene_player_position
 		main_scene_player_position = pos
+		save_position_data()
 		print("Manually set valid position: ", pos)
 	else:
 		print("Cannot set invalid position: ", pos)
 
-# NEW: Debug function to print all saved positions
 func debug_print_positions():
 	print("=== AVATAR MANAGER POSITIONS DEBUG ===")
+	print("Profile: ", current_profile)
 	print("Main scene position: ", main_scene_player_position, " (valid: ", is_valid_position(main_scene_player_position), ")")
 	print("Previous valid position: ", previous_valid_position, " (valid: ", is_valid_position(previous_valid_position), ")")
 	print("Best available position: ", get_best_saved_position())
 	print("Returning from level: ", returning_from_level)
 	print("=====================================")
 
-# Coin management funcs
+# Coin management
 func get_coins() -> int:
 	return total_coins
 
 func add_coins(amount: int):
 	total_coins += amount
+	save_coins_data()  # Save to profile
 	emit_signal("coins_changed", amount)
 
 func spend_coins(amount: int) -> bool:
 	if total_coins >= amount:
 		total_coins -= amount
+		save_coins_data()  # Save to profile
 		emit_signal("coins_changed", -amount)
 		return true
 	return false
 
-# Avatar management funcs
+# Avatar management
 func get_current_avatar():
 	return avatars[current_avatar_index]
 
 func unlock_avatar(index):
 	if index < avatars.size():
 		avatars[index]["unlocked"] = true
+		save_avatar_data()  # Save to profile
 
 func buy_avatar(index) -> bool:
 	if index < avatars.size():
@@ -204,6 +223,7 @@ func buy_avatar(index) -> bool:
 func change_avatar(index):
 	if index < avatars.size() and avatars[index]["unlocked"]:
 		current_avatar_index = index
+		save_avatar_data()  # Save to profile
 		emit_signal("avatar_changed", index)
 		return true
 	return false
@@ -215,6 +235,147 @@ func get_avatar(index):
 
 func get_avatar_count():
 	return avatars.size()
+
+# PROFILE SAVE/LOAD FUNCTIONS
+
+# Save avatar data to profile folder
+func save_avatar_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "avatar_data.dat"
+	
+	if not DirAccess.dir_exists_absolute(profile_dir):
+		DirAccess.open("user://").make_dir_recursive("profiles/" + current_profile)
+	
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if file:
+		var save_data = {
+			"current_avatar_index": current_avatar_index,
+			"avatars": avatars
+		}
+		file.store_string(JSON.stringify(save_data))
+		file.close()
+
+# Load avatar data from profile folder
+func load_avatar_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "avatar_data.dat"
+	
+	if FileAccess.file_exists(save_file_path):
+		var file = FileAccess.open(save_file_path, FileAccess.READ)
+		if file:
+			var json_string = file.get_as_text()
+			file.close()
+			
+			var json = JSON.new()
+			var parse_result = json.parse(json_string)
+			
+			if parse_result == OK:
+				var save_data = json.data
+				current_avatar_index = save_data.get("current_avatar_index", 0)
+				avatars = save_data.get("avatars", avatars)
+				print("Loaded avatar data for profile: ", current_profile)
+
+# Save coins data to profile folder
+func save_coins_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "coins_data.dat"
+	
+	if not DirAccess.dir_exists_absolute(profile_dir):
+		DirAccess.open("user://").make_dir_recursive("profiles/" + current_profile)
+	
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if file:
+		var save_data = {
+			"total_coins": total_coins
+		}
+		file.store_string(JSON.stringify(save_data))
+		file.close()
+
+# Load coins data from profile folder
+func load_coins_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "coins_data.dat"
+	
+	if FileAccess.file_exists(save_file_path):
+		var file = FileAccess.open(save_file_path, FileAccess.READ)
+		if file:
+			var json_string = file.get_as_text()
+			file.close()
+			
+			var json = JSON.new()
+			var parse_result = json.parse(json_string)
+			
+			if parse_result == OK:
+				var save_data = json.data
+				total_coins = save_data.get("total_coins", 0)
+				print("Loaded coins for profile ", current_profile, ": ", total_coins)
+
+# Save position data to profile folder
+func save_position_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "position_data.dat"
+	
+	if not DirAccess.dir_exists_absolute(profile_dir):
+		DirAccess.open("user://").make_dir_recursive("profiles/" + current_profile)
+	
+	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
+	if file:
+		var save_data = {
+			"main_scene_player_position": {
+				"x": main_scene_player_position.x,
+				"y": main_scene_player_position.y
+			},
+			"previous_valid_position": {
+				"x": previous_valid_position.x,
+				"y": previous_valid_position.y
+			},
+			"player_positions": player_positions
+		}
+		file.store_string(JSON.stringify(save_data))
+		file.close()
+
+# Load position data from profile folder
+func load_position_data():
+	if current_profile == "":
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "position_data.dat"
+	
+	if FileAccess.file_exists(save_file_path):
+		var file = FileAccess.open(save_file_path, FileAccess.READ)
+		if file:
+			var json_string = file.get_as_text()
+			file.close()
+			
+			var json = JSON.new()
+			var parse_result = json.parse(json_string)
+			
+			if parse_result == OK:
+				var save_data = json.data
+				var main_pos = save_data.get("main_scene_player_position", {})
+				main_scene_player_position = Vector2(main_pos.get("x", 0), main_pos.get("y", 0))
+				
+				var prev_pos = save_data.get("previous_valid_position", {})
+				previous_valid_position = Vector2(prev_pos.get("x", 0), prev_pos.get("y", 0))
+				
+				player_positions = save_data.get("player_positions", {})
+				print("Loaded position data for profile: ", current_profile)
 
 # Sound playback functions
 func play_pause_click():

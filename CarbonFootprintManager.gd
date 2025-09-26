@@ -5,16 +5,29 @@ extends Node
 signal footprint_changed(footprint_difference: int)
 
 var carbon_footprint: int = 1000  # Starting footprint score
-var save_file_path: String = "user://carbon_footprint_save.dat"
+
+# Profile-based save system
+var current_profile: String = ""
+var classroom_id: String = ""
+var classroom_password: String = ""
+var profiles_folder: String = "user://profiles/"
 
 # Simple HTTP test variables
 var http_request: HTTPRequest
 
 func _ready():
-	load_footprint_data()
 	setup_http()
-	# Send data when game starts
-	send_data()
+
+# NEW: Set profile data from login system
+func set_profile_data(profile_name: String, class_id: String, password: String):
+	current_profile = profile_name
+	classroom_id = class_id
+	classroom_password = password
+	
+	# Load profile-specific footprint data
+	load_footprint_data()
+	
+	print("CarbonFootprintManager: Set profile to ", profile_name, " in classroom ", class_id)
 
 # Setup HTTP request for testing
 func setup_http():
@@ -24,14 +37,19 @@ func setup_http():
 
 # Send data function - called automatically
 func send_data():
+	if current_profile == "" or classroom_id == "":
+		print("Cannot send data: No profile or classroom set")
+		return
+		
 	var data = {
-		"student_name": "TestStudent",
+		"classroom_id": classroom_id,
+		"student_name": current_profile,
 		"carbon_footprint": carbon_footprint,
 		"status": get_footprint_status(),
 		"timestamp": Time.get_unix_time_from_system()
 	}
 	
-	var url = "https://webhook.site/832a2e5b-9f94-473c-8b48-a9880ddb3882"  # Replace with your webhook URL
+	var url = "https://webhook.site/your-unique-url"  # Replace with your webhook URL
 	var headers = ["Content-Type: application/json"]
 	var json_data = JSON.stringify(data)
 	
@@ -45,7 +63,6 @@ func send_data():
 func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
 	print("Response code: ", response_code)
-	print("Response: ", response_text)
 	
 	if response_code == 200:
 		print("✅ DATA SENT SUCCESSFULLY!")
@@ -71,8 +88,6 @@ func add_footprint(amount: int):
 		save_footprint_data()
 		# Send data whenever footprint changes
 		send_data()
-		# Send data whenever footprint changes
-		send_data()
 		
 func reduce_footprint(amount: int):
 	add_footprint(-amount)
@@ -87,6 +102,8 @@ func set_footprint(new_footprint: int):
 	if actual_change != 0:
 		footprint_changed.emit(actual_change)
 		save_footprint_data()
+		# Send data whenever footprint changes
+		send_data()
 
 # Get footprint status for UI coloring
 func get_footprint_status() -> String:
@@ -109,8 +126,19 @@ func get_footprint_color() -> Color:
 		_:
 			return Color.WHITE
 
-# Save footprint data
+# UPDATED: Save footprint data to profile folder
 func save_footprint_data():
+	if current_profile == "":
+		print("Cannot save: No profile set")
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "carbon_footprint_save.dat"
+	
+	# Create profile directory if needed
+	if not DirAccess.dir_exists_absolute(profile_dir):
+		DirAccess.open("user://").make_dir_recursive("profiles/" + current_profile)
+	
 	var file = FileAccess.open(save_file_path, FileAccess.WRITE)
 	if file:
 		var save_data = {
@@ -118,9 +146,17 @@ func save_footprint_data():
 		}
 		file.store_string(JSON.stringify(save_data))
 		file.close()
+		print("Saved carbon footprint for profile: ", current_profile)
 
-# Load footprint data
+# UPDATED: Load footprint data from profile folder
 func load_footprint_data():
+	if current_profile == "":
+		carbon_footprint = 1000
+		return
+		
+	var profile_dir = profiles_folder + current_profile + "/"
+	var save_file_path = profile_dir + "carbon_footprint_save.dat"
+	
 	if FileAccess.file_exists(save_file_path):
 		var file = FileAccess.open(save_file_path, FileAccess.READ)
 		if file:
@@ -133,10 +169,12 @@ func load_footprint_data():
 			if parse_result == OK:
 				var save_data = json.data
 				carbon_footprint = save_data.get("carbon_footprint", 1000)
+				print("Loaded carbon footprint for profile ", current_profile, ": ", carbon_footprint)
 			else:
-				print("Error parsing carbon footprint save file")
+				print("Error parsing carbon footprint save file for profile: ", current_profile)
 				carbon_footprint = 1000
 	else:
+		print("No save file found for profile: ", current_profile, " - using default")
 		carbon_footprint = 1000
 
 # Reset footprint to default (for testing or new game)

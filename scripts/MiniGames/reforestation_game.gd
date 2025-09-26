@@ -1,20 +1,16 @@
 extends Node2D
-
 @onready var area = $Area2D
 @onready var interact_label = $InteractLabel
 @onready var reforestation_tilemap_layer = $reforestationGame
 @onready var after_game_tilemap_layer = $afterGame
-
 var can_interact = false
 var player = null
-
 @export var glow_duration: float = 1.0
 
 func _ready():
 	interact_label.hide()
 	area.body_entered.connect(_on_area_body_entered)
 	area.body_exited.connect(_on_area_body_exited)
-	
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		player = players[0]
@@ -23,7 +19,6 @@ func _ready():
 			player.position = saved_pos
 	else:
 		print("Warning: No player found in Player group")
-	
 	check_completion()
 
 func _process(_delta):
@@ -78,6 +73,27 @@ func finish_reforestation():
 	_set_aftergame_brightness(2.0)
 	await get_tree().create_timer(glow_duration).timeout
 	_set_aftergame_brightness(1.0)
+	
+	# Notify the old man NPC to update its state
+	notify_old_man_npc()
+
+func notify_old_man_npc():
+	# Find the old man NPC in the scene and update its state
+	var old_man = get_node_or_null("../OldManNPC")  # Adjust path as needed
+	if not old_man:
+		# Try different possible paths
+		old_man = get_parent().get_node_or_null("OldManNPC")
+	if not old_man:
+		# Search in the entire scene
+		var nodes = get_tree().get_nodes_in_group("oldman_npc")  # Add the old man to this group
+		if nodes.size() > 0:
+			old_man = nodes[0]
+	
+	if old_man and old_man.has_method("update_npc_state"):
+		old_man.update_npc_state()
+		print("Old man NPC state updated!")
+	else:
+		print("Warning: Old man NPC not found or doesn't have update_npc_state method")
 
 func _set_aftergame_brightness(value: float):
 	var material = after_game_tilemap_layer.material

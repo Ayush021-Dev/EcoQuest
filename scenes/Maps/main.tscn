@@ -52369,7 +52369,7 @@ tile_map_data = PackedByteArray("AADT/wcAAAAAAAQAAADT/wgAAAAAAAUAAADT/wkAAAAAAAY
 tile_set = SubResource("TileSet_5vw27")
 
 [node name="Node2D" type="Node2D" parent="."]
-position = Vector2(-91, -259)
+position = Vector2(218, 386)
 
 [node name="PauseMenu" parent="." instance=ExtResource("15_a4lkh")]
 process_mode = 3
