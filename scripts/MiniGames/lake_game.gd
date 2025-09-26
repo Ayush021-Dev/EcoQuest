@@ -3,6 +3,8 @@ extends Node2D  # Attached to LakeController
 @onready var area = $Area2D
 @onready var interact_label = $InteractLabel
 @onready var tilemap_layer = $lakeGame  # TileMapLayer node, replace with your actual Lake TileMapLayer
+@onready var fishes = $lakeGame/fishes
+@onready var garbage = $lakeGame/garbage
 
 var can_interact = false
 var player = null
@@ -12,12 +14,15 @@ func _ready():
 	area.body_entered.connect(_on_area_body_entered)
 	area.body_exited.connect(_on_area_body_exited)
 	
-	# UPDATED: Better player finding with error handling
+	# Better player finding with error handling
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		player = players[0]
 	else:
 		print("Warning: No player found in Player group")
+	
+	# At start, update visibility based on level completion
+	_check_completion()
 
 func _process(_delta):
 	if interact_label.visible and player:
@@ -44,6 +49,26 @@ func _set_brightness(value: float):
 
 func _input(event):
 	if can_interact and event.is_action_pressed("interact"):
-		# ADDED: Save player position before changing scene
+		# Save player position before changing scene
 		AvatarManager.entering_level()
 		get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
+
+func _check_completion():
+	if _all_levels_completed():
+		fishes.show()
+		garbage.hide()
+	else:
+		fishes.hide()
+		garbage.show()
+
+func _all_levels_completed() -> bool:
+	var level_ids = [
+		"lake_level1",
+		"lake_level2",
+		"lake_level3",
+		"lake_level4"
+	]
+	for id in level_ids:
+		if not LevelCompletionManager.is_level_completed(id):
+			return false
+	return true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://fgrgfdatp3a"]
+[gd_scene load_steps=76 format=4 uid="uid://fgrgfdatp3a"]
 
 [ext_resource type="Script" uid="uid://m6cvk84au8p8" path="res://scripts/Ui_scripts/main.gd" id="1_3vtb0"]
 [ext_resource type="Texture2D" uid="uid://dqwiqrc5i6lib" path="res://assets/waterfall-autotiles-anim.png" id="1_eb6dy"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://b3gpy76836nhr" path="res://assets/items/recycle_items.png" id="19_jj4kg"]
 [ext_resource type="Script" uid="uid://ci6fy47roof8h" path="res://scripts/MiniGames/Farm_game.gd" id="20_8cgvg"]
 [ext_resource type="AudioStream" uid="uid://c4a104pkapcbs" path="res://assets/sounds/calm_ambience.mp3" id="21_5ida1"]
+[ext_resource type="Texture2D" uid="uid://c4r6yerggwyqi" path="res://assets/Bubble/fish_full.png" id="21_112xw"]
 [ext_resource type="PackedScene" uid="uid://o16ibklgbwm0" path="res://scenes/Info_board.tscn" id="21_ol8pr"]
 [ext_resource type="Texture2D" uid="uid://drgomlovb5n1c" path="res://assets/Farm/barn.png" id="21_sqite"]
 [ext_resource type="PackedScene" uid="uid://bjcolnwy3m24x" path="res://scenes/Characters/oldman.tscn" id="23_jj4kg"]
@@ -41022,6 +41023,68 @@ texture = ExtResource("19_jj4kg")
 [sub_resource type="TileSet" id="TileSet_d81rw"]
 sources/0 = SubResource("TileSetAtlasSource_mhjtb")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l740b"]
+texture = ExtResource("21_112xw")
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+3:8/0 = 0
+4:8/0 = 0
+5:8/0 = 0
+7:8/0 = 0
+10:8/0 = 0
+11:8/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+1:10/0 = 0
+4:10/0 = 0
+7:10/0 = 0
+10:10/0 = 0
+7:14/0 = 0
+9:14/0 = 0
+10:14/0 = 0
+1:15/0 = 0
+2:15/0 = 0
+4:15/0 = 0
+5:15/0 = 0
+6:15/0 = 0
+7:15/0 = 0
+9:15/0 = 0
+10:15/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_17w3r"]
+sources/0 = SubResource("TileSetAtlasSource_l740b")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_3eu0s"]
 radius = 125.064
 
@@ -52210,6 +52273,11 @@ tile_set = SubResource("TileSet_mhjtb")
 scale = Vector2(0.5, 0.5)
 tile_map_data = PackedByteArray("AAC9AKkAAAAfAAEAAGC+AKkAAAAfAAIAAGC/AKkAAAAfAAMAAGCLAJwAAAAfAAEAAGCMAJwAAAAfAAIAAGCNAJwAAAAfAAMAAGB2AKgAAAAfAAEAAGB3AKgAAAAfAAIAAGB4AKgAAAAfAAMAAGCBAKgAAAAPAAAAAACBAKkAAAAPAAEAAACBAKoAAAAPAAIAAACBAKsAAAAPAAMAAACCAKkAAAAQAAEAAACCAKoAAAAQAAIAAACCAKsAAAAQAAMAAACDAKkAAAARAAEAAACDAKoAAAARAAIAAACDAKsAAAARAAMAAAB6AJUAAAAPAAAAAAB6AJYAAAAPAAEAAAB6AJcAAAAPAAIAAAB6AJgAAAAPAAMAAAB7AJYAAAAQAAEAAAB7AJcAAAAQAAIAAAB7AJgAAAAQAAMAAAB8AJYAAAARAAEAAAB8AJcAAAARAAIAAAB8AJgAAAARAAMAAACWALAAAAAAAAEAAFCVALAAAAAAAAIAAFCUALAAAAAAAAMAAFChAKYAAAAAAAEAAFCgAKYAAAAAAAIAAFCfAKYAAAAAAAMAAFC0AJgAAAAAAAEAAFCzAJgAAAAAAAIAAFCyAJgAAAAAAAMAAFCSAKAAAAAdAAIAAFCSAKEAAAAeAAIAAFCRAKAAAAAdAAMAAFCRAKEAAAAeAAMAAFCKALEAAAAdAAIAAFCKALIAAAAeAAIAAFCJALEAAAAdAAMAAFCJALIAAAAeAAMAAFC1ALAAAAAdAAIAAFC1ALEAAAAeAAIAAFC0ALAAAAAdAAMAAFC0ALEAAAAeAAMAAFCuAJ8AAAAZAAIAAACuAKAAAAAZAAMAAACvAJ8AAAAaAAIAAACvAKAAAAAaAAMAAACwAJ8AAAAbAAIAAACwAKAAAAAbAAMAAACxAJ8AAAAcAAIAAACxAKAAAAAcAAMAAACYAJkAAAAZAAIAAACYAJoAAAAZAAMAAACZAJkAAAAaAAIAAACZAJoAAAAaAAMAAACaAJkAAAAbAAIAAACaAJoAAAAbAAMAAACbAJkAAAAcAAIAAACbAJoAAAAcAAMAAAB9AKAAAAAZAAIAAAB9AKEAAAAZAAMAAAB+AKAAAAAaAAIAAAB+AKEAAAAaAAMAAAB/AKAAAAAbAAIAAAB/AKEAAAAbAAMAAACAAKAAAAAcAAIAAACAAKEAAAAcAAMAAAA=")
 tile_set = SubResource("TileSet_d81rw")
+
+[node name="fishes" type="TileMapLayer" parent="LakeController/lakeGame"]
+visible = false
+tile_map_data = PackedByteArray("AABLAFAAAAABAAIAAABLAFEAAAABAAMAAABMAFAAAAACAAIAAABMAFEAAAACAAMAAABTAE4AAAABAAIAAABTAE8AAAABAAMAAABUAE4AAAACAAIAAABUAE8AAAACAAMAAABYAFMAAAABAAIAAABYAFQAAAABAAMAAABZAFMAAAACAAIAAABZAFQAAAACAAMAAABBAEsAAAABAAIAAABBAEwAAAABAAMAAABCAEsAAAACAAIAAABCAEwAAAACAAMAAABbAE0AAAAJAAkAAABcAEwAAAAKAAgAAABcAE0AAAAKAAkAAABcAE4AAAAKAAoAAABdAEwAAAALAAgAAABdAE0AAAALAAkAAAA/AFMAAAAJAAkAAABAAFIAAAAKAAgAAABAAFMAAAAKAAkAAABAAFQAAAAKAAoAAABBAFIAAAALAAgAAABBAFMAAAALAAkAAABOAFgAAAABAA8AAABPAFgAAAACAA8AAABVAFYAAAABAA8AAABWAFYAAAACAA8AAABIAFUAAAABAA8AAABJAFUAAAACAA8AAABeAFgAAAABAA8AAABfAFgAAAACAA8AAABDAFEAAAAJAAIAAABDAFIAAAAJAAMAAABEAFEAAAAKAAIAAABEAFIAAAAKAAMAAAA7AFEAAAAJAAIAAAA7AFIAAAAJAAMAAAA8AFEAAAAKAAIAAAA8AFIAAAAKAAMAAABCAFgAAAAJAAIAAABCAFkAAAAJAAMAAABDAFgAAAAKAAIAAABDAFkAAAAKAAMAAAA=")
+tile_set = SubResource("TileSet_17w3r")
 
 [node name="InteractLabel" type="Label" parent="LakeController"]
 offset_left = 1489.0

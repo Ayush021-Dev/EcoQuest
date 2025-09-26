@@ -1,6 +1,9 @@
 extends Node2D
 @onready var game_timer: Timer = $Timer
 @onready var result_label: Label = $ResultLabel 
+@onready var close_button = $CloseButton
+@onready var click_sound = $ClickSound
+@onready var hover_sound = $HoverSound
 # Sediment spot management
 var sediment_spots = []
 var active_spots = []
@@ -38,7 +41,12 @@ func _ready():
 
 	if $BG.playing:
 		$BG.stop()
-
+	if not close_button.pressed.is_connected(_on_close_pressed):
+		close_button.pressed.connect(_on_close_pressed)
+	if not close_button.pressed.is_connected(_play_click_sound):
+		close_button.pressed.connect(_play_click_sound)
+	if not close_button.mouse_entered.is_connected(_play_hover_sound):
+		close_button.mouse_entered.connect(_play_hover_sound)
 	game_timer.connect("timeout", Callable(self, "_on_game_timer_timeout"))
 
 
@@ -349,3 +357,15 @@ func pop_bubble(bubble):
 		get_tree().create_timer(0.5).timeout.connect(bubble.queue_free)
 		print("Bubble escaped! Total:", bubbles_escaped_count)
 		
+func _on_close_pressed():
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
+
+func _play_click_sound():
+	if click_sound.playing:
+		click_sound.stop()
+	click_sound.play()
+
+func _play_hover_sound():
+	if hover_sound.playing:
+		hover_sound.stop()
+	hover_sound.play()

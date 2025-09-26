@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bqloyiq7in7vx"]
+[gd_scene load_steps=45 format=3 uid="uid://bqloyiq7in7vx"]
 
 [ext_resource type="Script" uid="uid://cjo3d2p5xhale" path="res://scripts/MiniGames/lakeLevel3.gd" id="1_bn70y"]
 [ext_resource type="Texture2D" uid="uid://b2wkahw5rvdt6" path="res://assets/Bubble/tilesetOpenGameBackground_1.png" id="1_jnqxk"]
@@ -19,6 +19,10 @@
 [ext_resource type="Shader" uid="uid://2evgnqn2xlca" path="res://scenes/Mini_games_level_Screens/LakeLevel3.gdshader" id="14_tpdvb"]
 [ext_resource type="FontFile" uid="uid://jss3joppgef5" path="res://assets/fonts/lucasarts-scumm-outline.fnt" id="18_hbnbf"]
 [ext_resource type="AudioStream" uid="uid://xax3juonscc0" path="res://assets/sounds/game_bg.mp3" id="19_4pger"]
+[ext_resource type="Texture2D" uid="uid://ds0iin0t0tcf" path="res://assets/items/Orange/scaled-at-50/b_No.png" id="20_7pad8"]
+[ext_resource type="Texture2D" uid="uid://cemn0bqsx2kgt" path="res://assets/items/Red/scaled-at-50/b_No.png" id="21_t17ul"]
+[ext_resource type="AudioStream" uid="uid://cjcnqrxa8wkw6" path="res://assets/sounds/051_use_item_01.wav" id="22_cuwc7"]
+[ext_resource type="AudioStream" uid="uid://bdmf3382te8dp" path="res://assets/sounds/001_Hover_01.wav" id="23_ph01s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ph01s"]
 atlas = ExtResource("3_tpdvb")
@@ -458,3 +462,19 @@ offset_bottom = 561.0
 theme_override_fonts/font = ExtResource("18_hbnbf")
 theme_override_font_sizes/font_size = 30
 autowrap_mode = 2
+
+[node name="CloseButton" type="TextureButton" parent="."]
+offset_left = 1057.0
+offset_top = 67.0
+offset_right = 1158.0
+offset_bottom = 144.0
+texture_normal = ExtResource("20_7pad8")
+texture_pressed = ExtResource("21_t17ul")
+texture_hover = ExtResource("21_t17ul")
+stretch_mode = 5
+
+[node name="ClickSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_cuwc7")
+
+[node name="HoverSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_ph01s")
