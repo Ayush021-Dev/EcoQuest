@@ -187,7 +187,6 @@ volume_db = 1.1
 autoplay = true
 
 [node name="ProgressBar" parent="." instance=ExtResource("9_tahfu")]
-visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -230,10 +229,10 @@ text = "Join Classroom"
 
 [node name="Label2" type="Label" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 143.0
-offset_right = 396.0
-offset_bottom = 179.0
+offset_left = 159.0
+offset_top = 139.0
+offset_right = 392.0
+offset_bottom = 175.0
 theme_override_fonts/font = ExtResource("14_616yh")
 theme_override_font_sizes/font_size = 40
 text = "Select Profile"
@@ -242,60 +241,66 @@ text = "Select Profile"
 layout_mode = 0
 offset_left = 187.0
 offset_top = 185.0
-offset_right = 327.0
-offset_bottom = 215.0
+offset_right = 353.0
+offset_bottom = 224.0
 theme_override_fonts/font = ExtResource("2_mli57")
+theme_override_font_sizes/font_size = 20
+alignment = 1
 
 [node name="LineEdit" type="LineEdit" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 155.0
+offset_left = 115.0
 offset_top = 254.0
 offset_right = 430.0
-offset_bottom = 313.0
+offset_bottom = 320.0
 theme_override_fonts/font = ExtResource("15_nufh0")
+theme_override_font_sizes/font_size = 20
 placeholder_text = "Or create new profile..."
+alignment = 1
 
 [node name="Label3" type="Label" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 158.0
-offset_top = 369.0
-offset_right = 416.0
-offset_bottom = 398.0
+offset_left = 100.0
+offset_top = 356.0
+offset_right = 469.0
+offset_bottom = 403.0
 theme_override_fonts/font = ExtResource("14_616yh")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 50
 text = "Classroom Details :"
 
 [node name="LineEdit2" type="LineEdit" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 201.0
+offset_left = 177.0
 offset_top = 417.0
 offset_right = 346.0
-offset_bottom = 464.0
+offset_bottom = 468.0
 theme_override_fonts/font = ExtResource("15_nufh0")
 placeholder_text = "Classroom ID"
+alignment = 1
 
 [node name="LineEdit3" type="LineEdit" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 202.0
+offset_left = 175.0
 offset_top = 478.0
 offset_right = 344.0
-offset_bottom = 517.0
+offset_bottom = 523.0
 theme_override_fonts/font = ExtResource("15_nufh0")
 placeholder_text = "Password"
+alignment = 1
 
 [node name="Button" type="Button" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 136.0
+offset_left = 85.0
 offset_top = 546.0
 offset_right = 255.0
-offset_bottom = 600.0
+offset_bottom = 601.0
 theme_override_fonts/font = ExtResource("2_mli57")
 theme_override_font_sizes/font_size = 30
 text = "Join Game"
 
 [node name="Button2" type="Button" parent="LoginPanel"]
 layout_mode = 0
-offset_left = 331.0
+offset_left = 289.0
 offset_top = 547.0
 offset_right = 451.0
 offset_bottom = 602.0

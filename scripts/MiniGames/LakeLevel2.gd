@@ -30,7 +30,7 @@ var score = 0
 var has_won = false
 
 func _ready():
-	panel.visible=false
+	panel.visible = false
 	win_panel.visible = false
 	set_process(false)
 	get_tree().paused = true
@@ -38,21 +38,29 @@ func _ready():
 	has_won = false
 	score = 0
 	update_score_display()
-	# Connect signals
+
+	# Connect signals for panel and close button
 	if not panel.is_connected("gui_input", Callable(self, "_on_panel_gui_input")):
 		panel.connect("gui_input", Callable(self, "_on_panel_gui_input"))
+
 	if not close_button.is_connected("pressed", Callable(self, "_on_close_pressed")):
 		close_button.connect("pressed", Callable(self, "_on_close_pressed"))
+
 	if not close_button.is_connected("pressed", Callable(self, "_play_click_sound")):
 		close_button.connect("pressed", Callable(self, "_play_click_sound"))
+
 	if not close_button.is_connected("mouse_entered", Callable(self, "_play_hover_sound")):
 		close_button.connect("mouse_entered", Callable(self, "_play_hover_sound"))
-	fish_button_small.pressed.connect(_on_fish_button_pressed.bind(FISH_SMALL))
-	fish_button_medium.pressed.connect(_on_fish_button_pressed.bind(FISH_MEDIUM))
-	fish_button_big.pressed.connect(_on_fish_button_pressed.bind(FISH_BIG))
+
+	# Connect fish buttons signals with parameter using Callable and bind()
+	fish_button_small.connect("pressed", Callable(self, "_on_fish_button_pressed").bind(FISH_SMALL))
+	fish_button_medium.connect("pressed", Callable(self, "_on_fish_button_pressed").bind(FISH_MEDIUM))
+	fish_button_big.connect("pressed", Callable(self, "_on_fish_button_pressed").bind(FISH_BIG))
+
+	# Connect sounds for fish buttons
 	for btn in [fish_button_small, fish_button_medium, fish_button_big]:
-		btn.pressed.connect(_play_click_sound)
-		btn.mouse_entered.connect(_play_hover_sound)
+		btn.pressed.connect(Callable(self, "_play_click_sound"))
+		btn.mouse_entered.connect(Callable(self, "_play_hover_sound"))
 
 func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and not game_running:

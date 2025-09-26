@@ -315,6 +315,7 @@ stream = ExtResource("7_1k4bs")
 stream = ExtResource("8_0d1nt")
 
 [node name="FishContainer" type="Node2D" parent="."]
+position = Vector2(169, 66)
 
 [node name="FishSpawner" type="Node" parent="."]
 
