@@ -52375,7 +52375,6 @@ position = Vector2(218, 386)
 process_mode = 3
 
 [node name="ProgressBar" parent="." instance=ExtResource("17_ba6sx")]
-visible = false
 offset_left = 2917.0
 offset_top = 1645.0
 offset_right = 3712.0

@@ -286,3 +286,7 @@ func check_seed_count():
 
 func show_feedback(feedback_position, text, _color):
 	print("Feedback at ", feedback_position, ": ", text)
+
+
+func _on_instructions_panel_gui_input(event: InputEvent) -> void:
+	pass # Replace with function body.

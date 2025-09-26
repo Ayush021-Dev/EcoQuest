@@ -695,3 +695,5 @@ offset_left = 103.0
 offset_top = 57.0
 offset_right = 1092.0
 offset_bottom = 450.0
+
+[connection signal="gui_input" from="InstructionsPanel" to="." method="_on_instructions_panel_gui_input"]
