@@ -27,6 +27,9 @@ func set_profile_data(profile_name: String, class_id: String, password: String):
 	# Load profile-specific footprint data
 	load_footprint_data()
 	
+	# Send initial data when profile is set
+	send_data()
+	
 	print("CarbonFootprintManager: Set profile to ", profile_name, " in classroom ", class_id)
 
 # Setup HTTP request for testing
@@ -49,11 +52,12 @@ func send_data():
 		"timestamp": Time.get_unix_time_from_system()
 	}
 	
-	var url = "https://webhook.site/your-unique-url"  # Replace with your webhook URL
+	# CHANGE THIS URL to your actual MongoDB API endpoint
+	var url = "https://your-website.com/api/footprint"  # Replace with your actual API URL
 	var headers = ["Content-Type: application/json"]
 	var json_data = JSON.stringify(data)
 	
-	print("Sending data: ", json_data)
+	print("Sending data to MongoDB: ", json_data)
 	
 	var error = http_request.request(url, headers, HTTPClient.METHOD_POST, json_data)
 	if error != OK:
@@ -63,11 +67,12 @@ func send_data():
 func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
 	var response_text = body.get_string_from_utf8()
 	print("Response code: ", response_code)
+	print("Response body: ", response_text)
 	
-	if response_code == 200:
-		print("✅ DATA SENT SUCCESSFULLY!")
+	if response_code == 200 or response_code == 201:
+		print("✅ DATA SENT TO MONGODB SUCCESSFULLY!")
 	else:
-		print("❌ Failed to send data")
+		print("❌ Failed to send data to MongoDB - Response code: ", response_code)
 
 # Get current carbon footprint
 func get_footprint() -> int:
