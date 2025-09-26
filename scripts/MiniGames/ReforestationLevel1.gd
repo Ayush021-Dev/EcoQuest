@@ -1,198 +1,92 @@
 extends Node2D
 
-@export var insect_scenes : Array[PackedScene]
+@export var garbage_scene: PackedScene = preload("res://scenes/Garbage.tscn")
+var garbage_types = ["cokezero", "sprite", "can", "bottle"]
+var total_garbage_count = 10
+var current_garbage_count = 0
+var score = 0
 
-@onready var insect_container = $InsectContainer
-@onready var tree_health_bar = $TreeHealth
-@onready var insect_spawn_timer = $InsectSpawnTimer
+@onready var gripper = $Gripper
+@onready var water_tilemap = $Water
+@onready var garbage_container = $GarbageContainer
+@onready var dustbin_area = $DustbinArea
 @onready var close_button = $CloseButton
 @onready var click_sound = $ClickSound
 @onready var hover_sound = $HoverSound
-@onready var health_change_label = $TreeHealth/HealthChangeLabel
-@onready var game_timer = $GameTimer
-@onready var game_over_panel = $GameOver
-@onready var game_over_label = $GameOver/Label
-@onready var instructions_panel = $Panel
-@onready var bg_sound = $BG
-
-var tree_health = 100
-var cockroaches_killed: int = 0
-var ants_killed: int = 0
-var butterflies_killed: int = 0
-var beetles_killed: int = 0
-var initial_tree_health: int = 100
-var level_id: String = "reforestation_level1"
+@onready var score_label = get_node_or_null("ScoreLabel")
+@onready var bg_music = $BG
+@onready var game_timer = $Timer
 
 func _ready():
-	insect_scenes = [
-		preload("res://scenes/Insects/Cockroach.tscn"),
-		preload("res://scenes/Insects/Butterfly.tscn"),
-		preload("res://scenes/Insects/Beetles.tscn"),
-		preload("res://scenes/Insects/Ants.tscn"),
-	]
+	# Connect signals safely
+	if not close_button.is_connected("pressed", Callable(self, "_on_close_pressed")):
+		close_button.connect("pressed", Callable(self, "_on_close_pressed"))
+	if not close_button.is_connected("pressed", Callable(self, "_play_click_sound")):
+		close_button.connect("pressed", Callable(self, "_play_click_sound"))
+	if not close_button.is_connected("mouse_entered", Callable(self, "_play_hover_sound")):
+		close_button.connect("mouse_entered", Callable(self, "_play_hover_sound"))
 
-	if not close_button.pressed.is_connected(_on_close_pressed):
-		close_button.pressed.connect(_on_close_pressed)
-	if not close_button.pressed.is_connected(_play_click_sound):
-		close_button.pressed.connect(_play_click_sound)
-	if not close_button.mouse_entered.is_connected(_play_hover_sound):
-		close_button.mouse_entered.connect(_play_hover_sound)
+	if gripper.has_signal("garbage_collected") and not gripper.is_connected("garbage_collected", Callable(self, "_on_garbage_collected")):
+		gripper.connect("garbage_collected", Callable(self, "_on_garbage_collected"))
 
-	insect_spawn_timer.connect("timeout", Callable(self, "_on_InsectSpawnTimer_timeout"))
-	game_timer.connect("timeout", Callable(self, "_on_game_timer_timeout"))
+	if bg_music.playing:
+		bg_music.stop()
 
-	insect_spawn_timer.stop()
-	game_timer.stop()
+	spawn_garbage()
+	update_score_display()
 
-	tree_health_bar.min_value = 0
-	tree_health_bar.max_value = 100
-	tree_health_bar.value = tree_health
-	health_change_label.visible = false
+func spawn_garbage():
+	if not garbage_scene:
+		print("Error: Garbage scene not loaded!")
+		return
+	var used_rect = water_tilemap.get_used_rect()
+	var tile_size = water_tilemap.tile_set.tile_size
+	var min_x = used_rect.position.x * tile_size.x
+	var max_x = (used_rect.position.x + used_rect.size.x) * tile_size.x - 160
+	var min_y = used_rect.position.y * tile_size.y
+	var max_y = (used_rect.position.y + used_rect.size.y) * tile_size.y - 25
+	for i in range(total_garbage_count):
+		var garbage_instance = garbage_scene.instantiate()
+		var random_x = randf_range(min_x, max_x)
+		var random_y = randf_range(min_y, max_y)
+		garbage_instance.position = Vector2(random_x, random_y)
+		var random_type = garbage_types[randi() % garbage_types.size()]
+		garbage_instance.set_garbage_type(random_type)
+		add_child(garbage_instance)
 
-	instructions_panel.visible = true
+func _on_garbage_collected():
+	score += 10
+	print("Score: ", score)
+	update_score_display()
+	var remaining_garbage = get_tree().get_nodes_in_group("garbage").size()
+	current_garbage_count = remaining_garbage
+	if current_garbage_count <= 0:
+		print("Level Complete! Final Score: ", score)
+		game_timer.stop()
 
-func _on_panel_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		instructions_panel.hide()
-		start_game()
-		bg_sound.play()
+func respawn_missed_garbage(garbage_type: String):
+	print("Respawning missed garbage of type: ", garbage_type)
+	var new_garbage = garbage_scene.instantiate()
+	var used_rect = water_tilemap.get_used_rect()
+	var tile_size = water_tilemap.tile_set.tile_size
+	var random_x = randf_range(used_rect.position.x * tile_size.x, (used_rect.position.x + used_rect.size.x) * tile_size.x)
+	var random_y = randf_range(used_rect.position.y * tile_size.y, (used_rect.position.y + used_rect.size.y) * tile_size.y)
+	new_garbage.position = Vector2(random_x, random_y)
+	new_garbage.set_garbage_type(garbage_type)
+	add_child(new_garbage)
+	print("New garbage spawned at: ", new_garbage.position)
 
-func start_game():
-	insect_spawn_timer.start()
-	game_timer.start()
-
-func spawn_insect():
-	# Weighted spawn: increase cockroach and ants frequency
-	var weighted_insects = [
-		insect_scenes[0], insect_scenes[0], insect_scenes[0],  # Cockroach x3
-		insect_scenes[3], insect_scenes[3], insect_scenes[3],  # Ants x3
-		insect_scenes[1],  # Butterfly x1
-		insect_scenes[2],  # Beetles x1
-	]
-	var insect_scene = weighted_insects[randi() % weighted_insects.size()]
-	var insect = insect_scene.instantiate()
-	insect.speed = randf_range(100, 250)
-	var min_y = 460
-	var max_y = 620
-	var spawn_y = randf_range(min_y, max_y)
-	insect.position = Vector2(900, spawn_y)
-	insect.fixed_y = spawn_y
-	insect.direction = Vector2(-1, 0)
-	insect.main = self
-	insect_container.add_child(insect)
-
-func _on_InsectSpawnTimer_timeout():
-	spawn_insect()
-
-func reduce_tree_health(amount):
-	tree_health = clamp(tree_health - amount, 0, 100)
-	tree_health_bar.value = tree_health
-	show_health_change(-amount)
-	if tree_health <= 0:
-		game_over()
-
-func on_insect_killed(insect_type: String):
-	match insect_type.to_lower():
-		"cockroach":
-			cockroaches_killed += 1
-		"ants":
-			ants_killed += 1
-		"butterfly":
-			butterflies_killed += 1
-		"beetles":
-			beetles_killed += 1
-
-func increase_tree_health(amount):
-	tree_health = clamp(tree_health + amount, 0, 100)
-	tree_health_bar.value = tree_health
-	show_health_change(amount)
+func update_score_display():
+	if score_label:
+		score_label.text = "Score: " + str(score)
+	var remaining_garbage = get_tree().get_nodes_in_group("garbage").size()
+	current_garbage_count = remaining_garbage
 
 func _on_game_timer_timeout():
-	if tree_health >= 80:
-		await show_game_won()
-	else:
-		await game_over()
-
-func show_game_won() -> void:
-	insect_spawn_timer.stop()
-	game_timer.stop()
-	for insect in insect_container.get_children():
-		insect.queue_free()
-
-	calculate_final_footprint_score()
-	LevelCompletionManager.mark_level_completed(level_id)
-	game_over_label.text = "Great Job! You Saved the Tree! 🌳\nThe forest is safe thanks to you!"
-	game_over_label.modulate = Color(0, 1, 0)
-	game_over_panel.visible = true
-	await get_tree().create_timer(5.0).timeout
-	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
-
-func game_over() -> void:
-	insect_spawn_timer.stop()
-	game_timer.stop()
-	for insect in insect_container.get_children():
-		insect.queue_free()
-
-	calculate_final_footprint_score()
-	game_over_label.text = "Game Over, try again"
-	game_over_label.modulate = Color(1, 0, 0)
-	game_over_panel.visible = true
-	await get_tree().create_timer(3.0).timeout
-	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
-
-func calculate_final_footprint_score():
-	var health_lost = initial_tree_health - tree_health
-	var footprint_change = 0
-
-	if tree_health >= 95:
-		# interpolate between -35 (at 95) to -50 (at 100)
-		footprint_change = int(-35 - ((tree_health - 95) / 5.0) * 15)
-	elif tree_health >= 90:
-		# interpolate between -30 (at 90) to -35 (at 95)
-		footprint_change = int(-30 - ((tree_health - 90) / 5.0) * 5)
-	elif tree_health >= 85:
-		footprint_change = -25
-	elif tree_health >= 80:
-		footprint_change = -10
-	elif tree_health > 0:
-		# penalty increases from +10 at 80 health up to +100 at 0 health linearly
-		var scale = (80 - tree_health) / 80.0
-		footprint_change = int(10 + scale * 90)
-	else:
-		footprint_change = 100  # full penalty if tree lost
-
-	if footprint_change < 0:
-		CarbonFootprintManager.reduce_footprint(-footprint_change)
-	else:
-		CarbonFootprintManager.add_footprint(footprint_change)
-
-	CarbonFootprintManager.add_footprint(health_lost)
-
-	print("Level 1 Final Stats:")
-	print("Health lost: ", health_lost)
-	print("Footprint change due to tree health: ", footprint_change)
-
-
-	print("Level 1 Final Stats:")
-	print("Health lost: ", health_lost)
-	print("Footprint change due to tree health: ", footprint_change)
-
-
-	print("Level 1 Final Stats:")
-	print("Health lost: ", health_lost)
-	print("Footprint change due to tree health: ", footprint_change)
-
-
-
-	print("Level 1 Final Stats:")
-	print("Health lost: ", health_lost)
-	if tree_health > 0:
-		print("Win bonus reduction applied based on tree health")
-	else:
-		print("Tree lost penalty added: 100 footprint")
+	print("Game timer ended.")
 
 func _on_close_pressed():
-	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/ReforestationLevels.tscn")
+	get_tree().change_scene_to_file("res://scenes/Mini_games_level_Screens/LakeLevels.tscn")
 
 func _play_click_sound():
 	if click_sound.playing:
@@ -203,15 +97,3 @@ func _play_hover_sound():
 	if hover_sound.playing:
 		hover_sound.stop()
 	hover_sound.play()
-
-func show_health_change(amount):
-	health_change_label.text = ("+" if amount > 0 else "") + str(amount) + " points"
-	health_change_label.modulate = Color(0, 0.5, 0) if amount > 0 else Color(0.5, 0, 0)
-	health_change_label.modulate.a = 1.0
-	health_change_label.show()
-	var tween = create_tween()
-	tween.tween_property(health_change_label, "modulate:a", 0, 1.0)
-	tween.connect("finished", Callable(self, "_on_health_change_fade_finished"))
-
-func _on_health_change_fade_finished():
-	health_change_label.hide()

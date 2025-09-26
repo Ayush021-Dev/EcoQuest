@@ -63,7 +63,7 @@ func move_down(delta):
 		direction=1
 		return
 	# Stop at water bottom or if we hit something
-	if position.y >= 500: 
+	if position.y >= 550: 
 		current_state = State.MOVING_UP
 
 func move_up(delta):
@@ -104,7 +104,7 @@ func carry_garbage(garbage):
 		}
 		# Remove garbage from collision detection while being carried
 		garbage.set_collision_enabled(false)
-		print("Picked up garbage!")
+		
 
 func drop_garbage_here():
 	if carrying_garbage:
@@ -121,11 +121,11 @@ func drop_garbage_here():
 		original_garbage_data.clear()
 
 func _on_garbage_hit_dustbin():
-	print("Garbage hit dustbin! Point scored!")
+	
 	garbage_collected.emit()
 
 func _on_garbage_missed_dustbin(garbage_node):
-	print("Garbage missed dustbin! Respawning...")
+	
 	var garbage_type_to_respawn = original_garbage_data.get("type", "cokezero")
 	
 	# Remove the missed garbage
@@ -140,7 +140,7 @@ func _on_garbage_missed_dustbin(garbage_node):
 
 func respawn_garbage():
 	if original_garbage_data.has("scene") and original_garbage_data.has("type"):
-		print("Attempting to respawn garbage of type: ", original_garbage_data.type)
+		
 		var new_garbage = original_garbage_data.scene.instantiate()
 		
 		# Get random position in water area
@@ -157,6 +157,6 @@ func respawn_garbage():
 		new_garbage.set_garbage_type(original_garbage_data.type)
 		
 		level.add_child(new_garbage)
-		print("New garbage spawned at: ", new_garbage.position)
+		
 	else:
 		print("Error: Missing original garbage data for respawning")
